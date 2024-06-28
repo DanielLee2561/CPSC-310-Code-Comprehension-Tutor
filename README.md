@@ -13,8 +13,7 @@
 
 Alt layout with react and api
 
-Use 'npm run dev' in server folder to start api
-&nbsp;
+Use 'npm run dev' in server folder to start api \
 Use 'npm start' in client folder to start frontend
 
 Video Reference: https://www.youtube.com/watch?v=w3vs4a03y3I
