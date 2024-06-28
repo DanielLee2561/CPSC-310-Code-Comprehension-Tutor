@@ -1,4 +1,11 @@
 import React, { useEffect, useState } from 'react'
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
+import Test from "..\\src\\pages\\test.js";
+import MyButton from "./components/MyButton";
 
 function App() {
 
@@ -16,6 +23,12 @@ function App() {
 
   return (
     <div>
+       <MyButton to="test" />
+      <Router>
+        <Routes>
+          <Route path="/test" element={<Test />} />
+        </Routes>
+      </Router>
       {(typeof backendData.users === 'undefinded') ? (
         <p>Loading...</p>
       ): (
