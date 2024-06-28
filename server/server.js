@@ -1,15 +1,15 @@
 // dependencies
 const express = require("express");
-const fs = require("fs");
+// const fs = require("fs");
 const app = express();
-const port = 3001;
+const port = 5000;
 
 // middleware
 app.use(express.json());
 
 // data
-const users_json = require("../data/users.json");
-const questions_json = require("../data/questions.json");
+const users_json = require("..\\server\\data\\users.json");
+const questions_json = require("..\\server\\data\\questions.json");
 
 const users = users_json.users;
 // API Calls
