@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Input texts and Button</title>
+    <script src="src/submission.js"></script>
+    <link rel="stylesheet" type="text/css" href="src/style.css">
+    <script src="https://requirejs.org/docs/release/2.3.5/minified/require.js"></script>
+</head>
+<body>
+    <div id="df">
+        <div>
+            <h3>Enter Description</h3>
+            <textarea id="description" cols="50" rows="15"></textarea>
+        </div>
+        <div>
+            <h3>Failed Tests</h3>
+            <textarea id="failed tests" cols="50" rows="15" readonly></textarea>
+        </div>
+    </div>
+    <div id="note">
+        <h3>Notes</h3>
+        <textarea id="notes" cols="100" rows="15"></textarea>
+    </div>
+    <br>
+    <div id="buttons">
+        <button id="save" type="button" onclick="">Save Question</button>
+        <button id="submission" type="button" onclick="submission()">Submit Question</button>
+    </div>
+    <p id="test"></p>
+</body>
+</html>
