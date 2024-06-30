@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>菜鸟教程(runoob.com)</title>
+    <script>
+        function displayResult()
+        {
+            document.getElementById("myTextarea").select();
+        }
+    </script>
+    <style>
+        input[type=text], textarea {
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+
+<textarea id="myTextarea" cols="70" rows="15" readonly>
+在菜鸟教程，你可以学多很多编程的基础知识，包括 HTML, XML, SQL, ASP, 和 PHP 等各种前端内容。
+</textarea>
+<textarea id="22" cols="70" rows="15">
+在菜鸟教程，你可以学多很多编程的基础知识，包括 HTML, XML, SQL, ASP, 和 PHP 等各种前端内容。
+</textarea>
+<br>
+
+<button type="button" onclick="displayResult()">选择文本框中的文本</button>
+
+</body>
+</html>
