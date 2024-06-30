@@ -1,3 +1,5 @@
+// REFERENCE: https://www.youtube.com/watch?v=GR5-aao7Y-0
+
 // dependencies
 const express = require("express");
 // const fs = require("fs");
@@ -45,6 +47,30 @@ app.post("/register", (req, res) => {
 });
 
 // TODO: Login
+app.put("/login", (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password; // password validation left up to frontend (no empty string, 5+ chars?)
+    // Look for username
+    for (let user of users) {
+        if (user.username === username) {
+            // Check password
+            if (user.password === password) {
+                user.statusLogin = true;
+                res.status(200).json({login:true});
+                console.log(users_json); // For testing can be removed
+                return;
+            } else {
+                res.status(409).json({login:false});
+                console.log(users_json); // For testing can be removed
+                return;
+            }
+        }
+    }
+    // If user name doesn't exist
+    res.status(400).json({login:false});
+    console.log(users_json); // For testing can be removed
+    return;
+});
 
 // TODO: Logout
 

@@ -1,39 +1,23 @@
-import React, { useEffect, useState } from 'react'
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-} from "react-router-dom";
-import Test from "..\\src\\pages\\test.js";
-import MyButton from "./components/MyButton";
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Register from './pages/register'
+import Login from './pages/login'
+import Home from './pages/home'
+import './App.css'
+import { useEffect, useState } from 'react'
 
 function App() {
-
-  const [backendData, setBackendData] = useState([{}])
-
-  useEffect(() => {
-    fetch("/users").then(
-      response => response.json()
-    ).then(
-      data => {
-        setBackendData(data)
-      }
-    )
-  }, [])  // [] will cause this to only run on first render of the component 
+  const [loggedIn, setLoggedIn] = useState(false)
+  const [username, setUsername] = useState('')
 
   return (
-    <div>
-       <MyButton to="test" />
-      <Router>
+    <div className="App">
+      <BrowserRouter>
         <Routes>
-          <Route path="/test" element={<Test />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Login />} />
         </Routes>
-      </Router>
-      {(typeof backendData.users === 'undefinded') ? (
-        <p>Loading...</p>
-      ): (
-        <p> {JSON.stringify(backendData.users)} </p>
-      )}
+      </BrowserRouter>
     </div>
   )
 }
