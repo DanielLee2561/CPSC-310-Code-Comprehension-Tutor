@@ -49,7 +49,7 @@ app.post("/register", (req, res) => {
 // TODO: Login
 app.put("/login", (req, res) => {
     const username = req.body.username;
-    const password = req.body.password; // password validation left up to frontend (no empty string, 5+ chars?)
+    const password = req.body.password; 
     // Look for username
     for (let user of users) {
         if (user.username === username) {
