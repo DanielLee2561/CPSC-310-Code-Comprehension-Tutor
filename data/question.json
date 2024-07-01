@@ -1,0 +1,19 @@
+{
+  "questions": [
+    {
+      "questionId": 1,
+      "questionCode": "const reverseString = (str) => str.split('').reverse().join('');",
+      "test": "..."
+    },
+    {
+      "questionId": 2,
+      "questionCode": "const fibonacci = (num) => { if (num <= 1) return num; let a = 0, b = 1, sum = 0; for (let i = 2; i <= num; i++) { sum = a + b; a = b; b = sum; } return sum; };",
+      "test": "..."
+    },
+    {
+      "questionId": 3,
+      "questionCode": "const sortArray = (arr) => arr.sort((a, b) => a - b);",
+      "test": "..."
+    }   
+  ]
+}
