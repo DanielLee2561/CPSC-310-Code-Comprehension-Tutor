@@ -11,15 +11,40 @@ const Register = (props) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [passwordConfirmation, setPasswordConfirmation] = useState('')
-  const [checked, setChecked] = useState(false);
-  const [usernameError, setUsernameError] = useState('')
-  const [passwordError, setPasswordError] = useState('')
-  const [passwordConfirmationError, setPasswordConfirmationError] = useState('')
+  const [consent, setConsent] = useState(false);
+  const [error, setError] = useState('')
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirmation, setShowPasswordConfirmation] = useState(false);
 
   const navigate = useNavigate()
 
   const onButtonClick = () => {
-    navigate("/")
+    if ((username === "") || (username.length < 5)) {
+      setError("ERROR: Input a username that is at least 5 characters long to register");
+      return;
+    }
+
+    if ((password === "") || (password.length < 5)) {
+      setError("ERROR: Input a password that is at least 5 characters long to register");
+      return;
+    }
+
+    if (passwordConfirmation === "") {
+      setError("ERROR: Retype your password to confirm it");
+      return;
+    }
+
+    if (passwordConfirmation !== password) {
+      setError("ERROR: Your passwords do not match");
+      return;
+    }
+
+    if (consent === false) {
+      setError("ERROR: Your consent is needed to continue registering your account");
+      return;
+    }
+
+    console.log("Success"); // Still need API checks (username and actual registration to backend)
   }
 
   return (
@@ -34,8 +59,9 @@ const Register = (props) => {
           placeholder="Username..."
           onChange={(ev) => setUsername(ev.target.value)}
           className={'inputBox'}
+          maxLength={20}
+          minLength={5}
         />
-        <label className="errorLabel">{usernameError}</label>
       </div>
       <br/>
       <div className={'input'}>
@@ -44,8 +70,20 @@ const Register = (props) => {
           placeholder="Password..."
           onChange={(ev) => setPassword(ev.target.value)}
           className={'inputBox'}
+          maxLength={20}
+          minLength={5}
+          type= {showPassword ? 'text' : 'password'}
         />
-        <label className="errorLabel">{passwordError}</label>
+        <label>
+            <input
+            value={showPassword}
+            className={'inputBox'}
+            type = "checkbox"
+            onChange={() => setShowPassword(!showPassword)}
+            id = "showPass"
+            />
+            <label>Show Password</label>
+        </label>
       </div>
       <br/>
       <div className={'input'}>
@@ -54,20 +92,33 @@ const Register = (props) => {
           placeholder="Confirm Password..."
           onChange={(ev) => setPasswordConfirmation(ev.target.value)}
           className={'inputBox'}
+          maxLength={20}
+          minLength={5}
+          type= {showPasswordConfirmation ? 'text' : 'password'}
         />
-        <label className="errorLabel">{passwordConfirmationError}</label>
-      </div>
-      <br/>
-      <div className={'input'}>
         <label>
             <input
-            value={passwordConfirmation}
+            value={showPasswordConfirmation}
             className={'inputBox'}
             type = "checkbox"
+            onChange={() => setShowPasswordConfirmation(!showPasswordConfirmation)}
+            id = "showPass"
             />
+            <label>Show Password Confirmation</label>
         </label>
       </div>
       <br/>
+      <div className={'input'}>
+          <input
+          value={consent}
+          className={'inputBox'}
+          type = "checkbox"
+          onChange={() => setConsent(!consent)}
+          />
+          <label>You Consent To This!!!</label>
+      </div>
+      <br/>
+      <label className="errorLabel" style={{ color: 'red' }}>{error}</label>
       <div className={'input'}>
         <input className={'inputButton'} type="button" onClick={onButtonClick} value={'Register'} />
       </div>
