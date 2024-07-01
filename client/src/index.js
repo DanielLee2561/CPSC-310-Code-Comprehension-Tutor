@@ -2,12 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import AttemptPage from './pages/AttemptPage';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <App />
+      {/* Below is an example of how you may invoke the attempt page component */}
+      {/*<AttemptPage*/}
+      {/*    id={1}*/}
+      {/*    question={`function foo() {\nconst message = "Hello, world!";\nconsole.log(message);\n}`}*/}
+      {/*    attempt_num={3}*/}
+      {/*    password="pass123"*/}
+      {/*/>*/}
   </React.StrictMode>
 );
 
