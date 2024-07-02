@@ -6,6 +6,7 @@
 
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import './authentication.css'
 
 const Register = (props) => {
   const [username, setUsername] = useState('')
@@ -73,6 +74,7 @@ const Register = (props) => {
           maxLength={20}
           minLength={5}
           type= {showPassword ? 'text' : 'password'}
+          id = {'password'}
         />
         <label>
             <input
@@ -95,6 +97,7 @@ const Register = (props) => {
           maxLength={20}
           minLength={5}
           type= {showPasswordConfirmation ? 'text' : 'password'}
+          id = {'passwordConfirmation'}
         />
         <label>
             <input
@@ -118,7 +121,9 @@ const Register = (props) => {
           <label>You Consent To This!!!</label>
       </div>
       <br/>
-      <label className="errorLabel" style={{ color: 'red' }}>{error}</label>
+      <div className="errorLabel">
+        <label>{error}</label>
+      </div>
       <div className={'input'}>
         <input className={'inputButton'} type="button" onClick={onButtonClick} value={'Register'} />
       </div>

@@ -3,6 +3,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './authentication.css'
 
 const Login = (props) => {
   const [username, setUsername] = useState('');
@@ -79,6 +80,7 @@ const Login = (props) => {
           className={'inputBox'}
           type={showPassword ? 'text' : 'password'}
           maxLength="20"
+          id = {'password'}
         />
         <label>
             <input
@@ -92,13 +94,16 @@ const Login = (props) => {
         </label>
       </div>
       <br/>
-      <label className="errorLabel" style={{ color: 'red' }}>{error}</label>
+      <div className="errorLabel">
+        <label>{error}</label>
+      </div>
       {/* <br/> */}
-      <div>
+      {/* <div>
         <input className={'registerButton'} type="button" onClick={onRegisterClick} value={'Don’t have an account? Register here'} />
       </div>
-      <br/>
+      <br/> */}
       <div className={'input'}>
+        <input className={'registerButton'} type="button" onClick={onRegisterClick} value={'Don’t have an account? Register here'} />
         <input className={'inputButton'} type="button" onClick={onButtonClick} value={'Log in'} />
       </div>
     </div>
