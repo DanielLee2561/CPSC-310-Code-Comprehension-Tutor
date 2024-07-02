@@ -6,18 +6,19 @@ import { useNavigate } from 'react-router-dom'
 const Home = (props) => {
   const { loggedIn, email } = props
   const navigate = useNavigate()
-  navigate("/login")
 
-  const onButtonClick = () => {
-
+  const changePage = () => {
+    navigate("/questions")
   }
 
   return (
     <div className="mainContainer">
       <div className={'titleContainer'}>
-        <div>Welcome!</div>
+        <h1>Home</h1>
       </div>
-      <div>This is the home page.</div>
+      <div>
+        <button onClick={changePage}>Questions</button>
+      </div>
     </div>
   )
 }
