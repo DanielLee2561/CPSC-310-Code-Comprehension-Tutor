@@ -38,7 +38,9 @@
     ]
   },
   "options": {
-    "allowedHosts":["localhost"],
+    "allowedHosts": [
+      "localhost"
+    ],
     "proxy": "http://localhost:5000"
   }
 }

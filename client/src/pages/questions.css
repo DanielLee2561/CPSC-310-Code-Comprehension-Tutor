@@ -1,0 +1,18 @@
+.arrow {
+	background-color: transparent;
+	border: solid black;
+	border-width: 0 3px 3px 0;
+	display: inline-block;
+	height: 10px;
+	width: 10px;
+	padding: 0px;
+	margin-right: 5px;
+  }
+  
+.right {
+	transform: rotate(-45deg);
+}
+  
+.down {
+	transform: rotate(45deg);
+}
