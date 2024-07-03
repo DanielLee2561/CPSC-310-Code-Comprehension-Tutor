@@ -6,8 +6,6 @@ import './App.css'
 import { useEffect, useState } from 'react'
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false)
-  const [username, setUsername] = useState('')
 
   return (
     <div className="App">

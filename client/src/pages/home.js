@@ -1,12 +1,27 @@
 // PLACEHOLDER
 
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const Home = (props) => {
   const { loggedIn, email } = props
   const navigate = useNavigate()
-  navigate("/login")
+  // navigate("/login")
+
+  const test = useLocation().state;
+  useEffect(() => {
+    if (test === null) {
+        navigate("/")
+    } else {
+      console.log(test.username);
+      console.log(test.password);
+      console.log(test.loggedIn);
+    }
+  })
+
+  // console.log(useLocation().state.username);
+  // console.log(useLocation().state.password);
+  // console.log(useLocation().state.loggedIn);
 
   const onButtonClick = () => {
 

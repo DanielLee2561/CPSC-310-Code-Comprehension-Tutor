@@ -46,6 +46,9 @@ const Register = (props) => {
     }
 
     console.log("Success"); // Still need API checks (username and actual registration to backend)
+    if (true) {
+      navigate("/");
+    }
   }
 
   return (

@@ -1,5 +1,6 @@
 // REFERENCE: https://clerk.com/blog/building-a-react-login-page-template
 // REFERENCE: https://www.geeksforgeeks.org/how-to-show-and-hide-password-in-reactjs/
+// REFERENCE: https://stackoverflow.com/questions/69714423/how-do-you-pass-data-when-using-the-navigate-function-in-react-router-v6
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -46,7 +47,13 @@ const Login = (props) => {
       console.log(valid); // For testing can be removed
     })
     if (valid) {
-      navigate("/home");
+      navigate("/home", {
+        state: {
+          "username": username,
+          "password": password,
+          "loggedIn": true
+        }
+      });
       return;
     } else {
       setError("ERROR: Username or password is incorrect");
