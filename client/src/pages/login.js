@@ -57,6 +57,9 @@ const Login = (props) => {
       return;
     } else {
       setError("ERROR: Username or password is incorrect");
+      navigate("/", {
+        state: null
+      });
       return;
     }
   }
