@@ -1,0 +1,15 @@
+textarea {
+    border: 2px solid #dddddd;
+    resize: none;
+}
+
+#df, #buttons {
+    text-align: center;
+    display: flex;
+    justify-content: space-evenly;
+    overflow-y: auto;
+}
+
+#note {
+    text-align: center;
+}
