@@ -1,6 +1,10 @@
 // REFERENCE: https://www.youtube.com/watch?v=GR5-aao7Y-0
+// REFERENCE: https://www.youtube.com/watch?v=6CjbezdbB8o
+// REFERENCE: https://www.youtube.com/watch?v=5lK_iFJsWv4&t=5s
+
 
 // dependencies
+const path = require('path');
 const express = require("express");
 // const fs = require("fs");
 const app = express();
@@ -11,8 +15,8 @@ const port = 5000;
 app.use(express.json());
 
 // data
-const users_json = require("..\\server\\data\\users.json");
-const questions_json = require("..\\server\\data\\questions.json");
+const users_json = require("../server/data/users.json");
+const questions_json = require("../server/data/questions.json");
 
 const users = users_json.users;
 // API Calls
@@ -124,6 +128,13 @@ app.delete("/users/:username", (req, res) => {
     }
 });
 
+let root = require('path').join(__dirname, 'build');
+root = require('path').join(__dirname, '..', "client", "build");
+app.use(express.static(root));
+console.log(express.static(root));
+app.use('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
+});
 
 
 // Opening the server to listen on port 5000

@@ -6,7 +6,7 @@
 
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-// import './authentication.css'
+import './authentication.css'
 
 const Register = (props) => {
   const [username, setUsername] = useState('')
