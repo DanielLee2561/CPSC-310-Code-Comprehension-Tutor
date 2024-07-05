@@ -19,7 +19,7 @@ const Register = (props) => {
 
   const navigate = useNavigate()
 
-  const onButtonClick = () => {
+  const onButtonClick = async () => {
     if ((username === "") || (username.length < 5)) {
       setError("ERROR: Input a username that is at least 5 characters long to register");
       return;
@@ -45,10 +45,28 @@ const Register = (props) => {
       return;
     }
 
-    console.log("Success"); // Still need API checks (username and actual registration to backend)
-    if (true) {
-      navigate("/");
-    }
+    // TEMP
+    let valid = false;
+    let userInput = {
+      username:username,
+      password:password
+    };
+    await fetch("/register", {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userInput),
+      method: "POST"
+      }
+    ).then(res => res.json()).then(data => {
+      valid = data;
+      console.log(valid); // For testing can be removed
+    })
+
+    // console.log("Success"); // Still need API checks (username and actual registration to backend)
+    // if (true) {
+    //   navigate("/");
+    // }
   }
 
   return (

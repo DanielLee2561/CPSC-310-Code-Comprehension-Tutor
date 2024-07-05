@@ -6,7 +6,7 @@
 // dependencies
 const path = require('path');
 const express = require("express");
-// const fs = require("fs");
+const fs = require("fs");
 const app = express();
 const port = 5000;
 
@@ -17,6 +17,7 @@ app.use(express.json());
 // data
 const users_json = require("../server/data/users.json");
 const questions_json = require("../server/data/questions.json");
+const users_path = "../server/data/users.json";
 
 const users = users_json.users;
 // API Calls
@@ -26,29 +27,38 @@ app.get("/users", (req, res) => {
     res.json(users_json);
 })
 
+// TEMP
+// write to the user json data
+const writeJsonFile = (filePath, data) => {
+    try {
+        fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
+    } catch (err) {
+        console.error('Error writing JSON file:', err);
+    }
+}
 
+
+// TEMP
 // Register a user
-app.post("/register", (req, res) => {
-    const username = req.body.username;
-    const password = req.body.password; // password validation left up to frontend (no empty string, 5+ chars?)
+app.post('/register',(req,res)=>{
+    const{username,password}=req.body;
+    if (!username || !password){
+        return res.status(400).json({error:"username and password are required."});
+    }
 
-    // Check if user of same username already exists
-    for (let user of users) {
-        if (user.username === username) {
-            res.status(409).json({users_json}); //.send()
-            return;
+    for (let user of users){
+        if (user.username===username){
+           res.status(409).json({error:"the username already exists"});
+           return;
         }
     }
     // construct user and put in json array
     let newUser = {};
     newUser = req.body; // both username and password
     newUser.type = "Student";
-    newUser.statusLogin = false;
-    newUser.questions = [];
-
-    users.push(newUser);
-
-    res.status(201).json(users_json); //.send();
+    users.push({...newUser});
+    writeJsonFile(users_path, { users });
+    res.send("just post");
 });
 
 // TODO: Login
