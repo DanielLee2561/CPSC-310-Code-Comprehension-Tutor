@@ -6,11 +6,12 @@ import session from 'express-session';
 
 const userJSONPath = path.join(process.cwd(), 'data', 'users.json');
 
-var users;
+let users;
 
 // read user's specific question's attempts
-fs.readFile('../data/users.json', 'utf8', (err, data) => {
+fs.readFile(userJSONPath, 'utf8', (err, data) => {
     if (err) return console.error('Error reading user.json: ', err);
+    console.log("Before fs try");
     try {
         //let content = JSON.parse(data); 
         users = JSON.parse(data).users;
@@ -27,8 +28,8 @@ fs.readFile('../data/users.json', 'utf8', (err, data) => {
 //console.log(users);
 
 // View Previous Attempt for a Specific Question
-router.get('/', (req, res) => {
-    const { username, questionId, attemptId } = req.params;
+router.get('/test', (req, res) => {
+    const [username, questionId, attemptId] = req.params;
     if (!username || !questionId || !attemptId)
         return res.status(400).json({error:"username, questionId and attemptId are required."});
 
