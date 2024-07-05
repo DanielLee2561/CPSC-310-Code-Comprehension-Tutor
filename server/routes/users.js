@@ -1,15 +1,16 @@
 import express, { response } from "express";
 const router = express.Router();
+//const app = express();
 import fs from 'fs';
 import path from 'path';
 import session from 'express-session';
 
-const userJSONPath = path.join(process.cwd(), 'data', 'users.json');
+//const userJSONPath = path.join(process.cwd(), 'data', 'users.json');
 
 let users;
 
 // read user's specific question's attempts
-fs.readFile(userJSONPath, 'utf8', (err, data) => {
+fs.readFile('../data/users.json', 'utf8', (err, data) => {
     if (err) return console.error('Error reading user.json: ', err);
     console.log("Before fs try");
     try {
@@ -28,8 +29,9 @@ fs.readFile(userJSONPath, 'utf8', (err, data) => {
 //console.log(users);
 
 // View Previous Attempt for a Specific Question
-router.get('/test', (req, res) => {
-    const [username, questionId, attemptId] = req.params;
+router.get('/:username/test', (req, res) => {
+    //const [username] = req.params;
+    const {username, questionId, attemptId} = req.body;
     if (!username || !questionId || !attemptId)
         return res.status(400).json({error:"username, questionId and attemptId are required."});
 
@@ -39,9 +41,24 @@ router.get('/test', (req, res) => {
     const question = user.questions.find(c => c.questionId === questionId);
     if (!question) return res.status(404).send('Question is not found.');
 
-    const attempt = question.attempts[attemptId-1];
-    console.log(attempt);
-    res.send(attempt);
+    //const attempt = question.attempts[attemptId-1];
+    const attempts = question.attempts;
+
+    let foundAttempt;
+    let index = 1;
+
+    for (let attempt of attempts) {
+        if (index === attemptId) {
+            foundAttempt = attempt;
+            break;
+        }
+        index++;
+    }
+
+    if (!foundAttempt) return res.status(404).send('Attempt is not found.');
+
+    console.log(foundAttempt);
+    res.send(foundAttempt);
 });
 
 export default router
