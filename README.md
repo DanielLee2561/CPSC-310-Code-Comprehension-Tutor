@@ -17,13 +17,3 @@
 6) Open "Project"             In web browser, open "localhost:5000/"
 
 Replace "[title]" with a name of your choice for the Docker Image.
-
-## Notes and Instructions  
-
-Alt layout with react and api
-
-Use 'npm run dev' in server folder to start api \
-Use 'npm start' in client folder to start frontend
-
-Video Reference: https://www.youtube.com/watch?v=w3vs4a03y3I \
-Had some trouble becuase of this lol https://stackoverflow.com/a/73268060
