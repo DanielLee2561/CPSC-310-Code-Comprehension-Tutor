@@ -101,6 +101,11 @@
       "username": "kate9",
       "password": "123123",
       "type": "Student"
+    },
+    {
+      "username": "kate99912",
+      "password": "123123",
+      "type": "Student"
     }
   ]
 }

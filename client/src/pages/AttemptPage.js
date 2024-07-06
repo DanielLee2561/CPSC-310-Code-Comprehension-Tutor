@@ -3,6 +3,7 @@ import {useState} from 'react';
 
 // Props contain questionID (id), question function(question), the attempt number (attempt_num) and user's password (password)
 function AttemptPage(props) {
+    const [error, setError] = useState("");
     const [isInProgress, setInProgress] = useState(true);
     const [description, setDescription] = useState("");
     const [notes, setNotes] = useState("");
@@ -31,27 +32,34 @@ function AttemptPage(props) {
         setNotes(event.target.value);
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
+        setError("");
         setSubmitEnabled(false);
-        const data = {
-            password: props.password, description: description, notes: notes, inProgress: false
+        if (!description) {
+            setError("ERROR: Please write the english description of the function");
+            setSubmitEnabled(true);
+            return;
         }
-        // TODO: api submit call here
 
+        const data = {
+            password: props.password, 
+            description: description, 
+            notes: notes, 
+            inProgress: false
+        };
+
+        // TODO: api submit call here
         const submitSuccessful = true; // stub
 
-        // api call sends back description and notes -> can be displayed in review page (below)
-        // setTimeout simulates the time it could take for the api to respond (remove when api call is implemented)
         setTimeout(() => {
             if (submitSuccessful) {
-                setDescription("this is desc");
-                setNotes("this is notes");
-                setGeneratedCode(`function foo() {\nconst message = "Hello, world!";\nconsole.log(message);\n}`); //change this to the gencode
+                setDescription("");
+                setNotes("");
+                setGeneratedCode(`function foo() {\nconst message = "Hello, world!";\nconsole.log(message);\n}`); 
                 setFailingTestCases("Get the failing test cases from the 'submit' api call");
-                setTestsCorrect(Math.round(Math.random() * 4)); // change to real num of correct tests
-                setTestsTotal(4); // prevents weird changing stuff (researcher removes question & user gets all correct -> 4/3 score)
+                setTestsCorrect(Math.round(Math.random() * 4)); 
+                setTestsTotal(4); 
 
-                // alert probably not needed here? (already has visual indicator)
                 setInProgress(false);
             } else {
                 alert("Attempt submission was not successful. Please try again later");
@@ -121,70 +129,75 @@ function AttemptPage(props) {
         scoreColour = "tomato";
     }
 
-    return (<div className="AttemptPage">
-        <h1 style={{color: "black",}}>Question: {question_id} - Attempt: #{attemptNum}</h1>
+    return (
+        <div className="AttemptPage">
+            <h1 style={{ color: "black" }}>Question: {question_id} - Attempt: #{attemptNum}</h1>
 
-        {!isInProgress ? <h2 style={{color: scoreColour}}>Score: {testsCorrect}/{testsTotal}</h2> :
-            <h2 style={{color: "darkorchid"}}>Attempt In Progress</h2>}
+            {!isInProgress ? <h2 style={{ color: scoreColour }}>Score: {testsCorrect}/{testsTotal}</h2> :
+                <h2 style={{ color: "darkorchid" }}>Attempt In Progress</h2>}
 
-        <h2>Formulate the functionality of the following foo function</h2>
+            <h2>Formulate the functionality of the following foo function</h2>
 
-        <div className="grid-container">
-        <pre className="grid-item function-text">
-            {functionText}
-        </pre>
+            <form onSubmit={handleSubmit}>
+                <div className="grid-container">
+                    <pre className="grid-item function-text">
+                        {functionText}
+                    </pre>
 
-            {!isInProgress ? <pre className="grid-item function-text" style={{color: 'mediumslateblue'}}>
-              {generatedCode}
-          </pre> : <pre className="grid-item" style={{textAlign: 'left', backgroundColor: "#f4f4f4"}}>
-            Submit to see your LLM generated code!
-          </pre>}
+                    {!isInProgress ? <pre className="grid-item function-text" style={{ color: 'mediumslateblue' }}>
+                        {generatedCode}
+                    </pre> : <pre className="grid-item" style={{ textAlign: 'left', backgroundColor: "#f4f4f4" }}>
+                        Submit to see your LLM generated code!
+                    </pre>}
 
-            {isInProgress ? <textarea
-                className="grid-item"
-                style={{fontFamily: 'Helvetica', textAlign: 'left'}}
-                placeholder="Input your description here..."
-            /> : <textarea
-                onChange={handleDescription}
-                className="grid-item readonly-textarea"
-                style={{fontFamily: 'Helvetica', textAlign: 'left'}}
-                value={description}
-                readOnly
-            />}
+                    {isInProgress ? <textarea
+                        className="grid-item"
+                        style={{ fontFamily: 'Helvetica', textAlign: 'left' }}
+                        placeholder="Input your description here..."
+                        onChange={handleDescription}
+                    /> : <textarea
+                        className="grid-item readonly-textarea"
+                        style={{ fontFamily: 'Helvetica', textAlign: 'left' }}
+                        value={description}
+                        readOnly
+                    />}
+                    {isInProgress && error && <div className="error" style={{ color: "red" }}>{error}</div>}
 
-            {isInProgress ? <pre className="grid-item" id="failing-test-case-box"
-                                 style={{fontFamily: 'Arial, sans-serif', textAlign: 'left'}}>
-            Submit to see if you have any failing test cases
-            </pre> : <pre className="grid-item" id="failing-test-case-box"
-                          style={{fontFamily: 'Arial, sans-serif', textAlign: 'left', color: 'red'}}>
-            {failingTestCases}
-            </pre>}
+                    {isInProgress ? <pre className="grid-item" id="failing-test-case-box"
+                        style={{ fontFamily: 'Arial, sans-serif', textAlign: 'left' }}>
+                        Submit to see if you have any failing test cases
+                    </pre> : <pre className="grid-item" id="failing-test-case-box"
+                        style={{ fontFamily: 'Arial, sans-serif', textAlign: 'left', color: 'red' }}>
+                        {failingTestCases}
+                    </pre>}
 
-            {isInProgress ? <textarea
-                className="grid-item"
-                style={{textAlign: 'left'}}
-                placeholder="Write notes here (optional)"
-            /> : <textarea onChange={handleNotes}
-                           className="grid-item readonly-textarea"
-                           style={{textAlign: 'left'}}
-                           value={notes}
-                           readOnly
-            />}
+                    {isInProgress ? <textarea
+                        className="grid-item"
+                        style={{ textAlign: 'left' }}
+                        placeholder="Write notes here (optional)"
+                        onChange={handleNotes}
+                    /> : <textarea
+                        className="grid-item readonly-textarea"
+                        style={{ textAlign: 'left' }}
+                        value={notes}
+                        readOnly
+                    />}
+                </div>
+
+                <h2></h2>
+
+                {isInProgress ? <div>
+                    {saveEnabled ? <button type="button" onClick={handleSave}>Save</button> : <button type="button" disabled>Saving...</button>}
+                    {submitEnabled ? <button type="submit">Submit</button> : <button type="button" disabled>Submitting...</button>}
+                </div> : <div>
+                    {retryEnabled ? <button type="button" onClick={handleRetry}>Retry</button> :
+                        <button type="button" disabled>Initializing new attempt...</button>}
+                </div>}
+
+                {isInProgress && <h5>Please allow some time for submission, generating code can take a while.</h5>}
+            </form>
         </div>
-
-        <h2></h2> {/* Just for some separation between the question side and the save/submitting stuff*/}
-
-        {isInProgress ? <div>
-            {saveEnabled ? <button onClick={handleSave}>Save</button> : <button disabled>Saving...</button>}
-            {submitEnabled ? <button onClick={handleSubmit}>Submit</button> : <button disabled>Submitting...</button>}
-        </div> : <div>
-            {retryEnabled ? <button onClick={handleRetry}>Retry</button> :
-                <button disabled>Initializing new attempt...</button>}
-        </div>}
-
-        {isInProgress && <h5>Please allow some time for submission, generating code can take a while.</h5>}
-
-    </div>);
+    );
 }
 
 export default AttemptPage;
