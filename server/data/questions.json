@@ -6,7 +6,7 @@
             "tests": [
                 {
                     "title": "foo() should return \"Hello World!\"",
-                    "assertion": "chai.expect(foo()).to.equal('Hello World!');"
+                    "assertion": "chai.expect(global.foo()).to.equal('Hello World!');"
                 }
             ]
         },
@@ -16,27 +16,27 @@
             "tests": [
                 {
                     "title": "foo([]) should return 0",
-                    "assertion": "chai.expect(foo([])).to.equal(0);"
+                    "assertion": "chai.expect(global.foo([])).to.equal(0);"
                 },
                 {
                     "title": "foo([1]) should return 1",
-                    "assertion": "chai.expect(foo([1])).to.equal(1);"
+                    "assertion": "chai.expect(global.foo([1])).to.equal(1);"
                 },
                 {
                     "title": "foo([1, 2]) should return 3",
-                    "assertion": "chai.expect(foo([1, 2])).to.equal(3);"
+                    "assertion": "chai.expect(global.foo([1, 2])).to.equal(3);"
                 },
                 {
                     "title": "foo([-2, 2]) should return 0",
-                    "assertion": "chai.expect(foo([-2, 2])).to.equal(0);"
+                    "assertion": "chai.expect(global.foo([-2, 2])).to.equal(0);"
                 },
                 {
                     "title": "foo([5, 13, -4]) should return 14",
-                    "assertion": "chai.expect(foo([5, 13, -4])).to.equal(14);"
+                    "assertion": "chai.expect(global.foo([5, 13, -4])).to.equal(14);"
                 },
                 {
                     "title": "foo([9, 10, 21]) should return 40",
-                    "assertion": "chai.expect(foo([9, 10, 21])).to.equal(40);"
+                    "assertion": "chai.expect(global.foo([9, 10, 21])).to.equal(40);"
                 }
             ]
         },

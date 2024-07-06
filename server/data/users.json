@@ -1,65 +1,82 @@
 {
-    "users": [
-      {
-        "username": "Tester",
-        "password": "password123",
-        "type": "Student",
-        "statusLogin": false,
-        "questions": [
-          {
-            "questionId": 1,
-            "attempts": [
-              {
-                "questionCode": "function foo() { console.log('Hello, World!'); };",
-                "questionTests": "...",
-                "description": "This function prints out 'Hello, World!'",
-                "notes": "",
-                "generatedCode": "function foo() { console.log('Hello, World!'); };",
-                "failingTestCases": "",
-                "inProgress": false,
-                "startTime": "",
-                "endTime": "",
-                "testCorrect": 3,
-                "testTotal": 3
-              }
-            ]
-          },
-          {
-            "questionId": 2,
-            "attempts": [
-              {
-                "questionCode": "function foo(x, y) { return x+y; };",
-                "questionTests": "...",
-                "description": "This function subtracts two numbers?",
-                "notes": "",
-                "generatedCode": "function foo(a, b) { return a-b; };",
-                "failingTestCases": "",
-                "inProgress": false,
-                "startTime": "",
-                "endTime": "",
-                "testCorrect": 0,
-                "testTotal": 3
-              },
-              {
-                "questionCode": "function foo(x, y) { return x+y; };",
-                "questionTests": "...",
-                "description": "I dont know",
-                "notes": "",
-                "generatedCode": "",
-                "failingTestCases": "",
-                "inProgress": true,
-                "startTime": "",
-                "endTime": "",
-                "testCorrect": null,
-                "testTotal": 3
-              }
-            ]
-          },
-          {
-            "questionId": 3,
-            "attempts": []
-          }
-        ]
-      }
-    ]
-  }
+  "users": [
+    {
+      "username": "Tester",
+      "password": "password123",
+      "type": "Student",
+      "statusLogin": true,
+      "questions": [
+        {
+          "questionId": 1,
+          "attempts": [
+            {
+              "inProgress": false,
+              "questionCode": "function foo() { console.log('Hello, World!'); };",
+              "questionTests": "...is this still needed?....",
+              "description": "This function returns 'Hello World!'",
+              "notes": "",
+              "generatedCode": "\nfunction foo() {\n  return 'Hello World!';\n}\n",
+              "failingTestCases": "",
+              "startTime": "2024-07-04T12:00:00.100Z",
+              "endTime": "2024-07-06T17:37:31.764Z",
+              "duration": 193051.664,
+              "testsCorrect": 1,
+              "testsTotal": 1
+            },
+            {
+              "inProgress": true,
+              "questionCode": "function foo() { console.log('Hello, World!'); };",
+              "questionTests": "...is this still needed?....",
+              "description": "This function returns 'Hello World!'",
+              "notes": "These are my optional notes. They are cool.",
+              "generatedCode": "\nfunction foo() {\n  return 'Hello World!';\n}\n",
+              "failingTestCases": "",
+              "startTime": "2024-07-04T12:00:00.100Z",
+              "endTime": "2024-07-06T17:37:31.764Z",
+              "duration": 193051.664,
+              "testsCorrect": 1,
+              "testsTotal": 1
+            }
+          ]
+        },
+        {
+          "questionId": 2,
+          "attempts": [
+            {
+              "inProgress": true,
+              "questionCode": "function foo() { console.log('Hello, World!'); };",
+              "questionTests": "...is this still needed?....",
+              "description": null,
+              "notes": "This is an example of a newly created attempt. It should be at the end of the array, not the front like how it is now",
+              "generatedCode": null,
+              "failingTestCases": null,
+              "startTime": "2024-07-04T12:00:00.100Z",
+              "endTime": null,
+              "duration": null,
+              "testsCorrect": null,
+              "testsTotal": null
+            },
+            {
+              "inProgress": true,
+              "questionCode": "function foo() { console.log('Hello, World!'); };",
+              "questionTests": "...is this still needed?....",
+              "description": "This function always returns 1",
+              "notes": "Just testing partial success... I know what the function does...",
+              "generatedCode": "\nfunction foo(x) {\n  return 1;\n}\n",
+              "failingTestCases": "foo([]) should return 0\nfoo([1, 2]) should return 3\nfoo([-2, 2]) should return 0\nfoo([5, 13, -4]) should return 14\nfoo([9, 10, 21]) should return 40\n",
+              "startTime": "2024-07-04T12:00:00.100Z",
+              "endTime": "2024-07-06T18:10:49.560Z",
+              "duration": 195049.46,
+              "testsCorrect": 1,
+              "testsTotal": 6
+            }
+          ]
+        },
+        {
+          "questionId": 3,
+          "attempts": []
+        }
+      ]
+    }
+  ]
+}
