@@ -123,6 +123,41 @@ app.delete("/users/:username", (req, res) => {
     }
 });
 
+// View Previous Attempt for a Specific Question
+app.get('/users/:username/questions/:id/:attemptID', (req, res) => {
+    const username = req.params.username;
+    const password = req.body.password;
+    const questionId = req.params.id;
+    const attemptId = req.params.attemptID;
+
+    if (!username || !questionId || !password || !attemptId)
+        return res.status(400).json({error:"element missing."});
+
+    const user = users.find(c => c.username === username);
+    if (!user) return res.status(404).send('User is not found.');
+    if (user.password !== password) return res.status(401).send('Unauthorized to access this data');
+
+    const question = user.questions.find(c => c.questionId === parseInt(questionId));
+    if (!question) return res.status(404).send('Question is not found.');
+
+    const attempts = question.attempts;
+
+    let foundAttempt;
+    let index = 1;
+
+    for (let attempt of attempts) {
+        if (index === parseInt(attemptId)) {
+            foundAttempt = attempt;
+            break;
+        }
+        index++;
+    }
+
+    if (!foundAttempt) return res.status(404).send('Attempt is not found.');
+
+    res.status(200).send(foundAttempt);
+});
+
 
 
 // Opening the server to listen on port 3001
