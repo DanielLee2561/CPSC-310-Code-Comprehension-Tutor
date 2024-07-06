@@ -4,6 +4,7 @@ import Login from './pages/login'
 import Home from './pages/home'
 import Questions from './pages/questions'
 import AttemptPage from './pages/AttemptPage'
+import Profile from './pages/profile'
 import './App.css'
 import { useEffect, useState } from 'react'
 
@@ -13,6 +14,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
+          <Route path="/profile" element={<Profile />} />
           <Route path="/attempt" element={<AttemptPage />} />
           <Route path="/questions" element={<Questions />} />
           <Route path="/register" element={<Register />} />
