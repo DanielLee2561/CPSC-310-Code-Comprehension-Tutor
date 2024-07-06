@@ -155,7 +155,7 @@ app.get('/users/:username/questions/:id/:attemptID', (req, res) => {
 
     if (!foundAttempt) return res.status(404).send('Attempt is not found.');
 
-    res.status(200).send(foundAttempt);
+    res.status(200).json(foundAttempt);
 });
 
 
