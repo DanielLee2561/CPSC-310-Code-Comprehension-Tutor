@@ -17,7 +17,7 @@ fs.readFile(questionsJsonPath, 'utf8', (err, data) => {
     }
     try {
         questions = JSON.parse(data).questions;
-        console.log(questions);
+        // console.log(questions);
     } catch (err) {
         console.error('Error parsing user.json:', err);
     }

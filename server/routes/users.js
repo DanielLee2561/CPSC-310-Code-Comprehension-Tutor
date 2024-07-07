@@ -6,39 +6,46 @@ import session from 'express-session';
 import jwt from "jsonwebtoken";
 
 // Load users from JSON file
-const usersJsonPath = path.join(process.cwd(), 'data', 'user.json');
+// const usersJsonPath = path.join(process.cwd(), 'data', 'user.json');
+
+// TODO: Use these functions?
+import {readJsonFile, writeJsonFile} from "../functions/fileSystemFunctions.js";
+const usersJsonPath = './data/users.json';
+const users_json = readJsonFile(usersJsonPath);
+// const users = users_json.users;
+let users = users_json;
 
 
-let users;
-//read user json data
-fs.readFile(usersJsonPath, 'utf8', (err, data) => {
-    if (err) {
-        console.error('Error reading user.json:', err);
-        return;
-    }
-    try {
-         users = JSON.parse(data).users;
-        
-        console.log(users);
-    } catch (err) {
-        console.error('Error parsing user.json:', err);
-    }
-});
-
-// if the data from the url, can use fetch to get the data from the frontend
-// fetch('../data/user.json')
-//         .then((response)=>response.json())
-//         .then((json)=>console.log(json));
-// console.log(users);
-
-// write to the user json data
-const writeJsonFile = (filePath, data) => {
-    try {
-        fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
-    } catch (err) {
-        console.error('Error writing JSON file:', err);
-    }
-}
+// let users;
+// //read user json data
+// fs.readFile(usersJsonPath, 'utf8', (err, data) => {
+//     if (err) {
+//         console.error('Error reading user.json:', err);
+//         return;
+//     }
+//     try {
+//          users = JSON.parse(data).users;
+//
+//         console.log(users);
+//     } catch (err) {
+//         console.error('Error parsing user.json:', err);
+//     }
+// });
+//
+// // if the data from the url, can use fetch to get the data from the frontend
+// // fetch('../data/user.json')
+// //         .then((response)=>response.json())
+// //         .then((json)=>console.log(json));
+// // console.log(users);
+//
+// // write to the user json data
+// const writeJsonFile = (filePath, data) => {
+//     try {
+//         fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
+//     } catch (err) {
+//         console.error('Error writing JSON file:', err);
+//     }
+// }
 
 router.get('/', (req, res) => {
     // console.log(users);
@@ -94,8 +101,8 @@ router.post('/login', (req, res) => {
                     fs.writeFileSync(usersJsonPath, JSON.stringify(users, null, 2));
                     res.cookie('token', token, {
                         httpOnly: true,
-                        secure: true, 
-                        maxAge: 3600000 
+                        secure: true,
+                        maxAge: 3600000
                     });
                     return res.status(204).json({ message: "Login successful." });
                 } else {
@@ -167,6 +174,32 @@ router.put('/:username',(req,res)=>{
     }
 });
 
+// TODO: Stub for getting specific attempt data.
+router.get("/Student_A/questions/2/attempts/1", (req, res) => {
+    res.status(200).json(users[0].questions[1].attempts[0])
+});
+
+// View Questions (list of all questions that user started & attempted, along with all of their attempts)
+router.get("/:username/questions", (req, res) => {
+    const username = req.params.username;
+    const password = req.body.password;
+    
+    for (let user of users) {
+        if (user.username === username) {
+            if (user.password !== password) {
+                res.status(401).json({error: "Incorrect password"});
+                return;
+            } else if (!user.statusLogin) {
+                res.status(401).json({error: "User is not currently logged in"});
+                return;
+            } else {
+                res.json({questions: user.questions});
+                return;
+            }
+        }
+    }
+    res.status(404).json({error: "Could not find user"});
+});
 
 
 export default router;

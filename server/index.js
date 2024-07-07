@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import usersRoutes from './routes/users.js';
 import questionsRoutes from './routes/questions.js';
 import ollamaRoutes from './routes/ollama.js';
+import attemptPersistenceRoutes from './routes/attemptPersistence.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import path from 'path'
@@ -19,10 +20,12 @@ const PORT=5000;
 // })
 app.use(cors({origin:"http://localhost:3000",credentials:true}));
 app.use(cookieParser());
-app.use(bodyParser.json()); 
+app.use(bodyParser.json());
 app.use('/users', usersRoutes);
 app.use('/questions', questionsRoutes);
 app.use('/questions/ollama', ollamaRoutes);
+
+app.use('/users', attemptPersistenceRoutes);
 
 
 let root = path.join(__dirname, 'build');

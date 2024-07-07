@@ -5,15 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3a82154-884c-4d77-8bb0-3737042c288a" name="Changes" comment="api for users, questions and ollama">
-      <change afterPath="$PROJECT_DIR$/server/data/questions.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/data/users.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/node_modules/mime/.npmignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/functions/dataPersistence.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/AttemptPage.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/AttemptPage.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/AttemptPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/AttemptPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/data/user.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/data/user.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/data/users.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/data/users.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routes/questions.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/questions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routes/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/users.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -52,7 +68,7 @@
   "keyToString": {
     "Node.js.index.js.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "#25 on Merging api",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/chuyi/IdeaProjects/Project-Groups-06-Lab-A/server",
     "node.js.detected.package.eslint": "true",
@@ -67,11 +83,15 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\matij\WebstormProjects\Project-Groups-06-Lab-A-mergingtime\server\functions" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
-        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-WS-241.18034.50" />
       </set>
     </attachedChunks>
   </component>
@@ -86,6 +106,7 @@
       <workItem from="1719429896923" duration="5596000" />
       <workItem from="1719461346865" duration="4488000" />
       <workItem from="1719805947422" duration="6229000" />
+      <workItem from="1720321166688" duration="10677000" />
     </task>
     <task id="LOCAL-00001" summary="api for users, questions and ollama">
       <option name="closed" value="true" />
