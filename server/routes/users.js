@@ -8,11 +8,12 @@ import jwt from "jsonwebtoken";
 // Load users from JSON file
 // const usersJsonPath = path.join(process.cwd(), 'data', 'user.json');
 
+// TODO: Use these functions?
 import {readJsonFile, writeJsonFile} from "../functions/fileSystemFunctions.js";
 const usersJsonPath = './data/users.json';
 const users_json = readJsonFile(usersJsonPath);
 // const users = users_json.users;
-const users = users_json;
+let users = users_json;
 
 
 // let users;
@@ -192,7 +193,7 @@ router.get("/:username/questions", (req, res) => {
                 res.status(401).json({error: "User is not currently logged in"});
                 return;
             } else {
-                res.json(user.questions);
+                res.json({questions: user.questions});
                 return;
             }
         }

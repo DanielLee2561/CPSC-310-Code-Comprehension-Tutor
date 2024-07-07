@@ -35,12 +35,17 @@ function AttemptPage(props) {
     // You may need to concatenate /attempts/:attempt_number (attemptNum) at the end.
     // Attempt number can change (due to retry/redo) so it cannot be statically included.
     const endpoint = "/users/" + props.username + "/questions/" + props.question_id;
+    // For refreshing the page, use reloadPage()
+    const navigate = useNavigate();
+    const reloadPage = () => {
+        navigate(0);
+    };
 
     // Set up all the variables based on saved attempt data
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // TODO: BUG here. 500 internal server error. I dont know how to fix
+                // TODO: BUG here. 500 internal server error.
                 const response = await fetch(endpoint + "/attempts/" + attemptNum, {
                     headers: {
                         "Accept": "application/json",
@@ -49,6 +54,9 @@ function AttemptPage(props) {
                 });
                 if (!response.ok) {
                     console.log(response);
+                    // TODO: Fix here. Refresh the page if the response is not ok.
+                    //  very hacky and could potentially lead to an infinite loop.
+                    reloadPage();
                 }
                 const result = await response.json();
 
@@ -65,17 +73,13 @@ function AttemptPage(props) {
                 setFunctionText("Thing");
             } catch (err) {
                 // For debugging
+                console.log(err.message);
                 setFunctionText(err.message);
             }
         }
         fetchData();
-    });
+    }, [endpoint, attemptNum, reloadPage]);
 
-    // For refreshing the page, use reloadPage()
-    const navigate = useNavigate();
-    const reloadPage = () => {
-        navigate(0);
-    };
 
     const handleDescription = (event) => {
         setDescription(event.target.value);

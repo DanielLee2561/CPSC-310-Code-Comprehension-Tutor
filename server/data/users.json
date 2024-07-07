@@ -47,16 +47,16 @@
         "questionId": 2,
         "attempts": [
           {
-            "description": "It returns 0",
-            "notes": "insidious bug (pls work)",
-            "inProgress": true,
+            "description": "It returns 1",
+            "notes": "Just testing partial success... I know what the function does...",
+            "inProgress": false,
             "startTime": "2024-07-01T07:00:00.000Z",
-            "endTime": "2024-07-07T07:37:56.416Z",
-            "generatedCode": "function foo(x) {\n return 0;\n}",
-            "failingTestCases": "foo([1]) should return 1\nfoo([1, 2]) should return 3\nfoo([5, 13, -4]) should return 14\nfoo([9, 10, 21]) should return 40\n",
-            "testCorrect": 2,
+            "endTime": "2024-07-07T19:49:07.178Z",
+            "generatedCode": "\nfunction foo(x) {\n  return 1;\n}\n",
+            "failingTestCases": "foo([]) should return 0\nfoo([1, 2]) should return 3\nfoo([-2, 2]) should return 0\nfoo([5, 13, -4]) should return 14\nfoo([9, 10, 21]) should return 40\n",
+            "testCorrect": 1,
             "testTotal": 6,
-            "duration": 520676.416
+            "duration": 564547.178
           }
         ]
       },
