@@ -26,8 +26,8 @@ COPY server/routes/questions.js ./
 COPY server/routes/users.js ./
 
 WORKDIR /usr/app/server/data/
-COPY server/data/users.json ./
-COPY server/data/questions.json ./
+COPY server/data/user.json ./
+COPY server/data/question.json ./
 
 WORKDIR /usr/app/server/
 
