@@ -3,6 +3,7 @@
 // REFERENCE: https://stackoverflow.com/questions/69714423/how-do-you-pass-data-when-using-the-navigate-function-in-react-router-v6
 
 import React, { useState } from 'react';
+import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import './authentication.css'
 
@@ -31,21 +32,33 @@ const Login = (props) => {
 
     // API call here 
     let valid = false;
-    let userInput = {
-      username:username,
-      password:password
-    };
-    await fetch("/login", {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(userInput),
-      method: "PUT"
-      }
-    ).then(res => res.json()).then(data => {
-      valid = data.login;
-      console.log(valid); // For testing can be removed
-    })
+    // let userInput = {
+    //   username:username,
+    //   password:password
+    // };
+    // await fetch("/login", {
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify(userInput),
+    //   method: "PUT"
+    //   }
+    // ).then(res => res.json()).then(data => {
+    //   valid = data.login;
+    //   console.log(valid); // For testing can be removed
+    // })
+
+    try {
+      const res = await axios.post("http://localhost:5000/users/login", {
+        username,
+        password
+      });
+      
+      console.log(res);
+      valid = res.status === 204 ? true : false;
+    } catch (err) {
+      setError(err.response.data.message);
+    } 
     if (valid) {
       navigate("/home", {
         state: {

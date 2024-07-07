@@ -18,7 +18,12 @@ WORKDIR /usr/app/server/
 COPY server/package*.json ./
 RUN npm install
 
-COPY server/server.js ./
+COPY server/index.js ./
+
+WORKDIR /usr/app/server/routes/
+COPY server/routes/ollama.js ./
+COPY server/routes/questions.js ./
+COPY server/routes/users.js ./
 
 WORKDIR /usr/app/server/data/
 COPY server/data/users.json ./
@@ -31,4 +36,4 @@ ENV NODE_ENV=production
 
 EXPOSE 5000
 
-CMD [ "node", "server.js"]
+CMD [ "node", "index.js"]

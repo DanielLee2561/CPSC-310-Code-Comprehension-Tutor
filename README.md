@@ -12,8 +12,9 @@
 ## Setup Instruction
 
 1) Install "Docker Desktop"
-2) Create "Docker Image"      In terminal at top-level, execute "docker build -t [title] ."
-3) Create "Docker Container"  In terminal at top-level, execute "docker container run -p 5000:5000 --rm [title]"
+2) Open "Docker Desktop"
+3) Create "Docker Image"      In terminal at top-level, execute "docker build -t [title] ."
+4) Create "Docker Container"  In terminal at top-level, execute "docker container run -p 5000:5000 --rm [title]"
 6) Open "Project"             In web browser, open "localhost:5000/"
 
 Replace "[title]" with a name of your choice for the Docker Image.

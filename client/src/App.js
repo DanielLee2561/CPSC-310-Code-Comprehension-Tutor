@@ -15,7 +15,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/profile" element={<Profile />} />
-          <Route path="/attempt" element={<AttemptPage />} />
+          <Route path="/attempt" element={
+            <AttemptPage question_id={2} attempt_num={1} username={"Student_A"} password={"pStudent_A"}/>}
+          />
           <Route path="/questions" element={<Questions />} />
           <Route path="/register" element={<Register />} />
           <Route path="/home" element={<Home />} />
