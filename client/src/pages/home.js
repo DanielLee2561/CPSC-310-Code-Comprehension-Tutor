@@ -11,7 +11,7 @@ const Home = (props) => {
   const test = useLocation().state;
   useEffect(() => {
     if (test === null) {
-        // navigate("/")
+        navigate("/")
     } else {
       console.log(test.username);
       console.log(test.password);
