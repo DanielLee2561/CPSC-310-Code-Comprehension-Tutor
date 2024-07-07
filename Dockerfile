@@ -24,10 +24,17 @@ WORKDIR /usr/app/server/routes/
 COPY server/routes/ollama.js ./
 COPY server/routes/questions.js ./
 COPY server/routes/users.js ./
+COPY server/routes/attemptPersistence.js ./
 
 WORKDIR /usr/app/server/data/
 COPY server/data/users.json ./
 COPY server/data/questions.json ./
+
+WORKDIR /usr/app/server/functions/
+COPY server/functions/dataPersistence.js ./
+COPY server/functions/evaluateCode.js ./
+COPY server/functions/fileSystemFunctions.js ./
+COPY server/functions/generateCode.js ./
 
 WORKDIR /usr/app/server/
 
