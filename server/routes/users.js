@@ -175,8 +175,44 @@ router.put('/:username',(req,res)=>{
 });
 
 // TODO: Stub for getting specific attempt data.
+/*
 router.get("/Student_A/questions/2/attempts/1", (req, res) => {
     res.status(200).json(users[0].questions[1].attempts[0])
+});
+ */
+// Getting specific attempt data in a question
+router.get("/:username/questions/:questionID/attempts/:attemptID", (req, res) => {
+    const username = req.params.username;
+    const password = req.body.password;
+    const questionId = req.params.questionID;
+    const attemptId = req.params.attemptID;
+
+    if (!username || !password || !questionId || !attemptId)
+        return res.status(400).json({error:"element missing."});
+
+    const user = users.find(c => c.username === username);
+    if (!user) return res.status(404).send('User is not found.');
+    if (user.password !== password) return res.status(401).send('Unauthorized to access this data');
+
+    const question = user.questions.find(c => c.questionId === parseInt(questionId));
+    if (!question) return res.status(404).send('Question is not found.');
+
+    const attempts = question.attempts;
+
+    let foundAttempt;
+    let index = 1;
+
+    for (let attempt of attempts) {
+        if (index === parseInt(attemptId)) {
+            foundAttempt = attempt;
+            break;
+        }
+        index++;
+    }
+
+    if (!foundAttempt) return res.status(404).send('Attempt is not found.');
+
+    res.status(200).json(foundAttempt);
 });
 
 // View Questions (list of all questions that user started & attempted, along with all of their attempts)
