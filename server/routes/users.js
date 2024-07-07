@@ -62,6 +62,7 @@ router.post('/register',(req,res)=>{
     let newUser = {};
     newUser = req.body; // both username and password
     newUser.type = "Student";
+    newUser.statusLogin = false;
     users.push({...newUser});
     writeJsonFile(usersJsonPath, { users });
     res.send("just post");
@@ -89,12 +90,14 @@ router.post('/login', (req, res) => {
                     expiresIn:100*60*60*24*7
                 })
                 if (user.password === password) {
+                    user.statusLogin = true;
+                    fs.writeFileSync(usersJsonPath, JSON.stringify(users, null, 2));
                     res.cookie('token', token, {
                         httpOnly: true,
                         secure: true, 
                         maxAge: 3600000 
                     });
-                    return res.status(200).json({ message: "Login successful." });
+                    return res.status(204).json({ message: "Login successful." });
                 } else {
                     return res.status(401).json({ error: "Password is incorrect." });
                 }
