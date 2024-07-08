@@ -5,7 +5,7 @@ import path from 'path';
 import session from 'express-session';
 
 // Load questions from JSON file
-const questionsJsonPath = path.join(process.cwd(), 'data', 'question.json');
+const questionsJsonPath = path.join(process.cwd(), 'data', 'questions.json');
 
 
 let questions;
