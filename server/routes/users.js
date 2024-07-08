@@ -12,8 +12,11 @@ import jwt from "jsonwebtoken";
 import {readJsonFile, writeJsonFile} from "../functions/fileSystemFunctions.js";
 const usersJsonPath = './data/users.json';
 const users_json = readJsonFile(usersJsonPath);
+const questionsJsonPath = './data/questions.json';
 // const users = users_json.users;
-let users = users_json;
+let users = users_json.users;
+const questions_json = readJsonFile(questionsJsonPath);
+let questions = questions_json.questions;
 
 
 // let users;
@@ -54,13 +57,13 @@ router.get('/', (req, res) => {
 
 //register a user
 router.post('/register',(req,res)=>{
-    const usersList = users.users
+    // const usersList = users.users
     const{username,password}=req.body;
     if (!username || !password){
         return res.status(400).json({error:"username and password are required."});
     }
 
-    for (let user of usersList){
+    for (let user of users){
         if (user.username===username){
            res.status(409).json({error:"the username already exists"});
            return;
@@ -71,15 +74,15 @@ router.post('/register',(req,res)=>{
     newUser = req.body; // both username and password
     newUser.type = "Student";
     newUser.statusLogin = false;
-    usersList.push({...newUser});
-    writeJsonFile(usersJsonPath, { "users": usersList });
+    users.push({...newUser});
+    writeJsonFile(usersJsonPath, { "users": users });
     res.send("just post");
 });
 
 
 //login 
 router.put('/login', (req, res) => {
-    const usersList = users.users
+    // const usersList = users.users
     try {
         const { username, password } = req.body;
 
@@ -89,7 +92,7 @@ router.put('/login', (req, res) => {
 
         let foundUser = false;
 
-        for (let user of usersList) {
+        for (let user of users) {
             if (user.username === username) {
                 foundUser = true;
 
@@ -100,7 +103,7 @@ router.put('/login', (req, res) => {
                 })
                 if (user.password === password) {
                     user.statusLogin = true;
-                    fs.writeFileSync(usersJsonPath, JSON.stringify({"users": usersList}, null, 2));
+                    fs.writeFileSync(usersJsonPath, JSON.stringify({"users": users}, null, 2));
                     res.cookie('token', token, {
                         httpOnly: true,
                         secure: true,
@@ -124,16 +127,16 @@ router.put('/login', (req, res) => {
 
 //logout account-----need to test later with frontend 
 router.put('/logout', (req, res) => {
-    const usersList = users.users
+    // const usersList = users.users
     const{username}=req.body;
 
     console.log("LOGGED OUT")
     // res.clearCookie("token").status(200).json({message:"Logout successful"})
 
-    for (let user of usersList){
+    for (let user of users){
         if (user.username===username){
             user.statusLogin = false;
-            fs.writeFileSync(usersJsonPath, JSON.stringify({"users": usersList}, null, 2));
+            fs.writeFileSync(usersJsonPath, JSON.stringify({"users": users}, null, 2));
             res.clearCookie("token").status(204).json({message:"Logout successful"});
             return;
         }
