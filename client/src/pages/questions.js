@@ -15,16 +15,12 @@ const Question = (question) => {
 
   // Start Button
   const ButtonStart = () => {
-    return (
-      <button onClick={onClickStart}>Start</button>
-    );
+    return <button onClick={onClickStart}>Start</button>;
   }
 
   // View Button
   const ButtonView = () => {
-    return (
-      <button onClick={onClickView}>View</button>
-    );
+    return <button onClick={onClickView}>View</button>;
   }
 
   // Expand Button
