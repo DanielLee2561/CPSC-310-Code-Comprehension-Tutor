@@ -54,12 +54,13 @@ router.get('/', (req, res) => {
 
 //register a user
 router.post('/register',(req,res)=>{
+    const usersList = users.users
     const{username,password}=req.body;
     if (!username || !password){
         return res.status(400).json({error:"username and password are required."});
     }
 
-    for (let user of users){
+    for (let user of usersList){
         if (user.username===username){
            res.status(409).json({error:"the username already exists"});
            return;
@@ -70,14 +71,15 @@ router.post('/register',(req,res)=>{
     newUser = req.body; // both username and password
     newUser.type = "Student";
     newUser.statusLogin = false;
-    users.push({...newUser});
-    writeJsonFile(usersJsonPath, { users });
+    usersList.push({...newUser});
+    writeJsonFile(usersJsonPath, { usersList });
     res.send("just post");
 });
 
 
 //login 
 router.post('/login', (req, res) => {
+    const usersList = users.users
     try {
         const { username, password } = req.body;
 
@@ -87,7 +89,7 @@ router.post('/login', (req, res) => {
 
         let foundUser = false;
 
-        for (let user of users) {
+        for (let user of usersList) {
             if (user.username === username) {
                 foundUser = true;
 
@@ -98,7 +100,7 @@ router.post('/login', (req, res) => {
                 })
                 if (user.password === password) {
                     user.statusLogin = true;
-                    fs.writeFileSync(usersJsonPath, JSON.stringify(users, null, 2));
+                    fs.writeFileSync(usersJsonPath, JSON.stringify(usersList, null, 2));
                     res.cookie('token', token, {
                         httpOnly: true,
                         secure: true,
@@ -122,7 +124,8 @@ router.post('/login', (req, res) => {
 
 //logout account-----need to test later with frontend 
 router.post('/logout', (req, res) => {
-  res.clearCookie("token").status(200).json({message:"Logout successful"})
+    const usersList = users.users
+    res.clearCookie("token").status(200).json({message:"Logout successful"})
 });
 
 
