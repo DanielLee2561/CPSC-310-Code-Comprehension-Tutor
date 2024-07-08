@@ -7,7 +7,7 @@ import {readJsonFile} from "../functions/fileSystemFunctions.js";
 const usersJsonPath = './data/users.json';
 // using let instead of const so that it can be reloaded after changes
 let users_json = readJsonFile(usersJsonPath);
-let users = users_json;
+let users = users_json.users;
 
 // Save & Submit Functions
 import {save, submit} from "../functions/dataPersistence.js";
@@ -66,8 +66,8 @@ router.put("/:username/questions/:id", async (req, res) => {
                     error = await submit(username, question_id, description, notes);
                 }
                 users_json = readJsonFile(usersJsonPath); // JSON was updated due to submit (must reload it)
-                // users = users_json.users;
-                users = users_json;
+                users = users_json.users;
+                // users = users_json;
                 if (error === "") {
                     res.status(400).json({error: error});
                 } else {

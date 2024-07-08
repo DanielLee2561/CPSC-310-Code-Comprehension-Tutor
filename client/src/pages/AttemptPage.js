@@ -47,10 +47,11 @@ function AttemptPage(props) {
             try {
                 // TODO: BUG here. 500 internal server error.
                 const response = await fetch(endpoint + "/attempts/" + attemptNum, {
+                    method: 'PUT',
                     headers: {
-                        "Accept": "application/json",
-                        "Content-Type": "application/json"
-                    }
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({password: props.password})
                 });
                 if (!response.ok) {
                     console.log(response);
@@ -68,17 +69,15 @@ function AttemptPage(props) {
                 setTestsCorrect(result.testCorrect);
                 setTestsTotal(result.testTotal);
                 setDuration(result.duration);
-
-                // TODO: Get question's function from the get attempt stuff.
-                setFunctionText("Thing");
+                setFunctionText(result.question);
             } catch (err) {
                 // For debugging
                 console.log(err.message);
-                setFunctionText(err.message);
+                // setFunctionText(err.message);
             }
         }
         fetchData();
-    }, [endpoint, attemptNum, reloadPage]);
+    }, [endpoint, attemptNum, props.password]);
 
 
     const handleDescription = (event) => {
@@ -89,7 +88,7 @@ function AttemptPage(props) {
         setNotes(event.target.value);
     }
 
-    const submit = async () => {
+    const handleSubmit = async () => {
         setSubmitEnabled(false);
         const input = {
             password: props.password,
@@ -97,6 +96,7 @@ function AttemptPage(props) {
             notes: notes,
             inProgress: false
         }
+
         try {
             const response = await fetch(endpoint, {
                 method: "PUT", headers: {
@@ -114,16 +114,15 @@ function AttemptPage(props) {
         } finally {
             setSubmitEnabled(true);
         }
-    }
-
-    const handleSubmit = () => {
-        submit();
     };
 
-    const save = async () => {
+    const handleSave = async () => {
         setSaveEnabled(false);
         const input = {
-            password: props.password, description: description, notes: notes, inProgress: true
+            password: props.password,
+            description: description,
+            notes: notes,
+            inProgress: true
         }
         try {
             const response = await fetch(endpoint, {
@@ -142,10 +141,6 @@ function AttemptPage(props) {
         } finally {
             setSaveEnabled(true);
         }
-    }
-
-    const handleSave = () => {
-        save();
     }
 
     const retry = () => {

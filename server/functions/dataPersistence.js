@@ -3,7 +3,7 @@ import {readJsonFile, writeJsonFile} from "./fileSystemFunctions.js";
 const usersJsonPath = "./data/users.json";
 const questionsJsonPath = "./data/questions.json";
 const users_json = readJsonFile(usersJsonPath);
-const users = users_json;
+const users = users_json.users;
 const question_json = readJsonFile(questionsJsonPath);
 const questions = question_json.questions;
 
@@ -13,7 +13,7 @@ import {evaluateCode} from "./evaluateCode.js";
 
 // Helpers
 
-// TODO: Unit test this in-depth
+// TODO: Unit test this in-depth?
 // Returns the number of parameters that the given foo function has.
 // May or may not actually be needed (depending if we want the LLM to know explicitly the name and number
 // of parameters it must generated, which could reduce the number of errors when testing)
@@ -60,7 +60,7 @@ async function submit(username, question_id, desc, notes) {
                         // evaluatedAttempt contains num passing tests, num all tests, failing test cases
 
                         if (evaluatedAttempt) {
-                            attempt.inProgress = false; // TODO: uncomment (this just for testing purposes)
+                            attempt.inProgress = false;
                             attempt.description = desc;
                             attempt.notes = notes;
                             attempt.endTime = endTime;
