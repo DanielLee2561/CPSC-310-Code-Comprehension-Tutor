@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Register from './pages/register'
 import Login from './pages/login'
 import Home from './pages/home'
+import QuestionsPage from './pages/questions'
 import './App.css'
 import { useEffect, useState } from 'react'
 
@@ -13,8 +14,10 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
+          <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/questions" element={<QuestionsPage />} />
           <Route path="/" element={<Login />} />
         </Routes>
       </BrowserRouter>
