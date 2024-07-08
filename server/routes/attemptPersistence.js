@@ -81,4 +81,90 @@ router.put("/:username/questions/:id", async (req, res) => {
 
 });
 
+
+
+// start attempt call here (Kate)
+router.post("/:username/questions/:id", async (req, res) => {
+    const { username, id: question_id } = req.params;
+    const { password } = req.body;
+
+    // Validate request body fields
+    if (!password ) {
+        res.status(400).json({ error: "Invalid or missing fields in request body" });
+        return;
+    }
+
+    // Create new attempt object
+    const newAttempt = {
+            "description": "",
+            "notes": "",
+            "inProgress": true,
+            "startTime": null,
+            "endTime": null,
+            "duration": 0,
+            "generatedCode": "",
+            "failingTestCases": "",
+            "testCorrect": 0,
+            "testTotal": 0  
+    };
+
+    try {
+        const userIndex = users.findIndex(u => u.username === username);
+        if (userIndex !== -1) {
+            const questionIndex = users[userIndex].questions.findIndex(q => q.questionId === parseInt(question_id));
+            if (questionIndex !== -1) {
+                users[userIndex].questions[questionIndex].attempts.push(newAttempt);
+                writeJsonFile(usersJsonPath, { usersList: users });
+                res.status(204).json('New attempt added successfully.'); 
+            } else {
+                res.status(404).json({ error: `Question with questionId ${question_id} not found` });
+            }
+        } else {
+            res.status(404).json({ error: `User with username "${username}" not found` });
+        }
+    } catch (err) {
+        console.error('Error adding new attempt:', err);
+        res.status(500).json({ error: "An error occurred while processing your request" });
+    }
+});
+
+
+// View Previous Attempt for a Specific Question (Mark)
+router.get('/:username/questions/:id/:attemptID', (req, res) => {
+    const username = req.params.username;
+    const password = req.body.password;
+    const questionId = req.params.id;
+    const attemptId = req.params.attemptID;
+
+    if (!username || !questionId || !password || !attemptId)
+        return res.status(400).json({error:"element missing."});
+
+    const user = users.find(c => c.username === username);
+    if (!user) return res.status(404).send('User is not found.');
+    if (user.password !== password) return res.status(401).send('Unauthorized to access this data');
+
+    const question = user.questions.find(c => c.questionId === parseInt(questionId));
+    if (!question) return res.status(404).send('Question is not found.');
+
+    const attempts = question.attempts;
+
+    let foundAttempt;
+    let index = 1;
+
+    for (let attempt of attempts) {
+        if (index === parseInt(attemptId)) {
+            foundAttempt = attempt;
+            break;
+        }
+        index++;
+    }
+
+    if (!foundAttempt) return res.status(404).send('Attempt is not found.');
+
+    res.status(200).json(foundAttempt);
+});
+
+
+
+
 export default router;
