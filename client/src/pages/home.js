@@ -6,33 +6,31 @@ import './home.css'
 const Home = (props) => {
   const { loggedIn, email } = props
   const navigate = useNavigate()
-  // navigate("/login")
+  const userInfo = useLocation().state;
 
-  const test = useLocation().state;
   useEffect(() => {
-    if (test === null) {
-        navigate("/")
-    } else {
-      console.log(test.username);
-      console.log(test.password);
-      console.log(test.loggedIn);
-    }
+    if (userInfo === null) {
+      navigate("/")
+    } 
   })
 
   // console.log(useLocation().state.username);
   // console.log(useLocation().state.password);
   // console.log(useLocation().state.loggedIn);
 
+  const test = useLocation();
   const onHomeButtonClicked = () => {
-    navigate("/home");
+    console.log(userInfo);
+    navigate("/home", {state: userInfo});
   }
 
   const onProfileButtonClicked = () => {
-    navigate("/profile");
+    console.log(userInfo);
+    navigate("/profile", {state: userInfo});
   }
 
   const onQuestionsButtonClicked = () => {
-    navigate("/questions");
+    navigate("/questions", {state: userInfo});
   }
 
   return (

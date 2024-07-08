@@ -35,6 +35,12 @@ form > *{
     margin-left: 10px;
 }
 
+.consentText {
+    text-align: justify;
+    font-size: 13px;
+    width: 200px;
+}
+
 #password {
     margin-left: 130px;
 }

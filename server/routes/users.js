@@ -72,13 +72,13 @@ router.post('/register',(req,res)=>{
     newUser.type = "Student";
     newUser.statusLogin = false;
     usersList.push({...newUser});
-    writeJsonFile(usersJsonPath, { usersList });
+    writeJsonFile(usersJsonPath, { "users": usersList });
     res.send("just post");
 });
 
 
 //login 
-router.post('/login', (req, res) => {
+router.put('/login', (req, res) => {
     const usersList = users.users
     try {
         const { username, password } = req.body;
@@ -100,7 +100,7 @@ router.post('/login', (req, res) => {
                 })
                 if (user.password === password) {
                     user.statusLogin = true;
-                    fs.writeFileSync(usersJsonPath, JSON.stringify(usersList, null, 2));
+                    fs.writeFileSync(usersJsonPath, JSON.stringify({"users": usersList}, null, 2));
                     res.cookie('token', token, {
                         httpOnly: true,
                         secure: true,
@@ -123,9 +123,22 @@ router.post('/login', (req, res) => {
 });
 
 //logout account-----need to test later with frontend 
-router.post('/logout', (req, res) => {
+router.put('/logout', (req, res) => {
     const usersList = users.users
-    res.clearCookie("token").status(200).json({message:"Logout successful"})
+    const{username}=req.body;
+
+    console.log("LOGGED OUT")
+    // res.clearCookie("token").status(200).json({message:"Logout successful"})
+
+    for (let user of usersList){
+        if (user.username===username){
+            user.statusLogin = false;
+            fs.writeFileSync(usersJsonPath, JSON.stringify({"users": usersList}, null, 2));
+            res.clearCookie("token").status(204).json({message:"Logout successful"});
+            return;
+        }
+    }
+    return res.status(500).json({ error: "Internal server error." });
 });
 
 

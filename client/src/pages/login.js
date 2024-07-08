@@ -4,7 +4,7 @@
 
 import React, { useState } from 'react';
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './authentication.css'
 
 const Login = (props) => {
@@ -14,6 +14,8 @@ const Login = (props) => {
   const [error, setError] = useState('');
 
   const navigate = useNavigate();
+
+  console.log(useLocation().state);
 
   const onRegisterClick = () => {
     navigate("/register");
@@ -49,7 +51,7 @@ const Login = (props) => {
     // })
 
     try {
-      const res = await axios.post("http://localhost:5000/users/login", {
+      const res = await axios.put("http://localhost:5000/users/login", {
         username,
         password
       });
@@ -62,9 +64,7 @@ const Login = (props) => {
     if (valid) {
       navigate("/home", {
         state: {
-          "username": username,
-          "password": password,
-          "loggedIn": true
+          "username": username
         }
       });
       return;
