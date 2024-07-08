@@ -13,7 +13,7 @@
 
 1) Install "Docker Desktop"
 2) Open "Docker Desktop"
-3) In project folder run 'docker compose up' without quotes
+3) In project folder (top level of project) run 'docker compose up' without quotes
 4) Go to http://localhost:5000/
 
 ## Setup Instruction
