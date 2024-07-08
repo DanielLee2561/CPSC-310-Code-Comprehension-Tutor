@@ -1,5 +1,5 @@
 import React, { useEffect,useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,useLocation } from 'react-router-dom'
 import './questions.css'
 import axios from 'axios';
 
@@ -70,6 +70,16 @@ const QuestionItem = ({ question, attempts }) => {
 
 function QuestionPage() {
   const [questions, setQuestions] = useState([]);
+  const navigate = useNavigate();
+  const userInfo = useLocation().state;
+
+  const onHomeButtonClicked = () => {
+    navigate("/home", {state: userInfo});
+  }
+
+  const onProfileButtonClicked = () => {
+    navigate("/profile", {state: userInfo});
+  }
 
 
   useEffect(() => {
@@ -87,7 +97,11 @@ function QuestionPage() {
 
   return (
     <div>
-      <h2>Questions</h2>
+      <div className="header">
+        <button title="Go To Home Page" className='homeButton' onClick={onHomeButtonClicked}><span className='headerSpan'>Homw</span></button>
+        <h1 className='headerTitle'>Questions</h1>
+        <button title="Go To Profile Page" className='profileButton' onClick={onProfileButtonClicked}><span className='headerSpan'>Profile</span></button>
+      </div>
       <ul>
         {questions.map((question) => (
           <QuestionItem

@@ -129,8 +129,6 @@ router.put('/login', (req, res) => {
 router.put('/logout', (req, res) => {
     // const usersList = users.users
     const{username}=req.body;
-
-    console.log("LOGGED OUT")
     // res.clearCookie("token").status(200).json({message:"Logout successful"})
 
     for (let user of users){

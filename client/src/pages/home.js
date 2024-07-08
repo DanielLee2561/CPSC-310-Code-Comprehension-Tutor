@@ -18,14 +18,11 @@ const Home = (props) => {
   // console.log(useLocation().state.password);
   // console.log(useLocation().state.loggedIn);
 
-  const test = useLocation();
   const onHomeButtonClicked = () => {
-    console.log(userInfo);
     navigate("/home", {state: userInfo});
   }
 
   const onProfileButtonClicked = () => {
-    console.log(userInfo);
     navigate("/profile", {state: userInfo});
   }
 

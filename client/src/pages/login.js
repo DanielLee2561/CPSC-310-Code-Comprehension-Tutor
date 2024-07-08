@@ -64,7 +64,8 @@ const Login = (props) => {
     if (valid) {
       navigate("/home", {
         state: {
-          "username": username
+          "username": username,
+          "password": password
         }
       });
       return;
