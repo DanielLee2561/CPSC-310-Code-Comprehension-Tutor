@@ -1,6 +1,6 @@
 import './AttemptPage.css';
 import React, {useState, useEffect} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 
 /*
     Props Required:
@@ -47,7 +47,8 @@ function AttemptPage(props) {
     // IMPORTANT: This is not the full endpoint.
     // You may need to concatenate /attempts/:attempt_number (attemptNum) at the end.
     // Attempt number can change (due to retry/redo) so it cannot be statically included.
-    const endpoint = "/users/" + props.username + "/questions/" + props.question_id;
+    const endpoint = "http://localhost:5000/users/" + props.username + "/questions/" + props.question_id;
+    const userInfo = useLocation().state;
     // For refreshing the page, use reloadPage()
     const navigate = useNavigate();
     const reloadPage = () => {
@@ -77,7 +78,9 @@ function AttemptPage(props) {
                     console.log(response);
                     // TODO: Fix here. Refresh the page if the response is not ok.
                     //  very hacky and could potentially lead to an infinite loop.
-                    reloadPage();
+                    // reloadPage();
+
+                    // no longer needed??
                 }
                 const result = await response.json();
 

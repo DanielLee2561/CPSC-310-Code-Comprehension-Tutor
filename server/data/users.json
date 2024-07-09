@@ -1,416 +1,468 @@
 {
-    "users": [
+  "users": [
+    {
+      "username": "Student_A",
+      "password": "pStudent_A",
+      "type": "Student",
+      "statusLogin": true,
+      "questions": [
         {
-            "username": "Student_A",
-            "password": "pStudent_A",
-            "type": "Student",
-            "statusLogin": false,
-            "questions": [
-                {
-                    "questionId": 1,
-                    "attempts": [
-                        {
-                            "description": "description",
-                            "notes": "note",
-                            "inProgress": false,
-                            "startTime": "2024-07-01T07:00:00.000Z",
-                            "endTime": "2024-07-01T07:10:00.000Z",
-                            "duration": 600,
-                            "generatedCode": "LLM",
-                            "failingTestCases": "testsFailed",
-                            "testCorrect": 1,
-                            "testTotal": 2
-                        },
-                        {
-                            "description": "description",
-                            "notes": "note",
-                            "inProgress": false,
-                            "startTime": "2024-07-01T07:00:00.000Z",
-                            "endTime": "2024-07-01T07:10:00.000Z",
-                            "duration": 600,
-                            "generatedCode": "LLM",
-                            "failingTestCases": "testsFailed",
-                            "testCorrect": 1,
-                            "testTotal": 2
-                        },
-                        {
-                            "description": "description",
-                            "notes": "note",
-                            "inProgress": true,
-                            "startTime": null,
-                            "endTime": null,
-                            "duration": null,
-                            "generatedCode": null,
-                            "failingTestCases": null,
-                            "testCorrect": null,
-                            "testTotal": null
-                        }
-                    ]
-                },
-                {
-                    "questionId": 2,
-                    "attempts": [
-                        {
-                            "description": "description",
-                            "notes": "note",
-                            "inProgress": false,
-                            "startTime": "2024-07-01T07:00:00.000Z",
-                            "endTime": "2024-07-01T07:10:00.000Z",
-                            "duration": 600,
-                            "generatedCode": "LLM",
-                            "failingTestCases": "testsFailed",
-                            "testCorrect": 1,
-                            "testTotal": 2
-                        }
-                    ]
-                },
-                {
-                    "questionId": 3,
-                    "attempts": [
-                        {
-                            "description": "description",
-                            "notes": "note",
-                            "inProgress": true,
-                            "startTime": null,
-                            "endTime": null,
-                            "duration": null,
-                            "generatedCode": null,
-                            "failingTestCases": null,
-                            "testCorrect": null,
-                            "testTotal": null
-                        }
-                    ]
-                },
-                {
-                    "questionId": 4,
-                    "attempts": []
-                },
-                {
-                    "questionId": 5,
-                    "attempts": []
-                },
-                {
-                    "questionId": 6,
-                    "attempts": []
-                },
-                {
-                    "questionId": 7,
-                    "attempts": []
-                },
-                {
-                    "questionId": 8,
-                    "attempts": []
-                }
-            ]
+          "questionId": 1,
+          "attempts": [
+            {
+              "description": "description",
+              "notes": "note",
+              "inProgress": false,
+              "startTime": "2024-07-01T07:00:00.000Z",
+              "endTime": "2024-07-01T07:10:00.000Z",
+              "duration": 600,
+              "generatedCode": "LLM",
+              "failingTestCases": "testsFailed",
+              "testCorrect": 1,
+              "testTotal": 2
+            },
+            {
+              "description": "description",
+              "notes": "note",
+              "inProgress": false,
+              "startTime": "2024-07-01T07:00:00.000Z",
+              "endTime": "2024-07-01T07:10:00.000Z",
+              "duration": 600,
+              "generatedCode": "LLM",
+              "failingTestCases": "testsFailed",
+              "testCorrect": 1,
+              "testTotal": 2
+            },
+            {
+              "description": "description",
+              "notes": "note",
+              "inProgress": true,
+              "startTime": null,
+              "endTime": null,
+              "duration": null,
+              "generatedCode": null,
+              "failingTestCases": null,
+              "testCorrect": null,
+              "testTotal": null
+            }
+          ]
         },
         {
-            "username": "Student_B",
-            "password": "pStudent_B",
-            "type": "Student",
-            "statusLogin": false,
-            "questions": [
-                {
-                    "questionId": 1,
-                    "attempts": [
-                        {
-                            "description": "description",
-                            "notes": "note",
-                            "inProgress": false,
-                            "startTime": "2024-07-01T07:00:00.000Z",
-                            "endTime": "2024-07-01T07:10:00.000Z",
-                            "duration": 600,
-                            "generatedCode": "LLM",
-                            "failingTestCases": "testsFailed",
-                            "testCorrect": 1,
-                            "testTotal": 2
-                        },
-                        {
-                            "description": "description",
-                            "notes": "note",
-                            "inProgress": false,
-                            "startTime": "2024-07-01T07:00:00.000Z",
-                            "endTime": "2024-07-01T07:10:00.000Z",
-                            "duration": 600,
-                            "generatedCode": "LLM",
-                            "failingTestCases": "testsFailed",
-                            "testCorrect": 1,
-                            "testTotal": 2
-                        },
-                        {
-                            "description": "description",
-                            "notes": "note",
-                            "inProgress": true,
-                            "startTime": null,
-                            "endTime": null,
-                            "duration": null,
-                            "generatedCode": null,
-                            "failingTestCases": null,
-                            "testCorrect": null,
-                            "testTotal": null
-                        }
-                    ]
-                },
-                {
-                    "questionId": 2,
-                    "attempts": [
-                        {
-                            "description": "description",
-                            "notes": "note",
-                            "inProgress": false,
-                            "startTime": "2024-07-01T07:00:00.000Z",
-                            "endTime": "2024-07-01T07:10:00.000Z",
-                            "duration": 600,
-                            "generatedCode": "LLM",
-                            "failingTestCases": "testsFailed",
-                            "testCorrect": 1,
-                            "testTotal": 2
-                        }
-                    ]
-                },
-                {
-                    "questionId": 3,
-                    "attempts": [
-                        {
-                            "description": "description",
-                            "notes": "note",
-                            "inProgress": true,
-                            "startTime": null,
-                            "endTime": null,
-                            "duration": null,
-                            "generatedCode": null,
-                            "failingTestCases": null,
-                            "testCorrect": null,
-                            "testTotal": null
-                        }
-                    ]
-                },
-                {
-                    "questionId": 4,
-                    "attempts": []
-                },
-                {
-                    "questionId": 5,
-                    "attempts": []
-                },
-                {
-                    "questionId": 6,
-                    "attempts": []
-                },
-                {
-                    "questionId": 7,
-                    "attempts": []
-                },
-                {
-                    "questionId": 8,
-                    "attempts": []
-                }
-            ]
+          "questionId": 2,
+          "attempts": [
+            {
+              "description": "description",
+              "notes": "note",
+              "inProgress": false,
+              "startTime": "2024-07-01T07:00:00.000Z",
+              "endTime": "2024-07-01T07:10:00.000Z",
+              "duration": 600,
+              "generatedCode": "LLM",
+              "failingTestCases": "testsFailed",
+              "testCorrect": 1,
+              "testTotal": 2,
+              "question": "function foo(n) {\n  var val = 0;\n  for (i = 0; i < n.length; i++) {\n val += n[i];\n  }\n return val;\n}"
+            },
+            {
+              "description": "it returns 0",
+              "notes": "",
+              "inProgress": false,
+              "startTime": "2024-07-09T00:30:58.892Z",
+              "endTime": "2024-07-09T00:31:10.429Z",
+              "duration": 11.537,
+              "generatedCode": "function foo(param) {\n  return 0;\n}\n",
+              "failingTestCases": "foo([1]) should return 1\nfoo([1, 2]) should return 3\nfoo([5, 13, -4]) should return 14\nfoo([9, 10, 21]) should return 40\n",
+              "testCorrect": 2,
+              "testTotal": 6,
+              "question": "function foo(n) {\n  var val = 0;\n  for (i = 0; i < n.length; i++) {\n val += n[i];\n  }\n return val;\n}"
+            },
+            {
+              "description": "it returns the sum of all the numbers in the given array",
+              "notes": "i hope retry works",
+              "inProgress": false,
+              "startTime": "2024-07-09T00:49:16.760Z",
+              "endTime": "2024-07-09T00:50:24.024Z",
+              "duration": 67.264,
+              "generatedCode": "function foo(arr) {\n  return arr.reduce((acc, num) => acc + num, 0);\n}\n",
+              "failingTestCases": "",
+              "testCorrect": 6,
+              "testTotal": 6,
+              "question": "function foo(n) {\n  var val = 0;\n  for (i = 0; i < n.length; i++) {\n val += n[i];\n  }\n return val;\n}"
+            },
+            {
+              "description": "skibidi",
+              "notes": "",
+              "inProgress": false,
+              "startTime": "2024-07-09T00:52:24.035Z",
+              "endTime": "2024-07-09T20:21:45.749Z",
+              "duration": 70161.714,
+              "generatedCode": "function foo(param) {\n  const a = {};\n  a.b = param;\n  return a;\n}\n",
+              "failingTestCases": "foo([]) should return 0\nfoo([1]) should return 1\nfoo([1, 2]) should return 3\nfoo([-2, 2]) should return 0\nfoo([5, 13, -4]) should return 14\nfoo([9, 10, 21]) should return 40\n",
+              "testCorrect": 0,
+              "testTotal": 6,
+              "question": "function foo(n) {\n  var val = 0;\n  for (i = 0; i < n.length; i++) {\n val += n[i];\n  }\n return val;\n}"
+            },
+            {
+              "description": "",
+              "notes": "",
+              "inProgress": true,
+              "startTime": "2024-07-09T20:25:42.134Z",
+              "endTime": null,
+              "duration": null,
+              "generatedCode": null,
+              "failingTestCases": null,
+              "testCorrect": null,
+              "testTotal": null
+            }
+          ]
         },
         {
-            "username": "Student_C",
-            "password": "pStudent_C",
-            "type": "Student",
-            "statusLogin": false,
-            "questions": [
-                {
-                    "questionId": 1,
-                    "attempts": [
-                        {
-                            "description": "description",
-                            "notes": "note",
-                            "inProgress": false,
-                            "startTime": "2024-07-01T07:00:00.000Z",
-                            "endTime": "2024-07-01T07:10:00.000Z",
-                            "duration": 600,
-                            "generatedCode": "LLM",
-                            "failingTestCases": "testsFailed",
-                            "testCorrect": 1,
-                            "testTotal": 2
-                        },
-                        {
-                            "description": "description",
-                            "notes": "note",
-                            "inProgress": false,
-                            "startTime": "2024-07-01T07:00:00.000Z",
-                            "endTime": "2024-07-01T07:10:00.000Z",
-                            "duration": 600,
-                            "generatedCode": "LLM",
-                            "failingTestCases": "testsFailed",
-                            "testCorrect": 1,
-                            "testTotal": 2
-                        },
-                        {
-                            "description": "description",
-                            "notes": "note",
-                            "inProgress": true,
-                            "startTime": null,
-                            "endTime": null,
-                            "duration": null,
-                            "generatedCode": null,
-                            "failingTestCases": null,
-                            "testCorrect": null,
-                            "testTotal": null
-                        }
-                    ]
-                },
-                {
-                    "questionId": 2,
-                    "attempts": [
-                        {
-                            "description": "description",
-                            "notes": "note",
-                            "inProgress": false,
-                            "startTime": "2024-07-01T07:00:00.000Z",
-                            "endTime": "2024-07-01T07:10:00.000Z",
-                            "duration": 600,
-                            "generatedCode": "LLM",
-                            "failingTestCases": "testsFailed",
-                            "testCorrect": 1,
-                            "testTotal": 2
-                        }
-                    ]
-                },
-                {
-                    "questionId": 3,
-                    "attempts": [
-                        {
-                            "description": "description",
-                            "notes": "note",
-                            "inProgress": true,
-                            "startTime": null,
-                            "endTime": null,
-                            "duration": null,
-                            "generatedCode": null,
-                            "failingTestCases": null,
-                            "testCorrect": null,
-                            "testTotal": null
-                        }
-                    ]
-                },
-                {
-                    "questionId": 4,
-                    "attempts": []
-                },
-                {
-                    "questionId": 5,
-                    "attempts": []
-                },
-                {
-                    "questionId": 6,
-                    "attempts": []
-                },
-                {
-                    "questionId": 7,
-                    "attempts": []
-                },
-                {
-                    "questionId": 8,
-                    "attempts": []
-                }
-            ]
+          "questionId": 3,
+          "attempts": [
+            {
+              "description": "description",
+              "notes": "note",
+              "inProgress": true,
+              "startTime": null,
+              "endTime": null,
+              "duration": null,
+              "generatedCode": null,
+              "failingTestCases": null,
+              "testCorrect": null,
+              "testTotal": null
+            }
+          ]
         },
         {
-            "username": "Researcher_A",
-            "password": "pResearcher_A",
-            "type": "Researcher",
-            "statusLogin": false,
-            "questions": [
-                {
-                    "questionId": 1,
-                    "attempts": [
-                        {
-                            "description": "description",
-                            "notes": "note",
-                            "inProgress": false,
-                            "startTime": "2024-07-01T07:00:00.000Z",
-                            "endTime": "2024-07-01T07:10:00.000Z",
-                            "duration": 600,
-                            "generatedCode": "LLM",
-                            "failingTestCases": "testsFailed",
-                            "testCorrect": 1,
-                            "testTotal": 2
-                        },
-                        {
-                            "description": "description",
-                            "notes": "note",
-                            "inProgress": false,
-                            "startTime": "2024-07-01T07:00:00.000Z",
-                            "endTime": "2024-07-01T07:10:00.000Z",
-                            "duration": 600,
-                            "generatedCode": "LLM",
-                            "failingTestCases": "testsFailed",
-                            "testCorrect": 1,
-                            "testTotal": 2
-                        },
-                        {
-                            "description": "description",
-                            "notes": "note",
-                            "inProgress": true,
-                            "startTime": null,
-                            "endTime": null,
-                            "duration": null,
-                            "generatedCode": null,
-                            "failingTestCases": null,
-                            "testCorrect": null,
-                            "testTotal": null
-                        }
-                    ]
-                },
-                {
-                    "questionId": 2,
-                    "attempts": [
-                        {
-                            "description": "description",
-                            "notes": "note",
-                            "inProgress": false,
-                            "startTime": "2024-07-01T07:00:00.000Z",
-                            "endTime": "2024-07-01T07:10:00.000Z",
-                            "duration": 600,
-                            "generatedCode": "LLM",
-                            "failingTestCases": "testsFailed",
-                            "testCorrect": 1,
-                            "testTotal": 2
-                        }
-                    ]
-                },
-                {
-                    "questionId": 3,
-                    "attempts": [
-                        {
-                            "description": "description",
-                            "notes": "note",
-                            "inProgress": true,
-                            "startTime": null,
-                            "endTime": null,
-                            "duration": null,
-                            "generatedCode": null,
-                            "failingTestCases": null,
-                            "testCorrect": null,
-                            "testTotal": null
-                        }
-                    ]
-                },
-                {
-                    "questionId": 4,
-                    "attempts": []
-                },
-                {
-                    "questionId": 5,
-                    "attempts": []
-                },
-                {
-                    "questionId": 6,
-                    "attempts": []
-                },
-                {
-                    "questionId": 7,
-                    "attempts": []
-                },
-                {
-                    "questionId": 8,
-                    "attempts": []
-                }
-            ]
+          "questionId": 4,
+          "attempts": []
+        },
+        {
+          "questionId": 5,
+          "attempts": []
+        },
+        {
+          "questionId": 6,
+          "attempts": []
+        },
+        {
+          "questionId": 7,
+          "attempts": []
+        },
+        {
+          "questionId": 8,
+          "attempts": []
         }
-    ]
+      ]
+    },
+    {
+      "username": "Student_B",
+      "password": "pStudent_B",
+      "type": "Student",
+      "statusLogin": false,
+      "questions": [
+        {
+          "questionId": 1,
+          "attempts": [
+            {
+              "description": "description",
+              "notes": "note",
+              "inProgress": false,
+              "startTime": "2024-07-01T07:00:00.000Z",
+              "endTime": "2024-07-01T07:10:00.000Z",
+              "duration": 600,
+              "generatedCode": "LLM",
+              "failingTestCases": "testsFailed",
+              "testCorrect": 1,
+              "testTotal": 2
+            },
+            {
+              "description": "description",
+              "notes": "note",
+              "inProgress": false,
+              "startTime": "2024-07-01T07:00:00.000Z",
+              "endTime": "2024-07-01T07:10:00.000Z",
+              "duration": 600,
+              "generatedCode": "LLM",
+              "failingTestCases": "testsFailed",
+              "testCorrect": 1,
+              "testTotal": 2
+            },
+            {
+              "description": "description",
+              "notes": "note",
+              "inProgress": true,
+              "startTime": null,
+              "endTime": null,
+              "duration": null,
+              "generatedCode": null,
+              "failingTestCases": null,
+              "testCorrect": null,
+              "testTotal": null
+            }
+          ]
+        },
+        {
+          "questionId": 2,
+          "attempts": [
+            {
+              "description": "description",
+              "notes": "note",
+              "inProgress": false,
+              "startTime": "2024-07-01T07:00:00.000Z",
+              "endTime": "2024-07-01T07:10:00.000Z",
+              "duration": 600,
+              "generatedCode": "LLM",
+              "failingTestCases": "testsFailed",
+              "testCorrect": 1,
+              "testTotal": 2
+            }
+          ]
+        },
+        {
+          "questionId": 3,
+          "attempts": [
+            {
+              "description": "description",
+              "notes": "note",
+              "inProgress": true,
+              "startTime": null,
+              "endTime": null,
+              "duration": null,
+              "generatedCode": null,
+              "failingTestCases": null,
+              "testCorrect": null,
+              "testTotal": null
+            }
+          ]
+        },
+        {
+          "questionId": 4,
+          "attempts": []
+        },
+        {
+          "questionId": 5,
+          "attempts": []
+        },
+        {
+          "questionId": 6,
+          "attempts": []
+        },
+        {
+          "questionId": 7,
+          "attempts": []
+        },
+        {
+          "questionId": 8,
+          "attempts": []
+        }
+      ]
+    },
+    {
+      "username": "Student_C",
+      "password": "pStudent_C",
+      "type": "Student",
+      "statusLogin": false,
+      "questions": [
+        {
+          "questionId": 1,
+          "attempts": [
+            {
+              "description": "description",
+              "notes": "note",
+              "inProgress": false,
+              "startTime": "2024-07-01T07:00:00.000Z",
+              "endTime": "2024-07-01T07:10:00.000Z",
+              "duration": 600,
+              "generatedCode": "LLM",
+              "failingTestCases": "testsFailed",
+              "testCorrect": 1,
+              "testTotal": 2
+            },
+            {
+              "description": "description",
+              "notes": "note",
+              "inProgress": false,
+              "startTime": "2024-07-01T07:00:00.000Z",
+              "endTime": "2024-07-01T07:10:00.000Z",
+              "duration": 600,
+              "generatedCode": "LLM",
+              "failingTestCases": "testsFailed",
+              "testCorrect": 1,
+              "testTotal": 2
+            },
+            {
+              "description": "description",
+              "notes": "note",
+              "inProgress": true,
+              "startTime": null,
+              "endTime": null,
+              "duration": null,
+              "generatedCode": null,
+              "failingTestCases": null,
+              "testCorrect": null,
+              "testTotal": null
+            }
+          ]
+        },
+        {
+          "questionId": 2,
+          "attempts": [
+            {
+              "description": "description",
+              "notes": "note",
+              "inProgress": false,
+              "startTime": "2024-07-01T07:00:00.000Z",
+              "endTime": "2024-07-01T07:10:00.000Z",
+              "duration": 600,
+              "generatedCode": "LLM",
+              "failingTestCases": "testsFailed",
+              "testCorrect": 1,
+              "testTotal": 2
+            }
+          ]
+        },
+        {
+          "questionId": 3,
+          "attempts": [
+            {
+              "description": "description",
+              "notes": "note",
+              "inProgress": true,
+              "startTime": null,
+              "endTime": null,
+              "duration": null,
+              "generatedCode": null,
+              "failingTestCases": null,
+              "testCorrect": null,
+              "testTotal": null
+            }
+          ]
+        },
+        {
+          "questionId": 4,
+          "attempts": []
+        },
+        {
+          "questionId": 5,
+          "attempts": []
+        },
+        {
+          "questionId": 6,
+          "attempts": []
+        },
+        {
+          "questionId": 7,
+          "attempts": []
+        },
+        {
+          "questionId": 8,
+          "attempts": []
+        }
+      ]
+    },
+    {
+      "username": "Researcher_A",
+      "password": "pResearcher_A",
+      "type": "Researcher",
+      "statusLogin": false,
+      "questions": [
+        {
+          "questionId": 1,
+          "attempts": [
+            {
+              "description": "description",
+              "notes": "note",
+              "inProgress": false,
+              "startTime": "2024-07-01T07:00:00.000Z",
+              "endTime": "2024-07-01T07:10:00.000Z",
+              "duration": 600,
+              "generatedCode": "LLM",
+              "failingTestCases": "testsFailed",
+              "testCorrect": 1,
+              "testTotal": 2
+            },
+            {
+              "description": "description",
+              "notes": "note",
+              "inProgress": false,
+              "startTime": "2024-07-01T07:00:00.000Z",
+              "endTime": "2024-07-01T07:10:00.000Z",
+              "duration": 600,
+              "generatedCode": "LLM",
+              "failingTestCases": "testsFailed",
+              "testCorrect": 1,
+              "testTotal": 2
+            },
+            {
+              "description": "description",
+              "notes": "note",
+              "inProgress": true,
+              "startTime": null,
+              "endTime": null,
+              "duration": null,
+              "generatedCode": null,
+              "failingTestCases": null,
+              "testCorrect": null,
+              "testTotal": null
+            }
+          ]
+        },
+        {
+          "questionId": 2,
+          "attempts": [
+            {
+              "description": "description",
+              "notes": "note",
+              "inProgress": false,
+              "startTime": "2024-07-01T07:00:00.000Z",
+              "endTime": "2024-07-01T07:10:00.000Z",
+              "duration": 600,
+              "generatedCode": "LLM",
+              "failingTestCases": "testsFailed",
+              "testCorrect": 1,
+              "testTotal": 2
+            }
+          ]
+        },
+        {
+          "questionId": 3,
+          "attempts": [
+            {
+              "description": "description",
+              "notes": "note",
+              "inProgress": true,
+              "startTime": null,
+              "endTime": null,
+              "duration": null,
+              "generatedCode": null,
+              "failingTestCases": null,
+              "testCorrect": null,
+              "testTotal": null
+            }
+          ]
+        },
+        {
+          "questionId": 4,
+          "attempts": []
+        },
+        {
+          "questionId": 5,
+          "attempts": []
+        },
+        {
+          "questionId": 6,
+          "attempts": []
+        },
+        {
+          "questionId": 7,
+          "attempts": []
+        },
+        {
+          "questionId": 8,
+          "attempts": []
+        }
+      ]
+    }
+  ]
 }
