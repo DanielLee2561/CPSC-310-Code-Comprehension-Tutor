@@ -161,8 +161,8 @@ const QuestionsPage = () => {
     // Initialize
     const initialize = async () => {
       try {
-        let request = {"username":"Student_A", "password":"pStudent_A"};
-        let response = await axios.put("http://localhost:5000/users/Student_A/questions", request);
+        let request = {"username":username, "password":password};
+        let response = await axios.put(`http://localhost:5000/users/${username}/questions`, request);
         setQuestions(response.data.questions);
       } catch (error) {
         console.error('Error fetching questions:', error);
