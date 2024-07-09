@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import './questions.css'
 import axios from 'axios';
 
@@ -145,12 +145,20 @@ const Question = (question) => {
 }
 
 // Questions
-function QuestionsPage() {
+const QuestionsPage = () => {
   // Variable
+  const username = useLocation().state.username;
+  const password = useLocation().state.password;
+  const statusLogin = useLocation().state.statusLogin;
   const [questions, setQuestions] = useState(null);
 
-  // Initialize
   useEffect(() => {
+    // State
+    console.log(username);
+    console.log(password);
+    console.log(statusLogin);
+
+    // Initialize
     const initialize = async () => {
       try {
         let request = {"username":"Student_A", "password":"pStudent_A"};

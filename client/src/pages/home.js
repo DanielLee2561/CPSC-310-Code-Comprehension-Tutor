@@ -32,7 +32,13 @@ const Home = (props) => {
   }
 
   const onQuestionsButtonClicked = () => {
-    navigate("/question_bank");
+    navigate("/question_bank", {
+      state: {
+        "username": test.username,
+        "password": test.password,
+        "statusLogin": test.loggedIn
+      }
+    });
   }
 
   return (
