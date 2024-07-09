@@ -8,9 +8,9 @@ import jwt from "jsonwebtoken";
 // Load users from JSON file
 // const usersJsonPath = path.join(process.cwd(), 'data', 'user.json');
 
-// TODO: Use these functions?
 import {readJsonFile, writeJsonFile} from "../functions/fileSystemFunctions.js";
 const usersJsonPath = './data/users.json';
+const questionsJsonPath = './data/questions.json';
 const users_json = readJsonFile(usersJsonPath);
 const questionsJsonPath = './data/questions.json';
 // const users = users_json.users;
@@ -80,7 +80,7 @@ router.post('/register',(req,res)=>{
 });
 
 
-//login 
+//login
 router.put('/login', (req, res) => {
     // const usersList = users.users
     try {
@@ -191,14 +191,8 @@ router.put('/:username',(req,res)=>{
     }
 });
 
-// TODO: Stub for getting specific attempt data.
-/*
-router.get("/Student_A/questions/2/attempts/1", (req, res) => {
-    res.status(200).json(users[0].questions[1].attempts[0])
-});
- */
 // Getting specific attempt data in a question
-router.get("/:username/questions/:questionID/attempts/:attemptID", (req, res) => {
+router.put("/:username/questions/:questionID/attempts/:attemptID", (req, res) => {
     const username = req.params.username;
     const password = req.body.password;
     const questionId = req.params.questionID;
@@ -229,11 +223,16 @@ router.get("/:username/questions/:questionID/attempts/:attemptID", (req, res) =>
 
     if (!foundAttempt) return res.status(404).send('Attempt is not found.');
 
+    // Find question function code and put in foundAttempt object
+    const questionFunction = questions.find(c => c.id === parseInt(questionId));
+    if (!questionFunction) return res.status(404).send('Question is not found.');
+    foundAttempt.question = questionFunction.code ? questionFunction.code : "";
+
     res.status(200).json(foundAttempt);
 });
 
 // View Questions (list of all questions that user started & attempted, along with all of their attempts)
-router.get("/:username/questions", (req, res) => {
+router.put("/:username/questions", (req, res) => {
     const username = req.params.username;
     const password = req.body.password;
     
@@ -253,6 +252,5 @@ router.get("/:username/questions", (req, res) => {
     }
     res.status(404).json({error: "Could not find user"});
 });
-
 
 export default router;

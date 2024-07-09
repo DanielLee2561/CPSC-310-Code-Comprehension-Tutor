@@ -27,7 +27,7 @@ const Home = (props) => {
   }
 
   const onQuestionsButtonClicked = () => {
-    navigate("/questions", {state: userInfo});
+    navigate("/question_bank", {state: userInfo});
   }
 
   return (

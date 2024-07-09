@@ -9,6 +9,13 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp; The web application will feature several unique features, one of which are researcher accounts. These accounts are instantiated manually, and they allow researchers to add, edit, and delete questions. Furthermore, they can view students’ highest scores for each question, and see question and student averages. This may allow researchers to evaluate the effectiveness of the questions and find out which types of functions students find easy or difficult to understand. They may modify the questions or add new ones to give students more to practice with. Another unique feature is a tutorial page, which will contain a video and a short, written guide on how to answer questions on the app. Lastly, students’ accounts will be secured with a password that they may change at any time.
 
+## Docker Compose (Setup Instruction with Compose)
+
+1) Install "Docker Desktop"
+2) Open "Docker Desktop"
+3) In project folder (top level of project) run 'docker compose up' without quotes
+4) Go to http://localhost:5000/
+
 ## Setup Instruction
 
 1) Install "Docker Desktop"

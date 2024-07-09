@@ -27,8 +27,6 @@
 .function-text {
     text-align: left;
     white-space: pre-wrap;
-    padding-left: 30px;
-    text-indent: -30px; /* for hanging indent */
     font-family: monospace;
     background-color: #f4f4f4;
     border: 1px solid #ccc;

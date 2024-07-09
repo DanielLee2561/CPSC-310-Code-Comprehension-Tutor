@@ -28,19 +28,20 @@ async function generateCode(user_input, num_params) {
     // Stub above, real code below.
 
     let parameters;
-    switch (num_params) {
-        case 1:
-            parameters = "1 parameter x";
-            break;
-        case 2:
-            parameters = "2 parameters x and y, in that order";
-            break;
-        case 3:
-            parameters = "3 parameters x, y, and z, in that order";
-            break;
-        default:
-            parameters = "no parameters";
-    }
+    // switch (num_params) {
+    //     case 1:
+    //         parameters = "1 parameter x";
+    //         break;
+    //     case 2:
+    //         parameters = "2 parameters x and y, in that order";
+    //         break;
+    //     case 3:
+    //         parameters = "3 parameters x, y, and z, in that order";
+    //         break;
+    //     default:
+    //         parameters = "no parameters";
+    // }
+    parameters = num_params + " parameters";
 
     const llm_model = "codegemma";
     const prompt_header = "Generate a Javascript function named foo that has " + parameters + ", that does the following: ";
@@ -52,7 +53,7 @@ async function generateCode(user_input, num_params) {
         prompt: llm_prompt,
     });
 
-    return output.response.split("```javascript")[1].split("```")[0];
+    return output.response.split("```javascript\n")[1].split("```")[0];
 }
 
 export {generateCode};
