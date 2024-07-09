@@ -149,10 +149,9 @@ const Question = (question) => {
 // Questions
 const QuestionsPage = () => {
   // Variable
-  const username = useLocation().state.username;
-  const password = useLocation().state.password;
-  const statusLogin = useLocation().state.statusLogin;
+  const userInfo = useLocation().state;
   const [questions, setQuestions] = useState(null);
+  const navigate = useNavigate();
   
   const onHomeButtonClicked = () => {
     navigate("/home", {state: userInfo});
@@ -164,21 +163,20 @@ const QuestionsPage = () => {
 
   useEffect(() => {
     if (userInfo === null) {
-      navigate("/")
+      navigate("/");
     } 
   })
 
   useEffect(() => {
     // State
-    console.log(username);
-    console.log(password);
-    console.log(statusLogin);
+    console.log(userInfo.username);
+    console.log(userInfo.password);
 
     // Initialize
     const initialize = async () => {
       try {
-        let request = {"username":username, "password":password};
-        let response = await axios.put(`http://localhost:5000/users/${username}/questions`, request);
+        let request = {"username":userInfo.username, "password":userInfo.password};
+        let response = await axios.put(`http://localhost:5000/users/${userInfo.username}/questions`, request);
         setQuestions(response.data.questions);
       } catch (error) {
         console.error('Error fetching questions:', error);

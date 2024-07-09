@@ -12,7 +12,6 @@ import {readJsonFile, writeJsonFile} from "../functions/fileSystemFunctions.js";
 const usersJsonPath = './data/users.json';
 const questionsJsonPath = './data/questions.json';
 const users_json = readJsonFile(usersJsonPath);
-const questionsJsonPath = './data/questions.json';
 // const users = users_json.users;
 let users = users_json.users;
 const questions_json = readJsonFile(questionsJsonPath);
