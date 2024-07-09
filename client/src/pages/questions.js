@@ -5,15 +5,13 @@ import axios from 'axios';
 
 
 
-const QuestionItem = ({ question, attempts }) => {
-  const { questionId } = question;
+const QuestionItem = ({ question, attempt }) => {
+  const { id } = question;
+  const {attempts}=attempt;
   const [expanded, setExpanded] = useState(false);
   
   const navigate = useNavigate();
   
-  const onClickView=()=>{
-
-  }
 
   const onClickRedo=()=>{
     
@@ -23,17 +21,21 @@ const QuestionItem = ({ question, attempts }) => {
     setExpanded(!expanded);
   };
 
-  const Attempt = (id) => {
+  const Attempt = ({ attempt, index }) => {
+    const { date, score, time } = attempt;
+
     return (
-      <li>
-        Attempt {id} [DATE] [SCORE] [TIME]
-        <button onClick={() => navigate("/attempt")}>View</button>
+      <li key={index}>
+        <span>
+          Attempt {index + 1} [date] [score] [time]
+        </span>
+        <button onClick={() => navigate(`/questions/${id}/attmept`)}>View</button>
       </li>
-    )
-  }
+    );
+  };
 
   return (
-    <li key={questionId}>
+    <li key={id}>
       <div className="question-header">
         <input
           className={expanded ? "arrow down" : "arrow right"}
@@ -41,63 +43,60 @@ const QuestionItem = ({ question, attempts }) => {
           onClick={onClickExpand}
         />
         <span className="question-title">
-          Question {questionId} [DATE] [SCORE] [TIME]
+          Question {id} [DATE] [SCORE] [TIME]
         </span>
-        <button className="start-button" onClick={() => navigate('/attempt')}>
+        <button className="start-button" onClick={() => navigate(`/questions/${id}/attmept`)}>
           Start
         </button>
       </div>
       {expanded && (
-        // <ul>
-        //   {attempts.map((attempt) => (
-        //     <Attempt key={attempt.id} id={attempt.id} />
-        //   ))}
-        // </ul>
         <ul>
-          <li><span>Question [1] [DATE] [SCORE] [TIME]</span>
-              <button>View</button> 
-              <button>Redo</button>
-          </li>
-          <li><span>Question [2] [DATE] [SCORE] [TIME]</span>
-              <button>View</button>
-              <button>Redo</button>
-          </li>
+          {attempts.map((attempt, index) => (
+            <Attempt key={index} attempt={attempt} index={index} />
+          ))}
         </ul>
       )}
     </li>
   );
 };
 
+
 function QuestionPage() {
   const [questions, setQuestions] = useState([]);
-
-
+  const [attempts,setAttempts]=useState([]);
+  const username = "Student_A";  // need to change dynamically 
+  
   useEffect(() => {
     const getQuestions = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/questions");
-        setQuestions(response.data);
-        console.log(response)
+        const questionsResponse = await axios.get("http://localhost:5000/questions");
+        const userResponse = await axios.get(`http://localhost:5000/users/${username}`);
+        setQuestions(questionsResponse.data);
+        setAttempts(userResponse.data.questions);
       } catch (error) {
         console.error('Error fetching questions:', error);
       }
     };
     getQuestions();
-  }, []);
-
+  }, [username]);
+  
   return (
     <div>
       <h2>Questions</h2>
       <ul>
-        {questions.map((question) => (
-          <QuestionItem
-            key={question.questionId}
+        {questions.map((question) => {
+          const attempt=attempts.find(a=>a.questionId===question.id);
+         return (
+            <QuestionItem
+            key={question.id}
             question={question}
-          />
-        ))}
+            attempt={attempt || { attempts: [] }}
+            />
+          );
+        })}
       </ul>
     </div>
-  );
+  )
 }
 
 export default QuestionPage;

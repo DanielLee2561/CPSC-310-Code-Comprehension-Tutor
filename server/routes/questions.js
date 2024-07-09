@@ -5,7 +5,7 @@ import path from 'path';
 import session from 'express-session';
 
 // Load questions from JSON file
-const questionsJsonPath = path.join(process.cwd(), 'data', 'question.json');
+const questionsJsonPath = path.join(process.cwd(), 'data', 'questions.json');
 
 
 let questions;
@@ -17,7 +17,7 @@ fs.readFile(questionsJsonPath, 'utf8', (err, data) => {
     }
     try {
         questions = JSON.parse(data).questions;
-        console.log(questions);
+        // console.log(questions);
     } catch (err) {
         console.error('Error parsing user.json:', err);
     }
@@ -45,13 +45,13 @@ router.get('/', (req, res) => {
 
 //add a question
 router.post('/',(req,res)=>{
-    const{questionId,questionCode,test}=req.body;
-    if (!questionId || !questionCode || !test){
-        return res.status(400).json({error:"questionId, questionCode and test are required."});
+    const{id,code,tests}=req.body;
+    if (!id || !code || !tests){
+        return res.status(400).json({error:"id, code and tests are required."});
     }
 
     // construct question and put in json array
-    const newQuestion={questionId,questionCode,test};
+    const newQuestion={id,code,tests};
     questions.push({...newQuestion});
     writeJsonFile(questionsJsonPath, { questions });
     res.send("just post a question");
@@ -71,7 +71,7 @@ router.post('/',(req,res)=>{
 // found the specific question by questionId
 router.get('/:questionId',(req,res)=>{
     const { questionId } = req.params;
-    const foundQuestion = questions.find((question)=> question.questionId == questionId);
+    const foundQuestion = questions.find((question)=> question.id == questionId);
     console.log(foundQuestion);
     res.send(foundQuestion);
 })
@@ -79,7 +79,7 @@ router.get('/:questionId',(req,res)=>{
 //delete a question by questionId
 router.delete('/:questionId',(req,res)=>{
     const { questionId } = req.params;
-    questions =questions.filter((question)=>question.questionId != questionId);
+    questions =questions.filter((question)=>question.id != questionId);
     writeJsonFile(questionsJsonPath, { questions });
     res.send("delete the specific question successful!");
 })
@@ -87,23 +87,23 @@ router.delete('/:questionId',(req,res)=>{
 // PUT route to update questionCode and test for a specific questionId
 router.put('/:questionId', (req, res) => {
     const { questionId } = req.params;
-    const { questionCode, test } = req.body;
+    const { code, tests } = req.body;
 
     // Check if newQuestionCode or newTest are missing
-    if (!questionCode || !test) {
+    if (!code || !tests) {
         return res.status(400).json({ error: "Missing newQuestionCode or newTest" });
     }
 
     // Find the question by questionId
     console.log(questions);
-    let question = questions.find((q) => q.questionId == questionId);
+    let question = questions.find((q) => q.id == questionId);
     if (!question) {
         return res.status(404).json({ error: "Question not found" });
     }
 
     // Update questionCode and test
-    question.questionCode = questionCode;
-    question.test = test;
+    question.questionCode = code;
+    question.test = tests;
 
     // Write updated questions array back to JSON file
     writeJsonFile(questionsJsonPath, { questions });
