@@ -20,7 +20,19 @@ function AttemptPage(props) {
     const [generatedCode, setGeneratedCode] = useState("");
 
     const question_id = props.question_id;
-    const [attemptNum, setAttemptNum] = useState(props.attempt_num);
+    const [attemptNum, setAttemptNum] = useState(() => {
+        const savedValue = sessionStorage.getItem('attemptNumber');
+
+        if (savedValue === undefined || savedValue === null) {
+            return props.attempt_num;
+        } else {
+            console.log("Saved VAlue is : " + savedValue);
+            return savedValue;
+        }
+
+        // return savedValue !== null ? parseInt(savedValue, 10) : props.attempt_num;
+        // return (savedValue === undefined || savedValue == 0) ? parseInt(props.attemptNum, 10) : parseInt(savedValue, 10);
+    });
     const [testsCorrect, setTestsCorrect] = useState(0);
     const [testsTotal, setTestsTotal] = useState(0);
     const [duration, setDuration] = useState(0);
@@ -30,6 +42,7 @@ function AttemptPage(props) {
     const [saveEnabled, setSaveEnabled] = useState(true);
     const [submitEnabled, setSubmitEnabled] = useState(true);
     const [retryEnabled, setRetryEnabled] = useState(true);
+
 
     // IMPORTANT: This is not the full endpoint.
     // You may need to concatenate /attempts/:attempt_number (attemptNum) at the end.
@@ -41,11 +54,18 @@ function AttemptPage(props) {
         navigate(0);
     };
 
+    useEffect(() => {
+        sessionStorage.setItem('attemptNumber', attemptNum);
+    }, [attemptNum]);
+
     // Set up all the variables based on saved attempt data
     useEffect(() => {
         const fetchData = async () => {
             try {
                 // TODO: BUG here. 500 internal server error.
+                // sessionStorage.setItem("attemptNumber", props.attempt_num);
+                console.log("prop : " + props.attempt_num)
+                console.log("atp : " + attemptNum);
                 const response = await fetch(endpoint + "/attempts/" + attemptNum, {
                     method: 'PUT',
                     headers: {
@@ -77,7 +97,7 @@ function AttemptPage(props) {
             }
         }
         fetchData();
-    }, [endpoint, attemptNum, props.password]);
+    }, [endpoint]);
 
 
     const handleDescription = (event) => {
@@ -143,48 +163,34 @@ function AttemptPage(props) {
         }
     }
 
-    const retry = () => {
+    const retry = async () => {
         setRetryEnabled(false);
         const input = {
             password: props.password
         }
-        // TODO: Retry may look similar to this (no guarantees though!)
-        // try {
-        //     const response = await fetch(endpoint, {
-        //         method: "PUT",
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         },
-        //         body: JSON.stringify(input)
-        //     });
-        //
-        //     if (!response.ok) {
-        //         console.log("Could not fetch data. Code " + response.status);
-        //     } else {
-        //         reloadPage();
-        //     }
-        // } catch (err) {
-        //     console.log("There was a problem saving the attempt: " + err);
-        // } finally {
-        //     setSaveEnabled(true);
-        // }
 
-        // TODO: Delete below stuff when retry is actually created
-        const retrySuccessful = true; // stub
-
-        setTimeout(() => {
-            if (retrySuccessful) {
-                setAttemptNum(attemptNum + 1); // change this to be the new attempt number
-                // its not always +1 (ie user is on attempt 3 page and wants to retry, but they already did attempt 4)
-                // potentially also restate the function question as well (for same reason as above)
-                setInProgress(true); //
-                setGeneratedCode("");
-                setFailingTestCases("");
+        try {
+            const response = await fetch(endpoint, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(input)
+            });
+            if (!response.ok) {
+                console.log("Could not fetch data. Code " + response.status);
             } else {
-                alert("Initializing new attempt failed."); // question may no longer exist?
+                const data = await response.json();
+                // props.attempt_num = data.attemptNum; // cannot reassign read-only value
+                console.log("New Attempt Number: " + data.attemptNum);
+                setAttemptNum(data.attemptNum); // automatically reset :(
+                reloadPage();
             }
-            setRetryEnabled(true);
-        }, 1000);
+        } catch (err) {
+            console.log("There was a problem saving the attempt: " + err);
+        } finally {
+            setSaveEnabled(true);
+        }
     }
 
     const handleRetry = () => {
