@@ -20,6 +20,7 @@ function App() {
           />
           <Route path="/question_bank" element={<QuestionsPage />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/home" element={<Home />} />
           <Route path="/" element={<Login />} />
         </Routes>
