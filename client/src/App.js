@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Register from './pages/register'
 import Login from './pages/login'
 import Home from './pages/home'
-import Questions from './pages/questions'
+import QuestionsPage from './pages/questions'
 import AttemptPage from './pages/AttemptPage'
 import Profile from './pages/profile'
 import './App.css'
@@ -18,7 +18,7 @@ function App() {
           <Route path="/attempt" element={
             <AttemptPage question_id={2} attempt_num={1} username={"Student_A"} password={"pStudent_A"}/>}
           />
-          <Route path="/questions" element={<Questions />} />
+          <Route path="/question_bank" element={<QuestionsPage />} />
           <Route path="/register" element={<Register />} />
           <Route path="/home" element={<Home />} />
           <Route path="/" element={<Login />} />

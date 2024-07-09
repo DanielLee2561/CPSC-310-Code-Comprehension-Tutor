@@ -1,103 +1,190 @@
-import React, { useEffect,useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './questions.css'
 import axios from 'axios';
 
-
-
-const QuestionItem = ({ question, attempts }) => {
-  const { questionId } = question;
-  const [expanded, setExpanded] = useState(false);
-  
+// Question
+const Question = (question) => {
+  // Variable
+  const id = question.questionId;
+  const attempts = question.attempts;
+  const [stateExpand, setStateExpand] = useState(false);
   const navigate = useNavigate();
-  
-  const onClickView=()=>{
 
+  // Start Button
+  const ButtonStart = () => {
+    return <button onClick={onClickStart}>Start</button>;
   }
 
-  const onClickRedo=()=>{
-    
+  // View Button
+  const ButtonView = () => {
+    return <button onClick={onClickView}>View</button>;
   }
 
-  const onClickExpand = () => {
-    setExpanded(!expanded);
-  };
-
-  const Attempt = (id) => {
+  // Expand Button
+  const ButtonExpand = () => {
     return (
-      <li>
-        Attempt {id} [DATE] [SCORE] [TIME]
-        <button onClick={() => navigate("/attempt")}>View</button>
-      </li>
-    )
+      <input
+        className={ stateExpand ? "arrow down" : "arrow right" }
+        type="button"
+        onClick={onClickExpand}
+      />
+    );
   }
 
-  return (
-    <li key={questionId}>
-      <div className="question-header">
-        <input
-          className={expanded ? "arrow down" : "arrow right"}
-          type="button"
-          onClick={onClickExpand}
-        />
-        <span className="question-title">
-          Question {questionId} [DATE] [SCORE] [TIME]
-        </span>
-        <button className="start-button" onClick={() => navigate('/attempt')}>
-          Start
-        </button>
-      </div>
-      {expanded && (
-        // <ul>
-        //   {attempts.map((attempt) => (
-        //     <Attempt key={attempt.id} id={attempt.id} />
-        //   ))}
-        // </ul>
+  // Start Button (Click)
+  const onClickStart = () => {
+    // Variable
+    let inProgress = false;
+
+    // In-Progress
+    for (let i = 0; i < attempts.length; i++) {
+      if (attempts[i].inProgress) {
+        inProgress = true;
+        break;
+      }
+    }
+
+    // Effect
+    if (inProgress) {
+      alert("You cannot start an attempt when there is already an attempt in-progress.");
+    } else {
+      // TODO (API Start Attempt)
+      navigate("/"); // TODO (Attempt Page ic: State)
+    }
+  }
+
+  // View Button (Click)
+  const onClickView = () => {
+    navigate("/"); // TODO (Attempt Page ic: State)
+  }
+
+  // Expand Button (Click)
+  const onClickExpand = () => {
+    setStateExpand(!stateExpand);
+  }
+  
+  // Best Attempt
+  const getBestAttempt = () => {
+    // Variable
+    let attemptBest = null;
+    
+    // Initialization
+    if (attempts.length > 0) {
+      attemptBest = attempts[0]; 
+    }
+
+    // Assignment
+    for (let i = 1; i < attempts.length; i++) {
+      if (attemptBest.testCorrect < attempts[i].testCorrect) {
+        attemptBest = attempts[i];
+      }
+    }
+
+    // Return
+    return attemptBest;
+  }
+
+  // Attempt
+  const Attempt = (name, id, attempt) => {
+    // Variable
+    let date = null;
+    let score = null;
+    let duration = null;
+
+    // Content
+    if (attempt != null) {
+       // Date
+      if (attempt.endTime != null) {
+        date = new Date(attempt.endTime);
+        let day = date.getDay();
+        let month = date.getMonth() + 1;
+        let year = date.getFullYear();
+        date = `${day}-${month}-${year}`;
+      }
+
+      // Score
+      if (attempt.testCorrect != null) {
+        score = `${attempt.testCorrect}/${attempt.testTotal}`;
+      }
+
+      // Duration
+      if (attempt.duration != null) {
+        duration = `${attempt.duration}s`;
+      }
+    }
+
+    return <span>{name} {id} {date} {score} {duration}</span>;
+  }
+
+  // Attempts
+  const Attempts = () => {
+    if (stateExpand) {
+      return (
         <ul>
-          <li><span>Question [1] [DATE] [SCORE] [TIME]</span>
-              <button>View</button> 
-              <button>Redo</button>
-          </li>
-          <li><span>Question [2] [DATE] [SCORE] [TIME]</span>
-              <button>View</button>
-              <button>Redo</button>
-          </li>
+          {attempts.map((attempt, id) =>
+            <li>
+              {Attempt("Attempt", id+1, attempt)}
+              <ButtonView />
+            </li>
+          )}
         </ul>
-      )}
+      );
+    }
+  }
+  
+  // Question
+  return (
+    <li>
+      <ButtonExpand />
+      {Attempt ("Question", id, getBestAttempt(id))}
+      <ButtonStart />
+      <Attempts />
     </li>
   );
-};
+}
 
-function QuestionPage() {
-  const [questions, setQuestions] = useState([]);
+// Questions
+function QuestionsPage() {
+  // Variable
+  const [questions, setQuestions] = useState(null);
 
-
+  // Initialize
   useEffect(() => {
-    const getQuestions = async () => {
+    const initialize = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/questions");
-        setQuestions(response.data);
-        console.log(response)
+        let request = {"username":"Student_A", "password":"pStudent_A"};
+        let response = await axios.put("http://localhost:5000/users/Student_A/questions", request);
+        setQuestions(response.data.questions);
       } catch (error) {
         console.error('Error fetching questions:', error);
       }
     };
-    getQuestions();
+    initialize();
   }, []);
 
+  // Questions
+  const Questions = () => {
+    if (questions != null) {
+      return (
+        <ul>
+          {questions.map((question) =>
+            <li>
+              {Question(question)}
+            </li>
+          )}
+        </ul>
+      );
+    }
+  }
+
+  // Return
   return (
     <div>
-      <h2>Questions</h2>
-      <ul>
-        {questions.map((question) => (
-          <QuestionItem
-            key={question.questionId}
-            question={question}
-          />
-        ))}
-      </ul>
+      <h1>Questions</h1>
+      <Questions />
     </div>
   );
 }
 
-export default QuestionPage;
+export default QuestionsPage

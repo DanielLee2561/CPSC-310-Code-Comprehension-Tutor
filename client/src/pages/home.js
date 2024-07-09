@@ -32,7 +32,7 @@ const Home = (props) => {
   }
 
   const onQuestionsButtonClicked = () => {
-    navigate("/questions");
+    navigate("/question_bank");
   }
 
   return (
