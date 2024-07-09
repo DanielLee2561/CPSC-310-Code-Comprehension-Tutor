@@ -9,7 +9,7 @@ import './App.css'
 import { useEffect, useState } from 'react'
 
 function App() {
-
+   
   return (
     <div className="App">
       <BrowserRouter>
@@ -18,6 +18,7 @@ function App() {
           <Route path="/attempt" element={
             <AttemptPage question_id={2} attempt_num={1} username={"Student_A"} password={"pStudent_A"}/>}
           />
+          <Route path="/questions/:id/:attemptId" element={<AttemptPage sername={"Student_A"} password={"pStudent_A"} />} />
           <Route path="/question_bank" element={<QuestionsPage />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
