@@ -8,6 +8,7 @@ import axios from 'axios';
 const QuestionItem = ({ question, attempts }) => {
   const { questionId } = question;
   const [expanded, setExpanded] = useState(false);
+  const userInfo = useLocation().state;
   
   const navigate = useNavigate();
   
@@ -43,7 +44,7 @@ const QuestionItem = ({ question, attempts }) => {
         <span className="question-title">
           Question {questionId} [DATE] [SCORE] [TIME]
         </span>
-        <button className="start-button" onClick={() => navigate('/attempt')}>
+        <button className="start-button" onClick={() => navigate('/attempt', {state: userInfo})}>
           Start
         </button>
       </div>
@@ -80,6 +81,12 @@ function QuestionPage() {
   const onProfileButtonClicked = () => {
     navigate("/profile", {state: userInfo});
   }
+
+  useEffect(() => {
+    if (userInfo === null) {
+      navigate("/")
+    } 
+  })
 
 
   useEffect(() => {

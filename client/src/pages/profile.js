@@ -42,7 +42,7 @@ const Profile = (props) => {
   return (
     <div className="mainContainer">
       <div className="header">
-        <button title="Go To Home Page" className='homeButton' onClick={onHomeButtonClicked}><span className='headerSpan'>Homw</span></button>
+        <button title="Go To Home Page" className='homeButton' onClick={onHomeButtonClicked}><span className='headerSpan'>Home</span></button>
         <h1 className='headerTitle'>Profile</h1>
         <button title="Go To Profile Page" className='profileButton' onClick={onProfileButtonClicked}><span className='headerSpan'>Profile</span></button>
       </div>
