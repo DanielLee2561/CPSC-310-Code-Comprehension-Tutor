@@ -12,6 +12,7 @@ import {readJsonFile, writeJsonFile} from "../functions/fileSystemFunctions.js";
 const usersJsonPath = './data/users.json';
 const questionsJsonPath = './data/questions.json';
 const users_json = readJsonFile(usersJsonPath);
+const questionsJsonPath = './data/questions.json';
 // const users = users_json.users;
 let users = users_json.users;
 const questions_json = readJsonFile(questionsJsonPath);
@@ -74,13 +75,13 @@ router.post('/register',(req,res)=>{
     newUser.type = "Student";
     newUser.statusLogin = false;
     users.push({...newUser});
-    writeJsonFile(usersJsonPath, { users });
+    writeJsonFile(usersJsonPath, { "users": users });
     res.send("just post");
 });
 
 
-//login 
-router.post('/login', (req, res) => {
+//login
+router.put('/login', (req, res) => {
     // const usersList = users.users
     try {
         const { username, password } = req.body;
@@ -102,7 +103,7 @@ router.post('/login', (req, res) => {
                 })
                 if (user.password === password) {
                     user.statusLogin = true;
-                    fs.writeFileSync(usersJsonPath, JSON.stringify(users_json, null, 2));
+                    fs.writeFileSync(usersJsonPath, JSON.stringify({"users": users}, null, 2));
                     res.cookie('token', token, {
                         httpOnly: true,
                         secure: true,
@@ -125,9 +126,20 @@ router.post('/login', (req, res) => {
 });
 
 //logout account-----need to test later with frontend 
-router.post('/logout', (req, res) => {
-    // const usersList = users.users // use users instead
-    res.clearCookie("token").status(200).json({message:"Logout successful"})
+router.put('/logout', (req, res) => {
+    // const usersList = users.users
+    const{username}=req.body;
+    // res.clearCookie("token").status(200).json({message:"Logout successful"})
+
+    for (let user of users){
+        if (user.username===username){
+            user.statusLogin = false;
+            fs.writeFileSync(usersJsonPath, JSON.stringify({"users": users}, null, 2));
+            res.clearCookie("token").status(204).json({message:"Logout successful"});
+            return;
+        }
+    }
+    return res.status(500).json({ error: "Internal server error." });
 });
 
 

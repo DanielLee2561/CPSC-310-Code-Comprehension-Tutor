@@ -6,7 +6,7 @@
 
 // import "./register.css";
 import "./authentication.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 
@@ -112,7 +112,9 @@ function Register() {
             type = "checkbox"
             onChange={() => setConsent(!consent)}
             />
-            <label>You Consent To This!!!</label>
+            <div className={'consentText'}>
+              <label>By tapping this checkbox and registering you consent to having the following data being collected and analyzed: Answers, Notes, Returned Code Results, Failed Test Results, Questions, Scores, and Times for all preformed questions. Your data will be associated with your username. </label>
+            </div>
         </div>
         <br/>
         <div className="errorLabel">

@@ -1,6 +1,6 @@
 import './AttemptPage.css';
 import React, {useState, useEffect} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate,useLocation} from 'react-router-dom';
 
 /*
     Props Required:
@@ -37,9 +37,17 @@ function AttemptPage(props) {
     const endpoint = "/users/" + props.username + "/questions/" + props.question_id;
     // For refreshing the page, use reloadPage()
     const navigate = useNavigate();
+    const userInfo = useLocation().state;
+
     const reloadPage = () => {
         navigate(0);
     };
+
+    useEffect(() => {
+        if (userInfo === null) {
+          navigate("/")
+        } 
+      })
 
     // Set up all the variables based on saved attempt data
     useEffect(() => {
@@ -193,7 +201,15 @@ function AttemptPage(props) {
 
     // For return button
     const handleReturn = () => {
-        navigate("/questions");
+        navigate("/questions", {state: userInfo});
+    }
+
+    const onHomeButtonClicked = () => {
+        navigate("/home", {state: userInfo});
+    }
+    
+    const onProfileButtonClicked = () => {
+        navigate("/profile", {state: userInfo});
     }
 
 
@@ -209,9 +225,14 @@ function AttemptPage(props) {
     }
 
     return (<div className="AttemptPage">
-        <h1 style={{color: "black",}}>Question: {question_id} - Attempt: #{attemptNum}</h1>
-        <button className="return-button" onClick={handleReturn}>Return</button>
-        {!isInProgress ? <div>
+        {/* <h1 style={{color: "black",}}>Question: {question_id} - Attempt: #{attemptNum}</h1> */}
+        <div className="header">
+            <button title="Go To Home Page" className='homeButton' onClick={onHomeButtonClicked}><span className='headerSpan'>Home</span></button>
+            <button className="returnButton" title="Back"  onClick={handleReturn}><span className='headerSpan'>Return</span></button>
+            <h1 className='headerTitleAttempt'>Question: {question_id} - Attempt: #{attemptNum}</h1>
+            <button title="Go To Profile Page" className='profileButton' onClick={onProfileButtonClicked}><span className='headerSpan'>Profile</span></button>
+        </div>
+        {!isInProgress ? <div className='timer'>
             <h2 style={{color: scoreColour}}>{testsCorrect}/{testsTotal}&emsp;&emsp;{duration}s</h2>
         </div> : <h2 style={{color: "darkorchid"}}>Attempt In Progress</h2>}
 

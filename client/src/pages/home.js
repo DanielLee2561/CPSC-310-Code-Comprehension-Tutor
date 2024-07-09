@@ -6,17 +6,12 @@ import './home.css'
 const Home = (props) => {
   const { loggedIn, email } = props
   const navigate = useNavigate()
-  // navigate("/login")
+  const userInfo = useLocation().state;
 
-  const test = useLocation().state;
   useEffect(() => {
-    if (test === null) {
-        navigate("/")
-    } else {
-      console.log(test.username);
-      console.log(test.password);
-      console.log(test.loggedIn);
-    }
+    if (userInfo === null) {
+      navigate("/")
+    } 
   })
 
   // console.log(useLocation().state.username);
@@ -24,27 +19,21 @@ const Home = (props) => {
   // console.log(useLocation().state.loggedIn);
 
   const onHomeButtonClicked = () => {
-    navigate("/home");
+    navigate("/home", {state: userInfo});
   }
 
   const onProfileButtonClicked = () => {
-    navigate("/profile");
+    navigate("/profile", {state: userInfo});
   }
 
   const onQuestionsButtonClicked = () => {
-    navigate("/question_bank", {
-      state: {
-        "username": test.username,
-        "password": test.password,
-        "statusLogin": test.loggedIn
-      }
-    });
+    navigate("/question_bank", {state: userInfo});
   }
 
   return (
     <div className="mainContainer">
       <div className="header">
-        <button title="Go To Home Page" className='homeButton' onClick={onHomeButtonClicked}><span className='headerSpan'>Homw</span></button>
+        <button title="Go To Home Page" className='homeButton' onClick={onHomeButtonClicked}><span className='headerSpan'>Home</span></button>
         <h1 className='headerTitle'>Code Comprehension Tutor</h1>
         <button title="Go To Profile Page" className='profileButton' onClick={onProfileButtonClicked}><span className='headerSpan'>Profile</span></button>
       </div>

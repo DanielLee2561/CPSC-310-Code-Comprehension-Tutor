@@ -16,6 +16,7 @@ const Question = (question) => {
     return <button onClick={onClickStart}>Start</button>;
   }
 
+
   // View Button
   const ButtonView = () => {
     return <button onClick={onClickView}>View</button>;
@@ -85,6 +86,7 @@ const Question = (question) => {
     return attemptBest;
   }
 
+
   // Attempt
   const Attempt = (name, id, attempt) => {
     // Variable
@@ -151,6 +153,20 @@ const QuestionsPage = () => {
   const password = useLocation().state.password;
   const statusLogin = useLocation().state.statusLogin;
   const [questions, setQuestions] = useState(null);
+  
+  const onHomeButtonClicked = () => {
+    navigate("/home", {state: userInfo});
+  }
+
+  const onProfileButtonClicked = () => {
+    navigate("/profile", {state: userInfo});
+  }
+
+  useEffect(() => {
+    if (userInfo === null) {
+      navigate("/")
+    } 
+  })
 
   useEffect(() => {
     // State
@@ -189,7 +205,11 @@ const QuestionsPage = () => {
   // Return
   return (
     <div>
-      <h1>Questions</h1>
+      <div className="header">
+        <button title="Go To Home Page" className='homeButton' onClick={onHomeButtonClicked}><span className='headerSpan'>Home</span></button>
+        <h1 className='headerTitle'>Questions</h1>
+        <button title="Go To Profile Page" className='profileButton' onClick={onProfileButtonClicked}><span className='headerSpan'>Profile</span></button>
+      </div>
       <Questions />
     </div>
   );
