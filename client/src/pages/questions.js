@@ -1,5 +1,5 @@
 import React, { useEffect,useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,useLocation } from 'react-router-dom'
 import './questions.css'
 import axios from 'axios';
 
@@ -24,17 +24,19 @@ const QuestionItem = ({ question, attempt }) => {
 
   const Attempt = ({ attempt, index }) => {
     const { date, score, time } = attempt;
+    const userInfo = useLocation().state;
 
     return (
       <li key={index}>
         <span>
           Attempt {index + 1} [date] [score] [time]
         </span>
-        <button onClick={() => navigate(`/questions/${id}/${index}`)}>View</button>
+        <button onClick={() => navigate(`/questions/${id}/${index}`, {state: userInfo})}>View</button>
       </li>
     );
   };
 
+  const userInfo = useLocation().state;
   return (
     <li key={id}>
       <div className="question-header">
@@ -46,7 +48,7 @@ const QuestionItem = ({ question, attempt }) => {
         <span className="question-title">
           Question {id} 
         </span>
-        <button className="start-button" onClick={() => navigate(`/questions/${id}/attmept`)}>
+        <button className="start-button" onClick={() => navigate(`/questions/${id}/attmept`, {state: userInfo})}>
           Start
         </button>
       </div>
@@ -66,7 +68,24 @@ function QuestionPage() {
   const [questions, setQuestions] = useState([]);
   const [attempts,setAttempts]=useState([]);
   const username = "Student_A";  // need to change dynamically 
-  
+  const navigate = useNavigate();
+  const userInfo = useLocation().state;
+
+  const onHomeButtonClicked = () => {
+    navigate("/home", {state: userInfo});
+  }
+
+  const onProfileButtonClicked = () => {
+    navigate("/profile", {state: userInfo});
+  }
+
+  useEffect(() => {
+    if (userInfo === null) {
+      navigate("/");
+    } 
+  })
+
+
   useEffect(() => {
     const getQuestions = async () => {
       try {
@@ -83,7 +102,11 @@ function QuestionPage() {
   
   return (
     <div>
-      <h2>Questions</h2>
+        <div className="header">
+          <button title="Go To Home Page" className='homeButton' onClick={onHomeButtonClicked}><span className='headerSpan'>Home</span></button>
+          <h1 className='headerTitle'>Questions</h1>
+          <button title="Go To Profile Page" className='profileButton' onClick={onProfileButtonClicked}><span className='headerSpan'>Profile</span></button>
+        </div>
       <ul>
         {questions.map((question) => {
           const attempt=attempts.find(a=>a.questionId===question.id);
