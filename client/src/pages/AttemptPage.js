@@ -66,7 +66,7 @@ function AttemptPage() {
         // new feature!!
         // navigate("/question_bank", {
         //     state: state,
-        // });
+        // }); 
     };
 
     // State
