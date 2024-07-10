@@ -59,7 +59,7 @@ const Question = (question) => {
         alert("You cannot start an attempt when there is already an attempt in-progress.");
       } else {
         // TODO (API Start Attempt)
-        navigate("/"); // TODO (Attempt Page ic: State)
+        // navigate("/"); // TODO (Attempt Page ic: State)
       }
     }
 
