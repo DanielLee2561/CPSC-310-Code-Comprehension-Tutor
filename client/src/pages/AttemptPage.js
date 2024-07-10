@@ -120,7 +120,7 @@ function AttemptPage() {
             }
         }
         fetchData();
-    }, [endpoint]);
+    }, [state]);
 
 
 
@@ -209,7 +209,8 @@ function AttemptPage() {
                 console.log("New Attempt Number: " + data.attemptNum);
                 // attemptId = data.attemptNum; //read-only :(
                 // setAttemptNum(data.attemptNum);
-                reloadPage(data.attemptNum);
+                state.attempt = data.attemptNum;
+                navigate("/attempt", {state: state});
             }
         } catch (err) {
             console.log("There was a problem retrying the attempt: " + err);
