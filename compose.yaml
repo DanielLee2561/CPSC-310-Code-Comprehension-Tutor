@@ -1,6 +1,22 @@
+# REFERENCE https://stackoverflow.com/questions/78500319/how-to-pull-model-automatically-with-container-creation
+
+version: '3.7'
+
 services:
   web:
     build: .
     container_name: CodeTutor
     ports: 
       - 5000:5000
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+        - 11434:11434
+    volumes:
+        - ./ollama/ollama:/root/.ollama
+        - ./entrypoint.sh:/entrypoint.sh
+    container_name: ollamaCodeTutor
+    pull_policy: always
+    tty: true
+    restart: always
+    entrypoint: ["/usr/bin/bash", "/entrypoint.sh"]
