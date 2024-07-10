@@ -1,16 +1,21 @@
 import express from "express";
+
 const router = express.Router();
 
 // Data
-import {readJsonFile} from "../functions/fileSystemFunctions.js";
+import {readJsonFile, writeJsonFile} from "../functions/fileSystemFunctions.js";
 
 const usersJsonPath = './data/users.json';
+const questionsJsonPath = './data/questions.json';
 // using let instead of const so that it can be reloaded after changes
 let users_json = readJsonFile(usersJsonPath);
 let users = users_json.users;
+let questions_json = readJsonFile(questionsJsonPath);
+let questions = questions_json.questions;
 
 // Save & Submit Functions
 import {save, submit} from "../functions/dataPersistence.js";
+
 
 /*
     Save/Submit Attempt
@@ -82,30 +87,31 @@ router.put("/:username/questions/:id", async (req, res) => {
 });
 
 
-
 // start attempt call here (Kate)
 router.post("/:username/questions/:id", async (req, res) => {
-    const { username, id: question_id } = req.params;
-    const { password } = req.body;
+    const {username, id: question_id} = req.params;
+    const {password} = req.body;
 
     // Validate request body fields
-    if (!password ) {
-        res.status(400).json({ error: "Invalid or missing fields in request body" });
+    if (!password) {
+        res.status(400).json({error: "Invalid or missing fields in request body"});
         return;
     }
 
+    const startTime = new Date();
+
     // Create new attempt object
     const newAttempt = {
-            "description": "",
-            "notes": "",
-            "inProgress": true,
-            "startTime": null,
-            "endTime": null,
-            "duration": 0,
-            "generatedCode": "",
-            "failingTestCases": "",
-            "testCorrect": 0,
-            "testTotal": 0  
+        "description": "",
+        "notes": "",
+        "inProgress": true,
+        "startTime": startTime,
+        "endTime": null,
+        "duration": null,
+        "generatedCode": null,
+        "failingTestCases": null,
+        "testCorrect": null,
+        "testTotal": null
     };
 
     try {
@@ -113,58 +119,59 @@ router.post("/:username/questions/:id", async (req, res) => {
         if (userIndex !== -1) {
             const questionIndex = users[userIndex].questions.findIndex(q => q.questionId === parseInt(question_id));
             if (questionIndex !== -1) {
+                // Check to ensure that only 1 inProgress attempt can exist per question
+                const attempts = users[userIndex].questions[questionIndex].attempts;
+                for (const attemptIndex in attempts) {
+                    if (attempts[attemptIndex].inProgress) {
+                        res.status(200).json({
+                            message: "There already is an attempt in progress for this question",
+                            attemptNum: (parseInt(attemptIndex) + 1)
+                        });
+                        // If this is code 400, then treated as "bad request" but I want it to be
+                        // recoverable
+                        return;
+                    }
+                }
                 users[userIndex].questions[questionIndex].attempts.push(newAttempt);
-                writeJsonFile(usersJsonPath, { usersList: users });
-                res.status(204).json('New attempt added successfully.'); 
+                writeJsonFile(usersJsonPath, users_json);
+                res.status(200).json({
+                    message: 'New attempt added successfully.',
+                    attemptNum: users[userIndex].questions[questionIndex].attempts.length
+                });
+                
             } else {
-                res.status(404).json({ error: `Question with questionId ${question_id} not found` });
+                res.status(404).json({error: `Question with questionId ${question_id} not found`});
             }
         } else {
-            res.status(404).json({ error: `User with username "${username}" not found` });
+            res.status(404).json({error: `User with username "${username}" not found`});
         }
     } catch (err) {
         console.error('Error adding new attempt:', err);
-        res.status(500).json({ error: "An error occurred while processing your request" });
+        res.status(500).json({error: "An error occurred while processing your request"});
     }
 });
 
-
-// View Previous Attempt for a Specific Question (Mark)
-router.get('/:username/questions/:id/:attemptID', (req, res) => {
+// View Questions (list of all questions that user started & attempted, along with all of their attempts)
+router.put("/:username/questions", (req, res) => {
     const username = req.params.username;
     const password = req.body.password;
-    const questionId = req.params.id;
-    const attemptId = req.params.attemptID;
 
-    if (!username || !questionId || !password || !attemptId)
-        return res.status(400).json({error:"element missing."});
-
-    const user = users.find(c => c.username === username);
-    if (!user) return res.status(404).send('User is not found.');
-    if (user.password !== password) return res.status(401).send('Unauthorized to access this data');
-
-    const question = user.questions.find(c => c.questionId === parseInt(questionId));
-    if (!question) return res.status(404).send('Question is not found.');
-
-    const attempts = question.attempts;
-
-    let foundAttempt;
-    let index = 1;
-
-    for (let attempt of attempts) {
-        if (index === parseInt(attemptId)) {
-            foundAttempt = attempt;
-            break;
+    for (let user of users) {
+        if (user.username === username) {
+            if (user.password !== password) {
+                res.status(401).json({error: "Incorrect password"});
+                return;
+            } else if (!user.statusLogin) {
+                res.status(401).json({error: "User is not currently logged in"});
+                return;
+            } else {
+                res.json({questions: user.questions});
+                return;
+            }
         }
-        index++;
     }
-
-    if (!foundAttempt) return res.status(404).send('Attempt is not found.');
-
-    res.status(200).json(foundAttempt);
+    res.status(404).json({error: "Could not find user"});
 });
-
-
 
 
 export default router;

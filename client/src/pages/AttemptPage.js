@@ -15,12 +15,16 @@ function AttemptPage() {
     // State
     const state = useLocation().state;
     const props = useLocation().state;
-    const question_id = 1;
-    const attemptId = 2;
-    const username = "Student_B";
-    // const question_id = state.question;
-    // const attemptId = state.attempt;
-    // const username = state.username;
+
+    const question_id = state.question;
+    const attemptId = state.attempt;
+    const username = state.username;
+    const password = state.password;
+    
+    // console.log(question_id);
+    // console.log(attemptId);
+    // console.log(username);
+    // console.log(props.password);
 
     const numericAttemptId = parseInt(attemptId);
     // Initializing states and state hooks.
@@ -33,7 +37,7 @@ function AttemptPage() {
     const [generatedCode, setGeneratedCode] = useState("");
 
     // const question_id = props.question_id;
-    const [attemptNum, setAttemptNum] = useState("");
+    const [attemptNum, setAttemptNum] = useState(attemptId);
     const [testsCorrect, setTestsCorrect] = useState(0);
     const [testsTotal, setTestsTotal] = useState(0);
     const [duration, setDuration] = useState(0);
@@ -47,11 +51,22 @@ function AttemptPage() {
     // IMPORTANT: This is not the full endpoint.
     // You may need to concatenate /attempts/:attempt_number (attemptNum) at the end.
     // Attempt number can change (due to retry/redo) so it cannot be statically included.
-    const endpoint = "/users/" + props.username + "/questions/" + props.question_id;
+    const endpoint = "http://localhost:5000/users/" + username + "/questions/" + question_id;
     // For refreshing the page, use reloadPage()
     const navigate = useNavigate();
-    const reloadPage = () => {
-        // navigate(/questions);
+    const reloadPage = (newAttemptId) => {
+        const update_state = {
+            question: question_id,
+            attempt: newAttemptId? newAttemptId : attemptId,
+            username: username,
+            password: password
+        };
+        navigate(0, {state:update_state});
+
+        // new feature!!
+        // navigate("/question_bank", {
+        //     state: state,
+        // });
     };
 
     // State
@@ -67,38 +82,45 @@ function AttemptPage() {
     // if not, create the new attempt; or return the latest attempt?
 
     useEffect(() => {
-        const fetchQuestionData = async () => {
+        const fetchData = async () => {
             try {
-                const questionsResponse  = await axios.get(`/questions/${question_id}`);
-                const userResponse  = await axios.get(`/users/Student_A`) ;
-                const questions = questionsResponse.data;
-                const user = userResponse.data;
-                const userQuestion = user.questions.find(q => q.questionId === parseInt(question_id));
-                console.log(userQuestion);
-                if (userQuestion && userQuestion.attempts.length === 0) {
-                    setAttemptNum(1);
-                    setFunctionText(questions.code); 
-                } 
-                else {
-                    //need to change dynamcially corresponding to the questions page
-                    const attmeptNum=attemptId;
-                    setAttemptNum(attmeptNum);
-                    setFunctionText(questions.code); 
-                    setDescription(userQuestion.attempts[attmeptNum].description);
-                    setNotes(userQuestion.attempts[attmeptNum].notes);
-                    setFailingTestCases(userQuestion.attempts[attmeptNum].failingTestCases);
-               
+                // sessionStorage.setItem("attemptNumber", props.attempt_num);
+                // setAttemptNum(attemptId);
+                console.log("Fetching data..." + attemptId);
+                const response = await fetch(endpoint + "/attempts/" + attemptId, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({password: props.password})
+                });
+                if (!response.ok) {
+                    console.log(response);
+                    // TODO: Fix here. Refresh the page if the response is not ok.
+                    //  very hacky and could potentially lead to an infinite loop.
+                    // reloadPage();
+
+                    // no longer needed??
                 }
-             
-               
-            } catch (error) {
-                console.error('Error fetching question:', error);
+                const result = await response.json();
+
+                setInProgress(result.inProgress);
+                setDescription(result.description);
+                setNotes(result.notes);
+                setGeneratedCode(result.generatedCode);
+                setFailingTestCases(result.failingTestCases);
+                setTestsCorrect(result.testCorrect);
+                setTestsTotal(result.testTotal);
+                setDuration(result.duration);
+                setFunctionText(result.question);
+            } catch (err) {
+                // For debugging
+                console.log(err.message);
+                // setFunctionText(err.message);
             }
-        };
-    
-        fetchQuestionData(); 
-    
-    }, [question_id,username]); 
+        }
+        fetchData();
+    }, [endpoint]);
 
 
 
@@ -111,7 +133,7 @@ function AttemptPage() {
         setNotes(event.target.value);
     }
 
-    const submit = async () => {
+    const handleSubmit = async () => {
         setSubmitEnabled(false);
         const input = {
             password: props.password,
@@ -119,6 +141,7 @@ function AttemptPage() {
             notes: notes,
             inProgress: false
         }
+
         try {
             const response = await fetch(endpoint, {
                 method: "PUT", headers: {
@@ -136,104 +159,64 @@ function AttemptPage() {
         } finally {
             setSubmitEnabled(true);
         }
-    }
-
-    const handleSubmit = () => {
-        submit();
     };
 
-    // const save = async () => {
-    //     setSaveEnabled(false);
-        
-    //     const input = {
-    //         password: props.password, description: description, notes: notes, inProgress: true
-    //     }
-    //     try {
-    //         const response = await fetch(endpoint, {
-    //             method: "PUT", headers: {
-    //                 'Content-Type': 'application/json'
-    //             }, body: JSON.stringify(input)
-    //         });
-
-    //         if (!response.ok) {
-    //             console.log("Could not fetch data. Code " + response.status);
-    //         } else {
-    //             reloadPage();
-    //         }
-    //     } catch (err) {
-    //         console.log("There was a problem saving the attempt: " + err);
-    //     } finally {
-    //         setSaveEnabled(true);
-    //     }
-    // }
-    const save = async () => {
+    const handleSave = async () => {
         setSaveEnabled(false);
         const input = {
+            password: props.password,
             description: description,
             notes: notes,
             inProgress: true
-        };
+        }
         try {
-            const response = await axios.put(`/users/${username}/questions/${question_id}`, input);
-            console.log('Data saved successfully:', response.data);
-            reloadPage();
-        } catch (error) {
-            console.error('There was a problem saving the attempt:', error);
+            const response = await fetch(endpoint, {
+                method: "PUT", headers: {
+                    'Content-Type': 'application/json'
+                }, body: JSON.stringify(input)
+            });
+
+            if (!response.ok) {
+                console.log("Could not fetch data. Code " + response.status);
+            } else {
+                reloadPage();
+            }
+        } catch (err) {
+            console.log("There was a problem saving the attempt: " + err);
         } finally {
             setSaveEnabled(true);
         }
-    };
-
-    const handleSave = () => {
-        save();
     }
 
-    const retry = () => {
+    const handleRetry = async () => {
         setRetryEnabled(false);
         const input = {
-            password: props.password
+            password: password
         }
-        // TODO: Retry may look similar to this (no guarantees though!)
-        // try {
-        //     const response = await fetch(endpoint, {
-        //         method: "PUT",
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         },
-        //         body: JSON.stringify(input)
-        //     });
-        //
-        //     if (!response.ok) {
-        //         console.log("Could not fetch data. Code " + response.status);
-        //     } else {
-        //         reloadPage();
-        //     }
-        // } catch (err) {
-        //     console.log("There was a problem saving the attempt: " + err);
-        // } finally {
-        //     setSaveEnabled(true);
-        // }
-
-        // TODO: Delete below stuff when retry is actually created
-        const retrySuccessful = true; // stub
-
-        setTimeout(() => {
-            if (retrySuccessful) {
-                setAttemptNum(attemptNum + 1); // change this to be the new attempt number
-                // its not always +1 (ie user is on attempt 3 page and wants to retry, but they already did attempt 4)
-                // potentially also restate the function question as well (for same reason as above)
-                setInProgress(true); //
-                setGeneratedCode("");
-                setFailingTestCases("");
+        try {
+            const response = await fetch(endpoint, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(input)
+            });
+            if (!response.ok) {
+                console.log("Could not fetch data. Code " + response.status);
             } else {
-                alert("Initializing new attempt failed."); // question may no longer exist?
+                const data = await response.json();
+                // props.attempt_num = data.attemptNum; // cannot reassign read-only value
+                console.log("New Attempt Number: " + data.attemptNum);
+                // attemptId = data.attemptNum; //read-only :(
+                // setAttemptNum(data.attemptNum);
+                reloadPage(data.attemptNum);
             }
+        } catch (err) {
+            console.log("There was a problem retrying the attempt: " + err);
+            console.log(attemptId);
+        } finally {
             setRetryEnabled(true);
-        }, 1000);
-    }
-
-    const handleRetry = () => {
-        retry();
+        }
     }
 
     // For return button
@@ -268,7 +251,7 @@ function AttemptPage() {
             <div className="header">
                 <button title="Go To Home Page" className='homeButton' onClick={onHomeButtonClicked}><span className='headerSpan'>Home</span></button>
                 <button className="returnButton" title="Back"  onClick={handleReturn}><span className='headerSpan'>Return</span></button>
-                <h1 className='headerTitleAttempt'>Question: {question_id} - Attempt: #{numericAttemptId+1}</h1>
+                <h1 className='headerTitleAttempt'>Question: {question_id} - Attempt: {attemptId}</h1>
                 <button title="Go To Profile Page" className='profileButton' onClick={onProfileButtonClicked}><span className='headerSpan'>Profile</span></button>
             </div>
             {!isInProgress ? <div>
