@@ -9,19 +9,9 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp; The web application will feature several unique features, one of which are researcher accounts. These accounts are instantiated manually, and they allow researchers to add, edit, and delete questions. Furthermore, they can view students’ highest scores for each question, and see question and student averages. This may allow researchers to evaluate the effectiveness of the questions and find out which types of functions students find easy or difficult to understand. They may modify the questions or add new ones to give students more to practice with. Another unique feature is a tutorial page, which will contain a video and a short, written guide on how to answer questions on the app. Lastly, students’ accounts will be secured with a password that they may change at any time.
 
-## Docker Compose (Setup Instruction with Compose)
+## Docker Setup (Compose)
 
 1) Install "Docker Desktop"
 2) Open "Docker Desktop"
-3) In project folder (top level of project) run 'docker compose up' without quotes
-4) Go to http://localhost:5000/
-
-## Setup Instruction
-
-1) Install "Docker Desktop"
-2) Open "Docker Desktop"
-3) Create "Docker Image"      In terminal at top-level, execute "docker build -t [title] ."
-4) Create "Docker Container"  In terminal at top-level, execute "docker container run -p 5000:5000 --rm [title]"
-6) Open "Project"             In web browser, open "localhost:5000/"
-
-Replace "[title]" with a name of your choice for the Docker Image.
+3) In top-level of project folder, execute without quotes "docker compose up -d".
+4) Open "http://localhost:5000/"
