@@ -69,10 +69,10 @@ const Question = (question) => {
   // View Button
   const ButtonView = (props) => {
     const state = useLocation().state;
-    state.question = props.question;
-    state.attempt = props.attempt;
 
     const onClick = () => {
+      state.question = props.question;
+      state.attempt = props.attempt;
       navigate("/attempt", {state: state});
     }
 
@@ -119,7 +119,7 @@ const Question = (question) => {
           {attempts.map((attempt, attemptID) =>
             <li>
               {Attempt("Attempt", attemptID+1, attempt)}
-              <ButtonView question={id} attempt={attemptID}/>
+              <ButtonView question={id} attempt={attemptID+1} />
             </li>
           )}
         </ul>

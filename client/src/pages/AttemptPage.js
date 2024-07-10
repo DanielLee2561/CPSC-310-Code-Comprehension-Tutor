@@ -16,7 +16,7 @@ function AttemptPage() {
     const state = useLocation().state;
     const props = useLocation().state;
     const question_id = state.question;
-    const attemptId = state.attempt;
+    const attemptId = state.attempt - 1;
     const username = state.username;
 
     const numericAttemptId = parseInt(attemptId);
