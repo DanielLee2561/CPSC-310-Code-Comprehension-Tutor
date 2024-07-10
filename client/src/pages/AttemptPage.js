@@ -15,12 +15,9 @@ function AttemptPage() {
     // State
     const state = useLocation().state;
     const props = useLocation().state;
-    const question_id = 1;
-    const attemptId = 2;
-    const username = "Student_B";
-    // const question_id = state.question;
-    // const attemptId = state.attempt;
-    // const username = state.username;
+    const question_id = state.question;
+    const attemptId = state.attempt;
+    const username = state.username;
 
     const numericAttemptId = parseInt(attemptId);
     // Initializing states and state hooks.
