@@ -1,5 +1,4 @@
 import './AttemptPage.css';
-import { useParams } from 'react-router-dom';
 import React, {useState, useEffect} from 'react';
 import {useNavigate,useLocation} from 'react-router-dom';
 import axios from "axios";
@@ -12,8 +11,17 @@ import axios from "axios";
         - password (string): The user's password. Used for authentication purposes with the API calls.
  */
 
-function AttemptPage(props) {
-    const { id: question_id,attemptId:attemptId,username:username} = useParams();
+function AttemptPage() {
+    // State
+    const state = useLocation().state;
+    const props = useLocation().state;
+    const question_id = 1;
+    const attemptId = 2;
+    const username = "Student_B";
+    // const question_id = state.question;
+    // const attemptId = state.attempt;
+    // const username = state.username;
+
     const numericAttemptId = parseInt(attemptId);
     // Initializing states and state hooks.
     const [functionText, setFunctionText] = useState("");
@@ -35,7 +43,6 @@ function AttemptPage(props) {
     const [saveEnabled, setSaveEnabled] = useState(true);
     const [submitEnabled, setSubmitEnabled] = useState(true);
     const [retryEnabled, setRetryEnabled] = useState(true);
-    const userInfo = useLocation().state;
 
     // IMPORTANT: This is not the full endpoint.
     // You may need to concatenate /attempts/:attempt_number (attemptNum) at the end.
@@ -47,11 +54,14 @@ function AttemptPage(props) {
         // navigate(/questions);
     };
 
+    // State
     useEffect(() => {
-        if (userInfo === null) {
-          navigate("/")
-        } 
-      })
+        if (state === null) {
+            navigate("/");
+        } else {
+            console.log(state);
+        }
+    }, [state])
 
     // get the corresponding data from the questionid and check user whether done this question before?
     // if not, create the new attempt; or return the latest attempt?
@@ -228,15 +238,17 @@ function AttemptPage(props) {
 
     // For return button
     const handleReturn = () => {
-        navigate("/question_bank", {state: userInfo});
+        delete state.question;
+        delete state.attempt;
+        navigate("/question_bank", {state: state});
     }
 
     const onHomeButtonClicked = () => {
-        navigate("/home", {state: userInfo});
+        navigate("/home", {state: state});
     }
 
     const onProfileButtonClicked = () => {
-        navigate("/profile", {state: userInfo});
+        navigate("/profile", {state: state});
     }
 
 
