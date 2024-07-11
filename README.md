@@ -12,6 +12,15 @@
 **Test Suite**
 
   https://drive.google.com/drive/folders/1f2XV9w6UkyC2rSI35xyZcPp23jXBQXw7?usp=sharing
+  
+**Caution**
+
+1) The Start Button in the Question Bank page has not been implemented.
+2) The Save/Submit/Retry Buttons in the Attempt page have been implemented, but they do not work in Docker. However, you can still view the information related to each attempt in the frontend.
+3) A student can register an account, but they are not able to answer questions. This is because we need to implement a function that enables a 'new' user to know what questions exist in the backend. However, an existing user can access the question bank.
+4) If you intend to test the prototype, please use an account that already exists in the backend.
+  - Username: Student_A
+  - Password: pStudent_A
 
 ## Docker Compose
 
