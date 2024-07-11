@@ -5,23 +5,41 @@ import axios from 'axios';
 
 
 
-const QuestionItem = ({ question, attempt }) => {
+const QuestionItem = ({ username, question, attempt }) => {
+
   const { id } = question;
   const {attempts}=attempt;
-  const [expanded, setExpanded] = useState(false);
   
+  const [expanded, setExpanded] = useState(false);
+  const [attemptInprograss,setAttemptInprograss]=useState(false);
   const navigate = useNavigate();
   
 
   const onClickRedo=()=>{
     
   }
+  
+  const handleStartClick=async (attemptIndex)=>{
+  try {
+    const username='Student_A';
+    const password='pStudent_A';
+    const response=await axios.post(`http://localhost:5000/users/${username}/questions/${id}`, {
+      password: password
+    });
+    console.log("Created the new attempt"+response);
+    //get the attemptId from  attempt  array again 
+    
+    navigate(`/questions/${id}/${attemptIndex + 1}`);
+  } catch (error) {
+    console.log(error)
+  }
+  }
 
   const onClickExpand = () => {
     setExpanded(!expanded);
   };
 
-  const Attempt = ({ attempt, index }) => {
+  const Attempt = ({ attempt, index}) => {
     const { date, score, time } = attempt;
 
     return (
@@ -29,7 +47,7 @@ const QuestionItem = ({ question, attempt }) => {
         <span>
           Attempt {index + 1} [date] [score] [time]
         </span>
-        <button onClick={() => navigate(`/questions/${id}/attmept`)}>View</button>
+        <button onClick={() => navigate(`/questions/${id}/${index}`)}>View</button>
       </li>
     );
   };
@@ -43,16 +61,20 @@ const QuestionItem = ({ question, attempt }) => {
           onClick={onClickExpand}
         />
         <span className="question-title">
-          Question {id} [DATE] [SCORE] [TIME]
+          Question {id} 
         </span>
-        <button className="start-button" onClick={() => navigate(`/questions/${id}/attmept`)}>
+        <button 
+        key={id}
+        className="start-button" 
+        onClick={() => handleStartClick(attempts.length)}
+        >
           Start
         </button>
       </div>
       {expanded && (
         <ul>
           {attempts.map((attempt, index) => (
-            <Attempt key={index} attempt={attempt} index={index} />
+            <Attempt key={index} attempt={attempt} index={index}  />
           ))}
         </ul>
       )}
@@ -89,6 +111,7 @@ function QuestionPage() {
          return (
             <QuestionItem
             key={question.id}
+            username={username}
             question={question}
             attempt={attempt || { attempts: [] }}
             />

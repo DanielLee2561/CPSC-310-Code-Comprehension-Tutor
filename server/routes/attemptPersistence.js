@@ -11,8 +11,8 @@ let users_json = readJsonFile(usersJsonPath);
 let users = users_json.users;
  console.log(users)
 
-// Save & Submit Functions
-import {save, submit} from "../functions/dataPersistence.js";
+// // Save & Submit Functions
+// import {save, submit} from "../functions/dataPersistence.js";
 
 /*
     Save/Submit Attempt
@@ -42,46 +42,71 @@ import {save, submit} from "../functions/dataPersistence.js";
             code and evaluating it)
 
  */
-router.put("/:username/questions/:id", async (req, res) => {
-    const { username, id: question_id } = req.params;
-    const { password, description, notes, inProgress } = req.body;
-    if (!password || !description || !notes || typeof inProgress === 'undefined') {
-        res.status(400).json({ error: "Missing required fields in request body" });
-        return;
-    }
-    console.log(users);
-    const user = users.find(u => u.username === username);
-    if (!user) {
-        res.status(404).json({ error: "Could not find user" });
-        return;
-    }
 
-    if (user.password !== password) {
-        res.status(401).json({ error: "Incorrect password" });
-        return;
-    }
+//update the attempt / save the attempt
+router.put("/:username/questions/:id/:attemptId", async (req, res) => {
+    const username = req.params.username;
+    const password = req.body.password;
+    const description=req.body.description;
+    const notes=req.body.notes;
+    const questionId = req.params.id;
+    const attemptId = req.params.attemptId;
 
-    if (!user.statusLogin) {
-        res.status(401).json({ error: "User is not currently logged in" });
-        return;
-    }
+    if ( !username || !questionId || !password || !attemptId)
+        return res.status(400).json({error:"element missing."});
 
-    try {
-        let attempt;
-        if (inProgress) {
-            attempt = save(username, question_id, description, notes);
-            res.send(attempt);
-        } else {
-            resultMessage = await submit(username, question_id, description, notes);
-            console.log(resultMessage);
-            users_json = readJsonFile(usersJsonPath); // JSON was updated due to submit (must reload it)
-            users = users_json;
-        }
+    const user = users.find(c => c.username === username);
+    if (!user) return res.status(404).send('User is not found.');
+    if (user.password !== password) return res.status(401).send('Unauthorized to access this data');
 
-    } catch (err) {
-        res.status(500).json({ error: "An error occurred while processing your request" });
-    }
+    const question = user.questions.find(c => c.questionId === parseInt(questionId));
+    if (!question) return res.status(404).send('Question is not found.');
+
+    const attempts = question.attempts;
+
+    
+    if (description) attempts[attemptId-1].description = description;
+    if (notes) attempts[attemptId-1].notes = notes;
+    writeJsonFile(usersJsonPath, { users: users });
+    console.log(attempts[attemptId-1]);
+    
+    res.status(200).send(attempts[attemptId-1]);
 });
+
+
+
+//submit the attempt 
+// router.put("/:username/questions/:id/:attemptId/ollama", async (req, res) => {
+//     const username = req.params.username;
+//     // const password = req.body.password;
+//     const description=req.body.description;
+//     const notes=req.body.notes;
+//     const questionId = req.params.id;
+//     const attemptId = req.params.attemptId;
+
+//     if ( !username || !questionId ||  !attemptId)
+//         return res.status(400).json({error:"element missing."});
+//     if (!description) return res.status(404).send("Need the description to run Ollama!");
+//     // pass the desciption to ollama api (ollama.js)
+//     const generatedCode=await axios.get(`http://localhost:5000/submit`,description);
+//     console.log(generatedCode);
+//     const user = users.find(c => c.username === username);
+//     if (!user) return res.status(404).send('User is not found.');
+//     // if (user.password !== password) return res.status(401).send('Unauthorized to access this data');
+
+//     const question = user.questions.find(c => c.questionId === parseInt(questionId));
+//     if (!question) return res.status(404).send('Question is not found.');
+
+//     const attempts = question.attempts;
+
+    
+//     attempts[attemptId-1].description = description;
+//     if (notes) attempts[attemptId-1].notes = notes;
+//     writeJsonFile(usersJsonPath, { users: users });
+    
+//     res.status(200).json(attempts[attemptId-1]);
+// });
+
 
 
 
@@ -100,7 +125,7 @@ router.post("/:username/questions/:id", async (req, res) => {
     const newAttempt = {
             "description": "",
             "notes": "",
-            "inProgress": true,
+            "inProgress": false,
             "startTime": null,
             "endTime": null,
             "duration": 0,
@@ -116,7 +141,7 @@ router.post("/:username/questions/:id", async (req, res) => {
             const questionIndex = users[userIndex].questions.findIndex(q => q.questionId === parseInt(question_id));
             if (questionIndex !== -1) {
                 users[userIndex].questions[questionIndex].attempts.push(newAttempt);
-                writeJsonFile(usersJsonPath, { usersList: users });
+                writeJsonFile(usersJsonPath, { users: users });
                 res.status(204).json('New attempt added successfully.'); 
             } else {
                 res.status(404).json({ error: `Question with questionId ${question_id} not found` });
@@ -138,7 +163,7 @@ router.get('/:username/questions/:id/:attemptID', (req, res) => {
     const questionId = req.params.id;
     const attemptId = req.params.attemptID;
 
-    if (!username || !questionId || !password || !attemptId)
+    if ( !username || !questionId || !password || !attemptId)
         return res.status(400).json({error:"element missing."});
 
     const user = users.find(c => c.username === username);
@@ -165,9 +190,6 @@ router.get('/:username/questions/:id/:attemptID', (req, res) => {
 
     res.status(200).json(foundAttempt);
 });
-
-
-
 
 
 

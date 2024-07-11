@@ -2,7 +2,8 @@ import './AttemptPage.css';
 import { useParams } from 'react-router-dom';
 import React, {useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
-import axios from "axios"
+import axios from "axios";
+
 /*
     Props Required:
         - question_id (int): The ID of the question being viewed/attempted
@@ -12,68 +13,55 @@ import axios from "axios"
  */
 
 function AttemptPage(props) {
-    const { id: question_id,username:username} = useParams();
-    
-    // Initializing states and state hooks.
-    const [functionText, setFunctionText] = useState("");
-
+    const { id: question_id,attemptId:attemptId} = useParams();
+    const username="Student_A";
+    const numericAttemptId = parseInt(attemptId);
+    const [functionText, setFunctionText] = useState(""); 
     const [isInProgress, setInProgress] = useState(true);
     const [description, setDescription] = useState("");
     const [notes, setNotes] = useState("");
     const [failingTestCases, setFailingTestCases] = useState("");
     const [generatedCode, setGeneratedCode] = useState("");
-
-    // const question_id = props.question_id;
     const [attemptNum, setAttemptNum] = useState("");
     const [testsCorrect, setTestsCorrect] = useState(0);
     const [testsTotal, setTestsTotal] = useState(0);
     const [duration, setDuration] = useState(0);
 
-    // just for visual indicators that attempt is being saved/submitted
-    // also useful to not bombard the server with many api calls from one user
     const [saveEnabled, setSaveEnabled] = useState(true);
     const [submitEnabled, setSubmitEnabled] = useState(true);
     const [retryEnabled, setRetryEnabled] = useState(true);
 
-    // IMPORTANT: This is not the full endpoint.
-    // You may need to concatenate /attempts/:attempt_number (attemptNum) at the end.
-    // Attempt number can change (due to retry/redo) so it cannot be statically included.
-    const endpoint = "/users/" + props.username + "/questions/" + props.question_id;
+    
     // For refreshing the page, use reloadPage()
     const navigate = useNavigate();
     const reloadPage = () => {
         // navigate(/questions);
     };
 
-    // get the corresponding data from the questionid and check user whether done this question before?
-    // if not, create the new attempt; or return the latest attempt?
-
     useEffect(() => {
         const fetchQuestionData = async () => {
             try {
-                const questionsResponse  = await axios.get(`/questions/${question_id}`);
-                const userResponse  = await axios.get(`/users/Student_A`) ;
+                const questionsResponse  = await axios.get(`http://localhost:5000/questions/${question_id}`);
+                const userResponse  = await axios.get(`http://localhost:5000/users/${username}`) ;
                 const questions = questionsResponse.data;
+                console.log("questions"+questions);
                 const user = userResponse.data;
+                console.log(user);
                 const userQuestion = user.questions.find(q => q.questionId === parseInt(question_id));
-                console.log(userQuestion);
-                if (userQuestion && userQuestion.attempts.length === 0) {
-                    setAttemptNum(1);
-                    setFunctionText(questions.code); 
+                console.log(userQuestion); 
+                setFunctionText(questions.code); 
+                const attmeptNum=attemptId;
+                setAttemptNum(attmeptNum);
+                console.log(attmeptNum);
+                if (userQuestion) {
+                    if (userQuestion.attempts && userQuestion.attempts.length > attmeptNum && attmeptNum >= 0) {
+                        setDescription(userQuestion.attempts[attmeptNum]?.description || '');
+                        setNotes(userQuestion.attempts[attmeptNum]?.notes || '');
+                        setFailingTestCases(userQuestion.attempts[attmeptNum]?.failingTestCases || []);          
                 } 
-                else {
-                    //need to change dynamcially corresponding to the questions page
-                    const lastAttempt=userQuestion.attempts.length -1;
-                    setAttemptNum(lastAttempt+1);
-                    setFunctionText(questions.code); 
-                    setDescription(userQuestion.attempts[lastAttempt].description);
-                    setNotes(userQuestion.attempts[lastAttempt].notes);
-                    setFailingTestCases(userQuestion.attempts[lastAttempt].failingTestCases);
-               
-                }
-             
-               
-            } catch (error) {
+            }
+        }
+            catch (error) {
                 console.error('Error fetching question:', error);
             }
         };
@@ -81,7 +69,6 @@ function AttemptPage(props) {
         fetchQuestionData(); 
     
     }, [question_id,username]); 
-
 
 
 
@@ -93,60 +80,51 @@ function AttemptPage(props) {
         setNotes(event.target.value);
     }
 
-    const submit = async () => {
-        setSubmitEnabled(false);
-        const input = {
-            password: props.password,
-            description: description,
-            notes: notes,
-            inProgress: false
-        }
-        try {
-            const response = await fetch(endpoint, {
-                method: "PUT", headers: {
-                    'Content-Type': 'application/json'
-                }, body: JSON.stringify(input)
-            });
+    // const submit = async () => {
+    //     setSubmitEnabled(false);
+    //     const input = {
+    //         // password: props.password,
+    //         description: description,
+    //         notes: notes,
+    //         inProgress: false
+    //     }
+    //     try {
+    //         //call update attempt api there
+    //         const generatedCode=await axios.get(`http://localhost:5000/submit`,description);
+    //         console.log(generatedCode);
+    //     } catch (err) {
 
-            if (!response.ok) {
-                console.log("Could not fetch data. Code " + response.status);
-            } else {
-                reloadPage();
-            }
-        } catch (err) {
-            console.log("There was a problem submitting the attempt: " + err);
-        } finally {
-            setSubmitEnabled(true);
-        }
-    }
+    //         console.log("There was a problem submitting the attempt: " + err);
+    //     } finally {
+    //         setSubmitEnabled(true);
+    //     }
+    // }
 
     const handleSubmit = () => {
-        submit();
+        // submit();
     };
 
+   
     const save = async () => {
-        setSaveEnabled(false);
+        //  setSaveEnabled(false);
         const input = {
-            password: props.password, description: description, notes: notes, inProgress: true
-        }
+            password:'pStudent_A',
+            description: description,
+            notes: notes,
+            inProgress: true
+        };
         try {
-            const response = await fetch(endpoint, {
-                method: "PUT", headers: {
-                    'Content-Type': 'application/json'
-                }, body: JSON.stringify(input)
-            });
-
-            if (!response.ok) {
-                console.log("Could not fetch data. Code " + response.status);
-            } else {
-                reloadPage();
-            }
-        } catch (err) {
-            console.log("There was a problem saving the attempt: " + err);
+            const attemptIndex=parseInt(attemptId)+1;
+            const response = await axios.put(`http://localhost:5000/users/${username}/questions/${question_id}/${attemptIndex}`, input);
+            console.log(response.data);
+            console.log('Data saved successfully:', response.data);
+            // reloadPage();
+        } catch (error) {
+            console.error('There was a problem saving the attempt:', error);
         } finally {
             setSaveEnabled(true);
         }
-    }
+    };
 
     const handleSave = () => {
         save();
@@ -219,13 +197,13 @@ function AttemptPage(props) {
 
     return (
         <div className="AttemptPage">
-            <h1 style={{ color: "black" }}>Question: {question_id} - Attempt: #{attemptNum}</h1>
+            <h1 style={{ color: "black" }}>Question: {question_id} - Attempt # {numericAttemptId+1}</h1>
             <button className="return-button" onClick={handleReturn}>Return</button>
             {!isInProgress ? <div>
                 <h2 style={{ color: scoreColour }}>{testsCorrect}/{testsTotal}&emsp;&emsp;{duration}s</h2>
             </div> : <h2 style={{ color: "darkorchid" }}>Attempt In Progress</h2>}
 
-            <h2>Formulate the functionality of the following foo function</h2>
+            <h2>Formulate the functionality of the following function</h2>
 
             <div className="grid-container">
                 <pre className="grid-item function-text">
