@@ -112,24 +112,8 @@ function AttemptPage(props) {
                 return null;
             };
             const extractedFunction = extractFunctionContent(generatedCode);
+            setGeneratedCode(extractedFunction);
             console.log(extractedFunction);
-     
-    
-            // const extractedFunction = extractFunctionContent(generatedCode);
-            // setGeneratedCode(extractedFunction);
-            // console.log(extractedFunction);
-            // const convertFunctionToJSON = (extractedFunction) => {
-            //     if (extractedFunction) {
-            //         return JSON.stringify(extractedFunction, null, 2);
-            //     } else {
-            //         console.error("Function content is empty or undefined.");
-            //         return null;
-            //     }
-            // };
-            // const jsonFormattedFunction = convertFunctionToJSON(extractedFunction);
-            // console.log("jsonFormattedFunction"+jsonFormattedFunction)
-            // Prepare input for saving the attempt
-
             
             const input = {
                 password: 'pStudent_A',
@@ -151,7 +135,7 @@ function AttemptPage(props) {
 
     const handleSubmit = () => {
         submit(description, notes);
-        //  save();
+
     };
 
    

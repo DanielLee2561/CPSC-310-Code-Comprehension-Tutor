@@ -51,12 +51,12 @@
           "questionId": 2,
           "attempts": [
             {
-              "description": "The function foo takes an array n as its argument, iterates through each element in the array, sums up all the elements, and returns the total sum.",
+              "description": "The function foo takes an array n as its argument, iterates through each element in the array, sums up all the elements, and returns the total sum. only using one variable in the function",
               "notes": "Your notes here",
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
-              "generatedCode": "function foo(n) {\n  let sum = 0;\n  for (const num of n) {\n    sum += num;\n  }\n  return sum;\n}",
+              "generatedCode": "function foo(n) {\n  let total = 0;\n  for (const num of n) {\n    total += num;\n  }\n  return total;\n}",
               "failingTestCases": "testsFailed",
               "testCorrect": 1,
               "testTotal": 2,
