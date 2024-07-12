@@ -76,36 +76,36 @@ router.put("/:username/questions/:id/:attemptId", async (req, res) => {
 
 
 //submit the attempt 
-// router.put("/:username/questions/:id/:attemptId/ollama", async (req, res) => {
-//     const username = req.params.username;
-//     // const password = req.body.password;
-//     const description=req.body.description;
-//     const notes=req.body.notes;
-//     const questionId = req.params.id;
-//     const attemptId = req.params.attemptId;
+router.put("/:username/questions/:id/:attemptId/ollama", async (req, res) => {
+    const username = req.params.username;
+    // const password = req.body.password;
+    const description=req.body.description;
+    const notes=req.body.notes;
+    const questionId = req.params.id;
+    const attemptId = req.params.attemptId;
 
-//     if ( !username || !questionId ||  !attemptId)
-//         return res.status(400).json({error:"element missing."});
-//     if (!description) return res.status(404).send("Need the description to run Ollama!");
-//     // pass the desciption to ollama api (ollama.js)
-//     const generatedCode=await axios.get(`http://localhost:5000/submit`,description);
-//     console.log(generatedCode);
-//     const user = users.find(c => c.username === username);
-//     if (!user) return res.status(404).send('User is not found.');
-//     // if (user.password !== password) return res.status(401).send('Unauthorized to access this data');
+    if ( !username || !questionId ||  !attemptId)
+        return res.status(400).json({error:"element missing."});
+    if (!description) return res.status(404).send("Need the description to run Ollama!");
+    // pass the desciption to ollama api (ollama.js)
+    const generatedCode=await axios.get(`http://localhost:5000/questions/ollama/submit`,description);
+    console.log(generatedCode);
+    const user = users.find(c => c.username === username);
+    if (!user) return res.status(404).send('User is not found.');
+    // if (user.password !== password) return res.status(401).send('Unauthorized to access this data');
 
-//     const question = user.questions.find(c => c.questionId === parseInt(questionId));
-//     if (!question) return res.status(404).send('Question is not found.');
+    const question = user.questions.find(c => c.questionId === parseInt(questionId));
+    if (!question) return res.status(404).send('Question is not found.');
 
-//     const attempts = question.attempts;
+    const attempts = question.attempts;
 
     
-//     attempts[attemptId-1].description = description;
-//     if (notes) attempts[attemptId-1].notes = notes;
-//     writeJsonFile(usersJsonPath, { users: users });
+    attempts[attemptId-1].description = description;
+    if (notes) attempts[attemptId-1].notes = notes;
+    writeJsonFile(usersJsonPath, { users: users });
     
-//     res.status(200).json(attempts[attemptId-1]);
-// });
+    res.status(200).json(attempts[attemptId-1]);
+});
 
 
 

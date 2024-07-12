@@ -80,28 +80,28 @@ function AttemptPage(props) {
         setNotes(event.target.value);
     }
 
-    // const submit = async () => {
-    //     setSubmitEnabled(false);
-    //     const input = {
-    //         // password: props.password,
-    //         description: description,
-    //         notes: notes,
-    //         inProgress: false
-    //     }
-    //     try {
-    //         //call update attempt api there
-    //         const generatedCode=await axios.get(`http://localhost:5000/submit`,description);
-    //         console.log(generatedCode);
-    //     } catch (err) {
+    const submit = async () => {
+        setSubmitEnabled(false);
+        const input = {
+            password: "pStudent_A",
+            description: description,
+            notes: notes,
+            inProgress: false
+        }
+        try {
+            //call update attempt api there
+            const generatedCode=await axios.get(`http://localhost:5000/submit`,input);
+            console.log(generatedCode);
+        } catch (err) {
 
-    //         console.log("There was a problem submitting the attempt: " + err);
-    //     } finally {
-    //         setSubmitEnabled(true);
-    //     }
-    // }
+            console.log("There was a problem submitting the attempt: " + err);
+        } finally {
+            setSubmitEnabled(true);
+        }
+    }
 
     const handleSubmit = () => {
-        // submit();
+         submit();
     };
 
    
