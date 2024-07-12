@@ -80,25 +80,42 @@ function AttemptPage(props) {
         setNotes(event.target.value);
     }
 
-    const submit = async () => {
+    const submit = async (description, notes) => {
         setSubmitEnabled(false);
-        const input = {
-            password: "pStudent_A",
-            description: description,
-            notes: notes,
-            inProgress: false
-        }
         try {
-            //call update attempt api there
-            const generatedCode=await axios.get(`http://localhost:5000/submit`,input);
-            console.log(generatedCode);
+            const generatedCode = await axios.get(`http://localhost:5000/submit`, {
+                params: {
+                    description: description,
+                    notes: notes
+                }
+            });
+            console.log(generatedCode.data);
         } catch (err) {
-
             console.log("There was a problem submitting the attempt: " + err);
         } finally {
             setSubmitEnabled(true);
         }
-    }
+    };
+    
+    // const submit = async () => {
+    //     setSubmitEnabled(false);
+    //     const input = {
+    //         password: "pStudent_A",
+    //         description: description,
+    //         notes: notes,
+    //         inProgress: false
+    //     }
+    //     try {
+    //         //call update attempt api there
+    //         const generatedCode=await axios.get(`http://localhost:5000/submit`,input);
+    //         console.log(generatedCode);
+    //     } catch (err) {
+
+    //         console.log("There was a problem submitting the attempt: " + err);
+    //     } finally {
+    //         setSubmitEnabled(true);
+    //     }
+    // }
 
     const handleSubmit = () => {
          submit();

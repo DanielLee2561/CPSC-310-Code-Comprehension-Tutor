@@ -8,15 +8,16 @@ const ollama = new Ollama({ host: 'http://localhost:11434' });
 
 router.get('/submit', async (req, res) => {
     
-    const description = req.params.description;
-    const notes = req.params.notes;
-    console.log("2424142424224");
+    const { description, notes } = req.body;
+    
+    console.log("description: " + description + ", notes: " + notes);
+    console.log("description"+description+notes);
     try {
         
         const output = await ollama.generate({
             model: 'codegemma',
             //need to change prompt content to specfic question
-            prompt: description+notes
+            prompt: description+" "+notes
         });
 
         const responseData = output.response;
