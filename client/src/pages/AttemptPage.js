@@ -98,21 +98,48 @@ function AttemptPage(props) {
             // Extract generated code from response
 
             const generatedCode = generatedCodeResponse.data;
-            setGeneratedCode(generatedCode);
-            const generatedCodejsonString = JSON.stringify(jsonObject, null, 2);
-            console.log(generatedCode);
+            
+            // const generatedCodejsonString = JSON.stringify(jsonObject, null, 2);
+            // console.log(generatedCode);
+
+     
+            const extractFunctionContent = (str) => {
+                const regex = /```javascript\s*([\s\S]*?)\s*```/;
+                const match = str.match(regex);
+                if (match && match[1]) {
+                return match[1].trim();
+                }
+                return null;
+            };
+            const extractedFunction = extractFunctionContent(generatedCode);
+            console.log(extractedFunction);
+     
     
+            // const extractedFunction = extractFunctionContent(generatedCode);
+            // setGeneratedCode(extractedFunction);
+            // console.log(extractedFunction);
+            // const convertFunctionToJSON = (extractedFunction) => {
+            //     if (extractedFunction) {
+            //         return JSON.stringify(extractedFunction, null, 2);
+            //     } else {
+            //         console.error("Function content is empty or undefined.");
+            //         return null;
+            //     }
+            // };
+            // const jsonFormattedFunction = convertFunctionToJSON(extractedFunction);
+            // console.log("jsonFormattedFunction"+jsonFormattedFunction)
             // Prepare input for saving the attempt
+
+            
             const input = {
                 password: 'pStudent_A',
                 description: description,
-                generatedCode: generatedCodejsonString,
+                generatedCode: extractedFunction,
                 notes: notes,
                 inProgress: false
             };
             const attemptIndex = parseInt(attemptId) + 1;
             const response = await axios.put(`http://localhost:5000/users/${username}/questions/${question_id}/${attemptIndex}`, input);
-
             console.log(response);
         } catch (err) {
             console.log('There was a problem submitting the attempt: ' + err);

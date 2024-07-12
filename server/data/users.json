@@ -51,27 +51,28 @@
           "questionId": 2,
           "attempts": [
             {
-              "description": "The function foo takes three arguments: an array n, a target value t, and a replacement value e. It iterates through each element in the array n, and if an element matches the target value t, it replaces that element with the replacement value e. Finally, the function returns the modified array n.",
+              "description": "The function foo takes an array n as its argument, iterates through each element in the array, sums up all the elements, and returns the total sum.",
               "notes": "Your notes here",
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
-              "generatedCode": "LLM",
+              "generatedCode": "function foo(n) {\n  let sum = 0;\n  for (const num of n) {\n    sum += num;\n  }\n  return sum;\n}",
               "failingTestCases": "testsFailed",
               "testCorrect": 1,
-              "testTotal": 2
+              "testTotal": 2,
+              "inProgress": false
             },
             {
               "description": "The function foo takes three arguments: an array n, a target value t, and a replacement value e. It iterates through each element in the array n, and if an element matches the target value t, it replaces that element with the replacement value e. Finally, the function returns the modified array n.",
-              "notes": "Your notes here",
-              "inProgress": true,
+              "notes": " add",
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
-              "generatedCode": "LLM",
+              "generatedCode": "function foo(n, t, e) {\n  for (let i = 0; i < n.length; i++) {\n    if (n[i] === t) {\n      n[i] = e;\n    }\n  }\n  return n;\n}",
               "failingTestCases": "testsFailed",
               "testCorrect": 1,
-              "testTotal": 2
+              "testTotal": 2,
+              "inProgress": false
             },
             {
               "description": "Your description here",

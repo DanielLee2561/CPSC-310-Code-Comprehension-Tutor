@@ -51,8 +51,8 @@ router.put("/:username/questions/:id/:attemptId", async (req, res) => {
     const notes=req.body.notes;
     const questionId = req.params.id;
     const attemptId = req.params.attemptId;
-    const generatedCode=req.params.generatedCode;
-    const inProgress=req.params.inProgress;
+    const generatedCode=req.body.generatedCode;
+    const inProgress=req.body.inProgress;
 
     if ( !username || !questionId || !password || !attemptId)
         return res.status(400).json({error:"element missing."});
