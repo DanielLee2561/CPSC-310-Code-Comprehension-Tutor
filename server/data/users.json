@@ -51,9 +51,8 @@
           "questionId": 2,
           "attempts": [
             {
-              "description": "Your destion here1111 sdfsdfasdf          hiiiiiiiiiiiiiiiiiiiiiiiiii sdfsdfsdfwerwqer",
+              "description": "The function foo takes three arguments: an array n, a target value t, and a replacement value e. It iterates through each element in the array n, and if an element matches the target value t, it replaces that element with the replacement value e. Finally, the function returns the modified array n.",
               "notes": "Your notes here",
-              "inProgress": true,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
@@ -63,7 +62,7 @@
               "testTotal": 2
             },
             {
-              "description": "Your description here",
+              "description": "The function foo takes three arguments: an array n, a target value t, and a replacement value e. It iterates through each element in the array n, and if an element matches the target value t, it replaces that element with the replacement value e. Finally, the function returns the modified array n.",
               "notes": "Your notes here",
               "inProgress": true,
               "startTime": "2024-07-01T07:00:00.000Z",

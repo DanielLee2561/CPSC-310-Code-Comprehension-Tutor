@@ -35,7 +35,7 @@ function AttemptPage(props) {
     // For refreshing the page, use reloadPage()
     const navigate = useNavigate();
     const reloadPage = () => {
-        // navigate(/questions);
+        navigate('/questions'); 
     };
 
     useEffect(() => {
@@ -57,6 +57,7 @@ function AttemptPage(props) {
                     if (userQuestion.attempts && userQuestion.attempts.length > attmeptNum && attmeptNum >= 0) {
                         setDescription(userQuestion.attempts[attmeptNum]?.description || '');
                         setNotes(userQuestion.attempts[attmeptNum]?.notes || '');
+                        setGeneratedCode(userQuestion.attempts[attmeptNum]?.generatedCode || '');
                         setFailingTestCases(userQuestion.attempts[attmeptNum]?.failingTestCases || []);          
                 } 
             }
@@ -81,44 +82,49 @@ function AttemptPage(props) {
     }
 
     const submit = async (description, notes) => {
+        console.log('Submit function called with:', description, notes); // Debugging line
+    
         setSubmitEnabled(false);
+    
         try {
-            const generatedCode = await axios.get(`http://localhost:5000/submit`, {
+            // Call the backend to generate code
+            const generatedCodeResponse = await axios.get('http://localhost:5000/questions/ollama/submit', {
                 params: {
                     description: description,
                     notes: notes
                 }
             });
-            console.log(generatedCode.data);
+    
+            // Extract generated code from response
+
+            const generatedCode = generatedCodeResponse.data;
+            setGeneratedCode(generatedCode);
+            const generatedCodejsonString = JSON.stringify(jsonObject, null, 2);
+            console.log(generatedCode);
+    
+            // Prepare input for saving the attempt
+            const input = {
+                password: 'pStudent_A',
+                description: description,
+                generatedCode: generatedCodejsonString,
+                notes: notes,
+                inProgress: false
+            };
+            const attemptIndex = parseInt(attemptId) + 1;
+            const response = await axios.put(`http://localhost:5000/users/${username}/questions/${question_id}/${attemptIndex}`, input);
+
+            console.log(response);
         } catch (err) {
-            console.log("There was a problem submitting the attempt: " + err);
+            console.log('There was a problem submitting the attempt: ' + err);
         } finally {
             setSubmitEnabled(true);
         }
     };
-    
-    // const submit = async () => {
-    //     setSubmitEnabled(false);
-    //     const input = {
-    //         password: "pStudent_A",
-    //         description: description,
-    //         notes: notes,
-    //         inProgress: false
-    //     }
-    //     try {
-    //         //call update attempt api there
-    //         const generatedCode=await axios.get(`http://localhost:5000/submit`,input);
-    //         console.log(generatedCode);
-    //     } catch (err) {
 
-    //         console.log("There was a problem submitting the attempt: " + err);
-    //     } finally {
-    //         setSubmitEnabled(true);
-    //     }
-    // }
 
     const handleSubmit = () => {
-         submit();
+        submit(description, notes);
+        //  save();
     };
 
    
@@ -127,15 +133,17 @@ function AttemptPage(props) {
         const input = {
             password:'pStudent_A',
             description: description,
+            generatedCode:generatedCode,
             notes: notes,
             inProgress: true
         };
+        console.log("submit description"+description);
         try {
             const attemptIndex=parseInt(attemptId)+1;
             const response = await axios.put(`http://localhost:5000/users/${username}/questions/${question_id}/${attemptIndex}`, input);
             console.log(response.data);
             console.log('Data saved successfully:', response.data);
-            // reloadPage();
+             reloadPage();
         } catch (error) {
             console.error('There was a problem saving the attempt:', error);
         } finally {
@@ -230,7 +238,7 @@ function AttemptPage(props) {
                 {!isInProgress ? <pre className="grid-item function-text" style={{ color: 'mediumslateblue' }}>
                     {generatedCode}
                 </pre> : <pre className="grid-item" style={{ textAlign: 'left', backgroundColor: "#f4f4f4" }}>
-                    Submit to see your LLM generated code!
+                    {generatedCode}
                 </pre>}
 
                 <textarea
