@@ -44,27 +44,34 @@ function Register() {
       return;
     }
     if (password!==confirmPassword){
-      setError("Passwords do not match");
+      setError("ERROR: Passwords do not match");
       setIsLoading(false);
       return;
     }
     if (!consent){
-      setError("Consent is required to register");
+      setError("ERROR: Consent is required to register");
       setIsLoading(false);
       return;
     }
 
+    let valid = false;
     try {
       const res = await axios.post("http://localhost:5000/users/register", {
         username,
         password
       });
       
-      console.log(res);
-      navigate("/");
+      valid = res.status === 201 ? true : false;
     } catch (err) {
       setError(err.response.data.message);
     } 
+    if (!valid) {
+      setError("ERROR: Username is already taken");
+      setIsLoading(false);
+      return;
+    } else {
+      navigate("/");
+    }
   };
   return (
     <div className={'main'}>

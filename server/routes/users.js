@@ -64,8 +64,7 @@ router.post('/register',(req,res)=>{
 
     for (let user of users){
         if (user.username===username){
-           res.status(409).json({error:"the username already exists"});
-           return;
+           return res.status(409).json({error:"the username already exists"});
         }
     }
     // construct user and put in json array
@@ -75,7 +74,7 @@ router.post('/register',(req,res)=>{
     newUser.statusLogin = false;
     users.push({...newUser});
     writeJsonFile(usersJsonPath, { "users": users });
-    res.send("just post");
+    return res.status(201).send("just post");
 });
 
 
