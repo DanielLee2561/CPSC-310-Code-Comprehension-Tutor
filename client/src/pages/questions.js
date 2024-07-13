@@ -3,16 +3,65 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import './questions.css'
 import axios from 'axios';
 
+// Start Button
+const ButtonStart = (props) => {
+  const navigate = useNavigate();
+  const state = useLocation().state;
+
+  const startAttempt = async () => {
+    try {
+      let request = {"password":state.password};
+      let response = await axios.post(`http://localhost:5000/users/${state.username}/questions/${props.question}`, request);
+      state.question = props.question;
+      state.attempt = response.data.attemptNum;
+      navigate("/attempt", {state: state});
+    } catch (error) {
+      console.error('Start Attempt', error);
+    }
+  };
+
+  const onClick = () => {
+    let attempts = props.attempts;
+    let inProgress = false;
+
+    for (let i = 0; i < attempts.length; i++) {
+      if (attempts[i].inProgress) {
+        inProgress = true;
+        break;
+      }
+    }
+
+    if (inProgress) {
+      alert("You cannot start an attempt when there is already an attempt in-progress.");
+    } else {
+      startAttempt();
+    }
+  };
+
+  return <button onClick={onClick}>Start</button>;
+}
+
+// View Button
+const ButtonView = (props) => {
+  const navigate = useNavigate();
+  const state = useLocation().state;
+
+  const onClick = () => {
+    state.question = props.question;
+    state.attempt = props.attempt;
+    navigate("/attempt", {state: state});
+  }
+
+  return <button onClick={onClick}>View</button>;
+}
+
 // Attempt
 const Attempt = (name, id, attempt) => {
-  // Variable
   let date = null;
   let score = null;
   let duration = null;
 
-  // Content
   if (attempt != null) {
-      // Date
     if (attempt.endTime != null) {
       date = new Date(attempt.endTime);
       let day = date.getDay();
@@ -21,12 +70,10 @@ const Attempt = (name, id, attempt) => {
       date = `${day}-${month}-${year}`;
     }
 
-    // Score
     if (attempt.testCorrect != null) {
       score = `${attempt.testCorrect}/${attempt.testTotal}`;
     }
 
-    // Duration
     if (attempt.duration != null) {
       duration = `${attempt.duration}s`;
     }
@@ -37,47 +84,9 @@ const Attempt = (name, id, attempt) => {
 
 // Question
 const Question = (question) => {
-  // Variable
   const id = question.questionId;
   const attempts = question.attempts;
-  const navigate = useNavigate();
   const [stateExpand, setStateExpand] = useState(false);
-
-  // Start Button
-  const ButtonStart = () => {
-    const onClick = () => {
-      let inProgress = false;
-
-      for (let i = 0; i < attempts.length; i++) {
-        if (attempts[i].inProgress) {
-          inProgress = true;
-          break;
-        }
-      }
-
-      if (inProgress) {
-        alert("You cannot start an attempt when there is already an attempt in-progress.");
-      } else {
-        // TODO (API Start Attempt)
-        // navigate("/"); // TODO (Attempt Page ic: State)
-      }
-    }
-
-    return <button onClick={onClick}>Start</button>;
-  }
-
-  // View Button
-  const ButtonView = (props) => {
-    const state = useLocation().state;
-
-    const onClick = () => {
-      state.question = props.question;
-      state.attempt = props.attempt;
-      navigate("/attempt", {state: state});
-    }
-
-    return <button onClick={onClick}>View</button>;
-  }
 
   // Expand Button
   const ButtonExpand = () => {
@@ -132,7 +141,7 @@ const Question = (question) => {
     <li>
       <ButtonExpand />
       {Attempt ("Question", id, getBestAttempt(id))}
-      <ButtonStart />
+      <ButtonStart question={id} attempts={attempts}/>
       <Attempts />
     </li>
   );
@@ -191,7 +200,7 @@ const QuestionsPage = () => {
         let response = await axios.put(`http://localhost:5000/users/${state.username}/questions`, request);
         setQuestions(response.data.questions);
       } catch (error) {
-        console.error('Error fetching questions:', error);
+        console.error('View Questions', error);
       }
     };
     initialize();
