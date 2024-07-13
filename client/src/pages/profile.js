@@ -47,7 +47,7 @@ const Profile = (props) => {
         <button title="Go To Profile Page" className='profileButton' onClick={onProfileButtonClicked}><span className='headerSpan'>Profile</span></button>
       </div>
       <div className='buttonContainer'>
-        <button title="Go To Question Page" className='logoutButton' onClick={onLogoutButtonClicked}>Logout</button>
+        <button title="Logout" className='logoutButton' onClick={onLogoutButtonClicked}>Logout</button>
       </div>
     </div>
   )
