@@ -1,5 +1,5 @@
-FROM node:16 AS ui-build
- 
+FROM node:18 AS ui-build
+
 WORKDIR /usr/app/client/
 COPY client/package*.json ./
 RUN npm install
@@ -8,7 +8,7 @@ COPY client/public/ ./public
 
 RUN npm run build
 
-FROM node:16 AS server-build
+FROM node:18 AS server-build
 
 WORKDIR /usr/app/
 

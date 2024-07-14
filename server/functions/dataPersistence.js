@@ -2,14 +2,23 @@
 import {readJsonFile, writeJsonFile} from "./fileSystemFunctions.js";
 const usersJsonPath = "./data/users.json";
 const questionsJsonPath = "./data/questions.json";
-const users_json = readJsonFile(usersJsonPath);
-const users = users_json.users;
-const question_json = readJsonFile(questionsJsonPath);
-const questions = question_json.questions;
+let users_json = readJsonFile(usersJsonPath);
+let users = users_json.users;
+let questions_json = readJsonFile(questionsJsonPath);
+let questions = questions_json.questions;
 
 // Generating & Evaluating code
 import {generateCode} from "./generateCode.js";
 import {evaluateCode} from "./evaluateCode.js";
+
+// Reloads the data variables to reflect the current state of the
+// users and questions JSON files.
+function reloadDataVars() {
+    users_json = readJsonFile(usersJsonPath);
+    users = users_json.users;
+    questions_json = readJsonFile(questionsJsonPath);
+    questions = questions_json.questions;
+}
 
 // Helpers
 
@@ -29,6 +38,9 @@ function countNumParameters(question) {
 // returns the empty string ("") instead.
 // TODO: Unit test this in-depth needed?
 function getQuestionFunction(question_id) {
+    // DO NOT put reloadDataVars here.
+    // It is already guaranteed to be up-to-date when this function is called, but
+    // if you call it then the attempt info WILL NOT be saved.
     for (let question of questions) {
         if (question.id == question_id) {
             return question.code;
@@ -42,6 +54,7 @@ function getQuestionFunction(question_id) {
 // Submits the attempt. Generates and evalutes code based on user's description.
 // Sets the attempts inProgress boolean to false & saves other data to the attempt.
 async function submit(username, question_id, desc, notes) {
+    reloadDataVars();
     // I re-find user so that it is possible to save to users.json without overwriting the data.
     // Its weird, but I'm happy to make it cleaner if there is a fix/better way to do this
     for (let user of users) {
@@ -71,7 +84,7 @@ async function submit(username, question_id, desc, notes) {
                             attempt.testTotal = evaluatedAttempt.testTotal;
                             attempt.failingTestCases = evaluatedAttempt.failingTestCases;
                             writeJsonFile(usersJsonPath, users_json);
-                            // return "Submission successful";
+                            reloadDataVars();
                             return attempt;
                         } else {
                             // TODO: what to do in this situation?
@@ -92,6 +105,7 @@ async function submit(username, question_id, desc, notes) {
 // attempt for the question with the given question_id.
 // It is assumed that the attempt has inProgress === true and that the user with the given username exists.
 function save(username, question_id, desc, notes) {
+    reloadDataVars();
     // I re-find user so that it is possible to save to users.json without overwriting the data.
     // Its weird, but I'm happy to make it cleaner if there is a fix/better way to do this
     for (let user of users) {
@@ -103,6 +117,8 @@ function save(username, question_id, desc, notes) {
                         attempt.description = desc;
                         attempt.notes = notes;
                         writeJsonFile(usersJsonPath, users_json);
+                        reloadDataVars();
+                        return;
                     } else {
                         return "Attempt not in progress, but was saved?";
                     }

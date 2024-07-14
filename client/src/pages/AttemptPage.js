@@ -1,6 +1,6 @@
 import './AttemptPage.css';
 import React, {useState, useEffect} from 'react';
-import {useNavigate,useLocation} from 'react-router-dom';
+import {useNavigate, useLocation} from 'react-router-dom';
 import axios from "axios";
 
 /*
@@ -20,7 +20,7 @@ function AttemptPage() {
     const attemptId = state.attempt;
     const username = state.username;
     const password = state.password;
-    
+
     // console.log(question_id);
     // console.log(attemptId);
     // console.log(username);
@@ -57,16 +57,11 @@ function AttemptPage() {
     const reloadPage = (newAttemptId) => {
         const update_state = {
             question: question_id,
-            attempt: newAttemptId? newAttemptId : attemptId,
+            attempt: newAttemptId ? newAttemptId : attemptId,
             username: username,
             password: password
         };
-        navigate(0, {state:update_state});
-
-        // new feature!!
-        // navigate("/question_bank", {
-        //     state: state,
-        // }); 
+        navigate(0, {state: update_state});
     };
 
     // State
@@ -87,22 +82,8 @@ function AttemptPage() {
                 // sessionStorage.setItem("attemptNumber", props.attempt_num);
                 // setAttemptNum(attemptId);
                 console.log("Fetching data..." + attemptId);
-                const response = await fetch(endpoint + "/attempts/" + attemptId, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({password: props.password})
-                });
-                if (!response.ok) {
-                    console.log(response);
-                    // TODO: Fix here. Refresh the page if the response is not ok.
-                    //  very hacky and could potentially lead to an infinite loop.
-                    // reloadPage();
-
-                    // no longer needed??
-                }
-                const result = await response.json();
+                const response = await axios.put(endpoint + "/attempts/" + attemptId, {password: props.password});
+                const result = response.data;
 
                 setInProgress(result.inProgress);
                 setDescription(result.description);
@@ -123,8 +104,6 @@ function AttemptPage() {
     }, [state]);
 
 
-
-
     const handleDescription = (event) => {
         setDescription(event.target.value);
     }
@@ -143,21 +122,12 @@ function AttemptPage() {
         }
 
         try {
-            const response = await fetch(endpoint, {
-                method: "PUT", headers: {
-                    'Content-Type': 'application/json'
-                }, body: JSON.stringify(input)
-            });
-
-            if (!response.ok) {
-                console.log("Could not fetch data. Code " + response.status);
-            } else {
-                reloadPage();
-            }
+            await axios.put(endpoint, input);
         } catch (err) {
-            console.log("There was a problem submitting the attempt: " + err);
+            console.log("ERROR: Could not send/fetch data (submit): " + err);
         } finally {
             setSubmitEnabled(true);
+            reloadPage();
         }
     };
 
@@ -170,19 +140,9 @@ function AttemptPage() {
             inProgress: true
         }
         try {
-            const response = await fetch(endpoint, {
-                method: "PUT", headers: {
-                    'Content-Type': 'application/json'
-                }, body: JSON.stringify(input)
-            });
-
-            if (!response.ok) {
-                console.log("Could not fetch data. Code " + response.status);
-            } else {
-                reloadPage();
-            }
+            await axios.put(endpoint, input);
         } catch (err) {
-            console.log("There was a problem saving the attempt: " + err);
+            console.log("ERROR: Could not send/fetch data (save): " + err);
         } finally {
             setSaveEnabled(true);
         }
@@ -194,24 +154,13 @@ function AttemptPage() {
             password: password
         }
         try {
-            const response = await fetch(endpoint, {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(input)
-            });
-            if (!response.ok) {
-                console.log("Could not fetch data. Code " + response.status);
-            } else {
-                const data = await response.json();
-                // props.attempt_num = data.attemptNum; // cannot reassign read-only value
-                console.log("New Attempt Number: " + data.attemptNum);
-                // attemptId = data.attemptNum; //read-only :(
-                // setAttemptNum(data.attemptNum);
-                state.attempt = data.attemptNum;
-                navigate("/attempt", {state: state});
-            }
+            const response = await axios.post(endpoint, input);
+            const data = response.data;
+            console.log("New Attempt Number: " + data.attemptNum);
+            // attemptId = data.attemptNum; //read-only :(
+            // setAttemptNum(data.attemptNum);
+            state.attempt = data.attemptNum;
+            navigate("/attempt", {state: state});
         } catch (err) {
             console.log("There was a problem retrying the attempt: " + err);
             console.log(attemptId);
@@ -250,14 +199,17 @@ function AttemptPage() {
     return (
         <div className="AttemptPage">
             <div className="header">
-                <button title="Go To Home Page" className='homeButton' onClick={onHomeButtonClicked}><span className='headerSpan'>Home</span></button>
-                <button className="returnButton" title="Back"  onClick={handleReturn}><span className='headerSpan'>Return</span></button>
+                <button title="Go To Home Page" className='homeButton' onClick={onHomeButtonClicked}><span
+                    className='headerSpan'>Home</span></button>
+                <button className="returnButton" title="Back" onClick={handleReturn}><span
+                    className='headerSpan'>Return</span></button>
                 <h1 className='headerTitleAttempt'>Question: {question_id} - Attempt: {attemptId}</h1>
-                <button title="Go To Profile Page" className='profileButton' onClick={onProfileButtonClicked}><span className='headerSpan'>Profile</span></button>
+                <button title="Go To Profile Page" className='profileButton' onClick={onProfileButtonClicked}><span
+                    className='headerSpan'>Profile</span></button>
             </div>
             {!isInProgress ? <div>
-                <h2 style={{ color: scoreColour }}>{testsCorrect}/{testsTotal}&emsp;&emsp;{duration}s</h2>
-            </div> : <h2 style={{ color: "darkorchid" }}>Attempt In Progress</h2>}
+                <h2 style={{color: scoreColour}}>{testsCorrect}/{testsTotal}&emsp;&emsp;{duration}s</h2>
+            </div> : <h2 style={{color: "darkorchid"}}>Attempt In Progress</h2>}
 
             <h2>Formulate the functionality of the following foo function</h2>
 
@@ -266,30 +218,32 @@ function AttemptPage() {
                     {functionText}
                 </pre>
 
-                {!isInProgress ? <pre className="grid-item function-text" style={{ color: 'mediumslateblue' }}>
+                {!isInProgress ? <pre className="grid-item function-text" style={{color: 'mediumslateblue'}}>
                     {generatedCode}
-                </pre> : <pre className="grid-item" style={{ textAlign: 'left', backgroundColor: "#f4f4f4" }}>
+                </pre> : <pre className="grid-item" style={{textAlign: 'left', backgroundColor: "#f4f4f4"}}>
                     Submit to see your LLM generated code!
                 </pre>}
 
                 <textarea
                     className={`grid-item ${isInProgress ? "" : "readonly-textarea"}`}
-                    style={{ fontFamily: 'Helvetica', textAlign: 'left' }}
+                    style={{fontFamily: 'Helvetica', textAlign: 'left'}}
                     placeholder="Input your description here..."
                     onChange={handleDescription}
                     value={description}
                     readOnly={!isInProgress}
                 />
 
-                {isInProgress ? <pre className="grid-item" id="failing-test-case-box" style={{ fontFamily: 'Arial, sans-serif', textAlign: 'left' }}>
+                {isInProgress ? <pre className="grid-item" id="failing-test-case-box"
+                                     style={{fontFamily: 'Arial, sans-serif', textAlign: 'left'}}>
                     Submit to see if you have any failing test cases
-                </pre> : <pre className="grid-item" id="failing-test-case-box" style={{ fontFamily: 'Arial, sans-serif', textAlign: 'left', color: 'red' }}>
+                </pre> : <pre className="grid-item" id="failing-test-case-box"
+                              style={{fontFamily: 'Arial, sans-serif', textAlign: 'left', color: 'red'}}>
                     {failingTestCases}
                 </pre>}
 
                 <textarea
                     className={`grid-item ${isInProgress ? "" : "readonly-textarea"}`}
-                    style={{ textAlign: 'left' }}
+                    style={{textAlign: 'left'}}
                     placeholder="Write notes here (optional)"
                     onChange={handleNotes}
                     value={notes}
@@ -297,7 +251,7 @@ function AttemptPage() {
                 />
             </div>
 
-            <h2> </h2> {/* Just for some separation between the question side and the save/submitting stuff*/}
+            <h2></h2> {/* Just for some separation between the question side and the save/submitting stuff*/}
 
             {isInProgress ? <div>
                 {saveEnabled ? <button className="active-button" onClick={handleSave}>Save</button> :

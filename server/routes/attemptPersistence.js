@@ -16,6 +16,15 @@ let questions = questions_json.questions;
 // Save & Submit Functions
 import {save, submit} from "../functions/dataPersistence.js";
 
+// Reloads the data variables to reflect the current state of the
+// users and questions JSON files.
+function reloadDataVars() {
+    users_json = readJsonFile(usersJsonPath);
+    users = users_json.users;
+    questions_json = readJsonFile(questionsJsonPath);
+    questions = questions_json.questions;
+}
+
 
 /*
     Save/Submit Attempt
@@ -46,6 +55,8 @@ import {save, submit} from "../functions/dataPersistence.js";
 
  */
 router.put("/:username/questions/:id", async (req, res) => {
+    reloadDataVars();
+
     const username = req.params.username;
     const question_id = req.params.id;
 
@@ -70,14 +81,13 @@ router.put("/:username/questions/:id", async (req, res) => {
                 } else {
                     error = await submit(username, question_id, description, notes);
                 }
-                users_json = readJsonFile(usersJsonPath); // JSON was updated due to submit (must reload it)
-                users = users_json.users;
-                // users = users_json;
+
                 if (error === "") {
                     res.status(400).json({error: error});
                 } else {
                     res.status(204).send();
                 }
+                reloadDataVars();
                 return;
             }
         }
@@ -89,6 +99,8 @@ router.put("/:username/questions/:id", async (req, res) => {
 
 // start attempt call here (Kate)
 router.post("/:username/questions/:id", async (req, res) => {
+    reloadDataVars();
+
     const {username, id: question_id} = req.params;
     const {password} = req.body;
 
@@ -134,6 +146,7 @@ router.post("/:username/questions/:id", async (req, res) => {
                 }
                 users[userIndex].questions[questionIndex].attempts.push(newAttempt);
                 writeJsonFile(usersJsonPath, users_json);
+                reloadDataVars();
                 res.status(200).json({
                     message: 'New attempt added successfully.',
                     attemptNum: users[userIndex].questions[questionIndex].attempts.length
@@ -149,28 +162,6 @@ router.post("/:username/questions/:id", async (req, res) => {
         console.error('Error adding new attempt:', err);
         res.status(500).json({error: "An error occurred while processing your request"});
     }
-});
-
-// View Questions (list of all questions that user started & attempted, along with all of their attempts)
-router.put("/:username/questions", (req, res) => {
-    const username = req.params.username;
-    const password = req.body.password;
-
-    for (let user of users) {
-        if (user.username === username) {
-            if (user.password !== password) {
-                res.status(401).json({error: "Incorrect password"});
-                return;
-            } else if (!user.statusLogin) {
-                res.status(401).json({error: "User is not currently logged in"});
-                return;
-            } else {
-                res.json({questions: user.questions});
-                return;
-            }
-        }
-    }
-    res.status(404).json({error: "Could not find user"});
 });
 
 
