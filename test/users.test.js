@@ -158,19 +158,42 @@ describe('Login', () => {
 	
 });
 
+
+
 describe('Register', () => {
 
 	const usersJsonPath = '../server/data/users.json';
 	const usersJSON = readJsonFile(usersJsonPath);
 	const questionsJsonPath = '../server/data/questions.json';
-	const questoinsJSON = readJsonFile(questionsJsonPath);
+	const questionsJSON = readJsonFile(questionsJsonPath);
 
 	afterEach(function() {
-        writeJsonFile(usersJsonPath, usersJSON);
-		writeJsonFile(questionsJsonPath, questoinsJSON);
-    });
-	
+		writeJsonFile(usersJsonPath, usersJSON);
+		writeJsonFile(questionsJsonPath, questionsJSON);
+	});
+
+	describe('Register API', () => {
+		it('Register Success', async () => {
+			const username = "Student_A";
+			const password = "pStudent_E";
+			// Log the request data for debugging
+			console.log('Registering user with:', { username, password });
+
+			try {
+				const res = await axios.put("http://localhost:5000/users/register", {
+					username,
+					password
+				});
+				expect(res.status).to.equal(201);
+			} catch (err) {
+					expect(err.response.status).equal(400);
+				
+			}
+		});
+	});	
 });
+
+
 
 
 describe('Logout', () => {
@@ -270,11 +293,29 @@ describe('Change Password', () => {
         writeJsonFile(usersJsonPath, usersJSON);
 		writeJsonFile(questionsJsonPath, questoinsJSON);
     });
-	
-	
-	
-	
+	describe('Change Password API', () => {
+		it('Change Password Success', async () => {
+			const username = "Student_A";
+			const oldPassword = "1111111";
+			const newPassword="pStudent_A";
+			// Log the request data for debugging
+			console.log('Change Password with:', { username });
+
+			try {
+				const res = await axios.put("http://localhost:5000/users/:username", {
+					username,
+					oldPassword,
+					newPassword
+				});
+				expect(res.status).to.equal(201);
+			} catch (err) {
+					expect(err.response.status).equal(400);
+				
+			}
+		});
+	});	
 });
+
 
 describe('Delete Account', () => {
 
@@ -287,11 +328,26 @@ describe('Delete Account', () => {
         writeJsonFile(usersJsonPath, usersJSON);
 		writeJsonFile(questionsJsonPath, questoinsJSON);
     });
-	
-	
-	
-	
+	describe('Delete Account API', () => {
+		it('Delete Account Success', async () => {
+			const username = "Student_A";
+			const password = "pStudent_A";
+			// Log the request data for debugging
+			console.log('Delete Account with:', { username });
+			try {
+				const res = await axios.delete("http://localhost:5000/users/:username", {
+					username,
+					password
+				});
+				expect(res.status).to.equal(201);
+			} catch (err) {
+					expect(err.response.status).equal(400);		
+			}
+		});
+	});
 });
+	
+	
 
 describe('Start Attempt', () => {
 
@@ -304,11 +360,28 @@ describe('Start Attempt', () => {
         writeJsonFile(usersJsonPath, usersJSON);
 		writeJsonFile(questionsJsonPath, questoinsJSON);
     });
-	
-	
-	
-	
+
+
+	describe('Start Attempt API', () => {
+		it('Start Attempt Success', async () => {
+			const username = "Student_A";
+			const password = "pStudent_A";
+			// Log the request data for debugging
+			console.log('Start Attempt with:', { username });
+			try {
+				const res = await axios.post("http://localhost:5000/users/:username/questions/:id", {
+					username,
+					password
+				});
+				expect(res.status).to.equal(200);
+			} catch (err) {
+					expect(err.response.status).equal(400);		
+			}
+		});
+	});	
+
 });
+
 
 describe('Save and Submit Attempt', () => {
 
@@ -344,6 +417,7 @@ describe('View Attempt', () => {
 	
 });
 
+
 describe('View Questions', () => {
 
 	const usersJsonPath = '../server/data/users.json';
@@ -355,11 +429,26 @@ describe('View Questions', () => {
         writeJsonFile(usersJsonPath, usersJSON);
 		writeJsonFile(questionsJsonPath, questoinsJSON);
     });
-	
-	
-	
-	
+
+	describe('View Questions API', () => {
+		it('View Questions Success', async () => {
+			const username = "Student_A";
+			const password = "pStudent_A";
+			// Log the request data for debugging
+			console.log('View Questions with:', { username });
+			try {
+				const res = await axios.get("http://localhost:5000/users/:username/questions", {
+					username,
+					password
+				});
+				expect(res.status).to.equal(200);
+			} catch (err) {
+					expect(err.response.status).equal(400);		
+			}
+		});
+	});	
 });
+
 
 describe('Delete Question', () => {
 
