@@ -54,6 +54,7 @@ router.get('/', (req, res) => {
     res.send(users);
 });
 
+
 //register a user
 router.post('/register',(req,res)=>{
     // const usersList = users.users
@@ -64,7 +65,7 @@ router.post('/register',(req,res)=>{
 
     for (let user of users){
         if (user.username===username){
-           return res.status(409).json({error:"the username already exists"});
+           return res.status(400).json({error:"the username already exists"});
         }
     }
     // construct user and put in json array
@@ -76,7 +77,6 @@ router.post('/register',(req,res)=>{
     writeJsonFile(usersJsonPath, { "users": users });
     return res.status(201).send("just post");
 });
-
 
 //login
 router.put('/login', (req, res) => {
@@ -146,26 +146,54 @@ router.get('/:username',(req,res)=>{
     const foundUser = users.find((user)=> user.username === username);
     res.send(foundUser);
 })
-
-router.delete('/:username',(req,res)=>{
+//delete the account 
+router.delete('/:username', (req, res) => {
     const { username } = req.params;
-    //username to delete
+    const { password } = req.body;
 
-    users =users.filter((user)=>user.username !== username);
-    writeJsonFile(usersJsonPath, { users });
-    res.send("delete successful!");
-})
+    if (!username || !password) {
+        return res.status(400).json({ error: "Missing username or password" });
+    }
 
-// here is to change the password  (need to test)
-router.put('/:username',(req,res)=>{
+    let userFound = false;
+    let userDeleted = false;
+
+    for (let user of users) {
+        if (user.username === username) {
+            userFound = true;
+            if (user.password === password) {
+                users = users.filter((user) => user.username !== username);
+                writeJsonFile(usersJsonPath, { users });
+                userDeleted = true;
+                break;
+            } else {
+                return res.status(400).json({ error: "Incorrect password" });
+            }
+        }
+    }
+
+    if (!userFound) {
+        return res.status(400).json({ error: "User not found" });
+    }
+
+    if (userDeleted) {
+        return res.status(200).send("Delete successful!");
+    } 
+});
+
+
+// here is to change the password 
+router.put('/:username', (req, res) => {
     const { username } = req.params;
     const { oldPassword, newPassword } = req.body;
-    //username to delete
+
     if (!username || !oldPassword || !newPassword) {
         return res.status(400).json({ error: "Missing username, old password, or new password" });
     }
+
     let userFound = false;
     let passwordUpdated = false;
+
     for (let user of users) {
         if (user.username === username) {
             userFound = true;
@@ -180,12 +208,14 @@ router.put('/:username',(req,res)=>{
     }
 
     if (!userFound) {
-        return res.status(404).json({ error: "User not found" });
+        return res.status(400).json({ error: "User not found" });
     }
 
     if (passwordUpdated) {
         writeJsonFile(usersJsonPath, { users });
-        return res.status(200).json({ message: "Password updated successfully" });
+        return res.status(204).json({ message: "Password updated successfully" });
+    } else {
+        return res.status(500).json({ error: "Failed to update password" });
     }
 });
 
@@ -230,7 +260,7 @@ router.put("/:username/questions/:questionID/attempts/:attemptID", (req, res) =>
 });
 
 // View Questions (list of all questions that user started & attempted, along with all of their attempts)
-router.put("/:username/questions", (req, res) => {
+router.get("/:username/questions", (req, res) => {
     const username = req.params.username;
     const password = req.body.password;
     
