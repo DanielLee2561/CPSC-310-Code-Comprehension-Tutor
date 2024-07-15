@@ -125,6 +125,10 @@ function AttemptPage(props) {
             const attemptIndex = parseInt(attemptId) + 1;
             const response = await axios.put(`http://localhost:5000/users/${username}/questions/${question_id}/${attemptIndex}`, input);
             console.log(response);
+            // call other files and and response to there
+
+            // pass the generated code into the test part 
+
         } catch (err) {
             console.log('There was a problem submitting the attempt: ' + err);
         } finally {
