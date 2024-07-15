@@ -151,27 +151,4 @@ router.post("/:username/questions/:id", async (req, res) => {
     }
 });
 
-// View Questions (list of all questions that user started & attempted, along with all of their attempts)
-router.put("/:username/questions", (req, res) => {
-    const username = req.params.username;
-    const password = req.body.password;
-
-    for (let user of users) {
-        if (user.username === username) {
-            if (user.password !== password) {
-                res.status(401).json({error: "Incorrect password"});
-                return;
-            } else if (!user.statusLogin) {
-                res.status(401).json({error: "User is not currently logged in"});
-                return;
-            } else {
-                res.json({questions: user.questions});
-                return;
-            }
-        }
-    }
-    res.status(404).json({error: "Could not find user"});
-});
-
-
 export default router;
