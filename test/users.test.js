@@ -21,7 +21,7 @@ function readJsonFile(path) {
 function writeJsonFile(path, data) {
     try {
         fs.writeFileSync(path, JSON.stringify(data, null, 2), 'utf8');
-        console.log('File successfully written');
+        // console.log('File successfully written');
     } catch (err) {
         console.error("Error writing file: " + err);
     }
@@ -39,31 +39,121 @@ describe('Login', () => {
 		writeJsonFile(questionsJsonPath, questoinsJSON);
     });
 	
-	describe('Login API', async () => {
-		it('Login Success', async () => {
-			const username = "Student_A";
-			const password = "pStudent_A";
-            const res = await axios.put("http://localhost:5000/users/login", {
+	// describe('Login API', async () => {
+	it('Login Success', async () => {
+		const username = "Student_A";
+		const password = "pStudent_A";
+		const res = await axios.put("http://localhost:5000/users/login", {
+			username,
+			password
+		});
+		const testUsersJSON = readJsonFile(usersJsonPath);
+		expect(testUsersJSON.users[0].statusLogin).equal(true);
+		for (let i = 0; i < testUsersJSON.users.length; i++) {
+			if (testUsersJSON.users[i].username !== username) {
+				expect(testUsersJSON.users[i].statusLogin).equal(false);
+			}
+		}
+		expect(res.status).equal(204);
+
+		await axios.put("http://localhost:5000/users/logout", {
+			username
+		});
+	});
+
+	it('Login Success Researcher', async () => {
+		const username = "Researcher_A";
+		const password = "pResearcher_A";
+		const res = await axios.put("http://localhost:5000/users/login", {
+			username,
+			password
+		});
+		const testUsersJSON = readJsonFile(usersJsonPath);
+		expect(testUsersJSON.users[3].statusLogin).equal(true);
+		for (let i = 0; i < testUsersJSON.users.length; i++) {
+			if (testUsersJSON.users[i].username !== username) {
+				expect(testUsersJSON.users[i].statusLogin).equal(false);
+			}
+		}
+		expect(res.status).equal(204);
+
+		await axios.put("http://localhost:5000/users/logout", {
+			username
+		});
+	});
+
+	it('Login Inccorect Password', async () => {
+		const username = "Student_A";
+		const password = "pStudent_A2";
+		try {
+			const res = await axios.put("http://localhost:5000/users/login", {
 				username,
 				password
-			  });
-			expect(res.status).equal(204);
-		});
-
-		it('Login Inccorect Password', async () => {
-			const username = "Student_A";
-			const password = "pStudent_A2";
-			try {
-				const res = await axios.put("http://localhost:5000/users/login", {
-					username,
-					password
-				});
-				expect.fail();
-			} catch (err) {
-				expect(err.response.status).equal(401);
+			});
+			expect.fail();
+		} catch (err) {
+			const testUsersJSON = readJsonFile(usersJsonPath);
+			for (let i = 0; i < testUsersJSON.users.length; i++) {
+				expect(testUsersJSON.users[i].statusLogin).equal(false);
 			}
-		});
-	})
+			expect(err.response.status).equal(401);
+		}
+	});
+
+	it('Login Inccorect Username', async () => {
+		const username = "Student_A2";
+		const password = "pStudent_A";
+		try {
+			const res = await axios.put("http://localhost:5000/users/login", {
+				username,
+				password
+			});
+			expect.fail();
+		} catch (err) {
+			const testUsersJSON = readJsonFile(usersJsonPath);
+			for (let i = 0; i < testUsersJSON.users.length; i++) {
+				expect(testUsersJSON.users[i].statusLogin).equal(false);
+			}
+			expect(err.response.status).equal(404);
+		}
+	});
+
+	it('Login No Username', async () => {
+		const username = "";
+		const password = "pStudent_A";
+		try {
+			const res = await axios.put("http://localhost:5000/users/login", {
+				username,
+				password
+			});
+			expect.fail();
+		} catch (err) {
+			const testUsersJSON = readJsonFile(usersJsonPath);
+			for (let i = 0; i < testUsersJSON.users.length; i++) {
+				expect(testUsersJSON.users[i].statusLogin).equal(false);
+			}
+			expect(err.response.status).equal(400);
+		}
+	});
+
+	it('Login No Password', async () => {
+		const username = "Student_A";
+		const password = "";
+		try {
+			const res = await axios.put("http://localhost:5000/users/login", {
+				username,
+				password
+			});
+			expect.fail();
+		} catch (err) {
+			const testUsersJSON = readJsonFile(usersJsonPath);
+			for (let i = 0; i < testUsersJSON.users.length; i++) {
+				expect(testUsersJSON.users[i].statusLogin).equal(false);
+			}
+			expect(err.response.status).equal(400);
+		}
+	});
+	// })
 	
 	
 });
@@ -95,9 +185,78 @@ describe('Logout', () => {
 		writeJsonFile(questionsJsonPath, questoinsJSON);
     });
 	
+	it('Logout Success', async () => {
+		// Logging In 
+		const username = "Student_A";
+		const password = "pStudent_A";
+		let res = await axios.put("http://localhost:5000/users/login", {
+			username,
+			password
+		});
+		expect(res.status).equal(204);
+
+		// Logging Out
+		res = await axios.put("http://localhost:5000/users/logout", {
+			username
+		});
+		const testUsersJSON = readJsonFile(usersJsonPath);
+		for (let i = 0; i < testUsersJSON.users.length; i++) {
+			expect(testUsersJSON.users[i].statusLogin).equal(false);
+		}
+		expect(res.status).equal(204);
+	});
+
+	it('Logout Wrong Username', async () => {
+		// Logging In 
+		let username = "Student_A";
+		const password = "pStudent_A";
+		let res = await axios.put("http://localhost:5000/users/login", {
+			username,
+			password
+		});
+		expect(res.status).equal(204);
+
+		// Logging Out
+		try {
+			username = "something else";
+			res = await axios.put("http://localhost:5000/users/logout", {
+				username
+			});
+		} catch (err) {
+			const testUsersJSON = readJsonFile(usersJsonPath);
+			expect(testUsersJSON.users[0].statusLogin).equal(true);
+			for (let i = 1; i < testUsersJSON.users.length; i++) {
+				expect(testUsersJSON.users[i].statusLogin).equal(false);
+			}
+			expect(err.response.status).equal(500);
+		}
+		username = "Student_A"
+		res = await axios.put("http://localhost:5000/users/logout", {
+			username
+		});
+	});
 	
-	
-	
+
+	it('Logout Success Researcher', async () => {
+		// Logging In 
+		const username = "Researcher_A";
+		const password = "pResearcher_A";
+		let res = await axios.put("http://localhost:5000/users/login", {
+			username,
+			password
+		});
+		expect(res.status).equal(204);
+
+		// Logging Out
+		res = await axios.put("http://localhost:5000/users/logout", {
+			username
+		});
+		const testUsersJSON = readJsonFile(usersJsonPath);
+		for (let i = 0; i < testUsersJSON.users.length; i++) {
+			expect(testUsersJSON.users[i].statusLogin).equal(false);
+		}
+		expect(res.status).equal(204);
+	});
 });
 
 describe('Change Password', () => {
