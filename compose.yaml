@@ -7,7 +7,7 @@ services:
     build: .
     container_name: CodeTutor
     ports: 
-      - 5000:5000
+      - "5000:5000"
   ollama:
     image: ollama/ollama:latest
     ports:

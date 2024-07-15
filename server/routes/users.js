@@ -11,12 +11,20 @@ import jwt from "jsonwebtoken";
 import {readJsonFile, writeJsonFile} from "../functions/fileSystemFunctions.js";
 const usersJsonPath = './data/users.json';
 const questionsJsonPath = './data/questions.json';
-const users_json = readJsonFile(usersJsonPath);
+let users_json = readJsonFile(usersJsonPath);
 // const users = users_json.users;
 let users = users_json.users;
-const questions_json = readJsonFile(questionsJsonPath);
+let questions_json = readJsonFile(questionsJsonPath);
 let questions = questions_json.questions;
 
+// Reloads the data variables to reflect the current state of the
+// users and questions JSON files.
+function reloadDataVars() {
+    users_json = readJsonFile(usersJsonPath);
+    users = users_json.users;
+    questions_json = readJsonFile(questionsJsonPath);
+    questions = questions_json.questions;
+}
 
 // let users;
 // //read user json data
@@ -51,6 +59,7 @@ let questions = questions_json.questions;
 
 router.get('/', (req, res) => {
     // console.log(users);
+    reloadDataVars();
     res.send(users);
 });
 
@@ -58,6 +67,7 @@ router.get('/', (req, res) => {
 //register a user
 router.post('/register',(req,res)=>{
     // const usersList = users.users
+    reloadDataVars();
     const{username,password}=req.body;
     if (!username || !password){
         return res.status(400).json({error:"username and password are required."});
@@ -75,12 +85,14 @@ router.post('/register',(req,res)=>{
     newUser.statusLogin = false;
     users.push({...newUser});
     writeJsonFile(usersJsonPath, { "users": users });
+    reloadDataVars();
     return res.status(201).send("just post");
 });
 
 //login
 router.put('/login', (req, res) => {
     // const usersList = users.users
+    reloadDataVars();
     try {
         const { username, password } = req.body;
 
@@ -107,6 +119,7 @@ router.put('/login', (req, res) => {
                         secure: true,
                         maxAge: 3600000
                     });
+                    reloadDataVars();
                     return res.status(204).json({ message: "Login successful." });
                 } else {
                     return res.status(401).json({ error: "Password is incorrect." });
@@ -126,6 +139,7 @@ router.put('/login', (req, res) => {
 //logout account-----need to test later with frontend 
 router.put('/logout', (req, res) => {
     // const usersList = users.users
+    reloadDataVars();
     const{username}=req.body;
     // res.clearCookie("token").status(200).json({message:"Logout successful"})
 
@@ -134,6 +148,7 @@ router.put('/logout', (req, res) => {
             user.statusLogin = false;
             fs.writeFileSync(usersJsonPath, JSON.stringify({"users": users}, null, 2));
             res.clearCookie("token").status(204).json({message:"Logout successful"});
+            reloadDataVars();
             return;
         }
     }
@@ -142,48 +157,27 @@ router.put('/logout', (req, res) => {
 
 
 router.get('/:username',(req,res)=>{
+    reloadDataVars();
     const { username } = req.params;
     const foundUser = users.find((user)=> user.username === username);
     res.send(foundUser);
 })
-//delete the account 
-router.delete('/:username', (req, res) => {
+
+router.delete('/:username',(req,res)=>{
+    reloadDataVars();
+  
     const { username } = req.params;
     const { password } = req.body;
 
-    if (!username || !password) {
-        return res.status(400).json({ error: "Missing username or password" });
-    }
-
-    let userFound = false;
-    let userDeleted = false;
-
-    for (let user of users) {
-        if (user.username === username) {
-            userFound = true;
-            if (user.password === password) {
-                users = users.filter((user) => user.username !== username);
-                writeJsonFile(usersJsonPath, { users });
-                userDeleted = true;
-                break;
-            } else {
-                return res.status(400).json({ error: "Incorrect password" });
-            }
-        }
-    }
-
-    if (!userFound) {
-        return res.status(400).json({ error: "User not found" });
-    }
-
-    if (userDeleted) {
-        return res.status(200).send("Delete successful!");
-    } 
-});
-
+    users =users.filter((user)=>user.username !== username);
+    writeJsonFile(usersJsonPath, { users });
+    reloadDataVars();
+    res.send("delete successful!");
+})
 
 // here is to change the password 
 router.put('/:username', (req, res) => {
+    reloadDataVars();
     const { username } = req.params;
     const { oldPassword, newPassword } = req.body;
 
@@ -213,7 +207,8 @@ router.put('/:username', (req, res) => {
 
     if (passwordUpdated) {
         writeJsonFile(usersJsonPath, { users });
-        return res.status(204).json({ message: "Password updated successfully" });
+        reloadDataVars();
+        return res.status(204).json({ message: "Password updated successfully" }); // change to 200 to see message
     } else {
         return res.status(500).json({ error: "Failed to update password" });
     }
@@ -221,6 +216,8 @@ router.put('/:username', (req, res) => {
 
 // Getting specific attempt data in a question
 router.put("/:username/questions/:questionID/attempts/:attemptID", (req, res) => {
+    reloadDataVars();
+
     const username = req.params.username;
     const password = req.body.password;
     const questionId = req.params.questionID;
@@ -260,7 +257,9 @@ router.put("/:username/questions/:questionID/attempts/:attemptID", (req, res) =>
 });
 
 // View Questions (list of all questions that user started & attempted, along with all of their attempts)
-router.get("/:username/questions", (req, res) => {
+router.put("/:username/questions", (req, res) => {
+    reloadDataVars();
+
     const username = req.params.username;
     const password = req.body.password;
     
