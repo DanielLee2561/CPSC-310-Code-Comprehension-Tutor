@@ -4,6 +4,7 @@
   "description": "**Project Name:** Code Comprehension Tutor  \r **Group Members:** Daniel Lee, Matija Koprivica, Arshvir Bhandal, Mark Zhu, Chuyi Zheng",
   "main": "index.js",
   "type": "module",
+  "nodemonConfig": {"ignore": ["*.json"]},
   "directories": {
     "test": "tests"
   },
