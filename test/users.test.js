@@ -600,11 +600,7 @@ describe('View Attempt', () => {
 		writeJsonFile(questionsJsonPath, questoinsJSON);
     });
 	
-	
-	
-	
 });
-
 
 describe('View Questions', () => {
 
@@ -631,12 +627,11 @@ describe('View Questions', () => {
 				});
 				expect(res.status).to.equal(200);
 			} catch (err) {
-					expect(err.response.status).equal(400);		
+					expect(err.response.status).equal(404);		
 			}
 		});
 	});	
 });
-
 
 describe('Delete Question', () => {
 
