@@ -63,6 +63,7 @@ router.get('/', (req, res) => {
     res.send(users);
 });
 
+
 //register a user
 router.post('/register',(req,res)=>{
     // const usersList = users.users
@@ -74,7 +75,7 @@ router.post('/register',(req,res)=>{
 
     for (let user of users){
         if (user.username===username){
-           return res.status(409).json({error:"the username already exists"});
+           return res.status(400).json({error:"the username already exists"});
         }
     }
     // construct user and put in json array
@@ -87,7 +88,6 @@ router.post('/register',(req,res)=>{
     reloadDataVars();
     return res.status(201).send("just post");
 });
-
 
 //login
 router.put('/login', (req, res) => {
@@ -165,8 +165,9 @@ router.get('/:username',(req,res)=>{
 
 router.delete('/:username',(req,res)=>{
     reloadDataVars();
+  
     const { username } = req.params;
-    //username to delete
+    const { password } = req.body;
 
     users =users.filter((user)=>user.username !== username);
     writeJsonFile(usersJsonPath, { users });
@@ -174,18 +175,19 @@ router.delete('/:username',(req,res)=>{
     res.send("delete successful!");
 })
 
-// here is to change the password  (need to test)
-router.put('/:username',(req,res)=>{
+// here is to change the password 
+router.put('/:username', (req, res) => {
     reloadDataVars();
-
     const { username } = req.params;
     const { oldPassword, newPassword } = req.body;
-    //username to delete
+
     if (!username || !oldPassword || !newPassword) {
         return res.status(400).json({ error: "Missing username, old password, or new password" });
     }
+
     let userFound = false;
     let passwordUpdated = false;
+
     for (let user of users) {
         if (user.username === username) {
             userFound = true;
@@ -200,13 +202,15 @@ router.put('/:username',(req,res)=>{
     }
 
     if (!userFound) {
-        return res.status(404).json({ error: "User not found" });
+        return res.status(400).json({ error: "User not found" });
     }
 
     if (passwordUpdated) {
         writeJsonFile(usersJsonPath, { users });
         reloadDataVars();
-        return res.status(200).json({ message: "Password updated successfully" });
+        return res.status(204).json({ message: "Password updated successfully" }); // change to 200 to see message
+    } else {
+        return res.status(500).json({ error: "Failed to update password" });
     }
 });
 
