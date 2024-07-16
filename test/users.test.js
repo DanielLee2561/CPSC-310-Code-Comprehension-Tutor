@@ -296,8 +296,8 @@ describe('Change Password', () => {
 	describe('Change Password API', () => {
 		it('Change Password Success', async () => {
 			const username = "Student_A";
-			const oldPassword = "1111111";
-			const newPassword="pStudent_A";
+			const oldPassword = "pStudent_A";
+			const newPassword="111111111";
 			// Log the request data for debugging
 			console.log('Change Password with:', { username });
 
@@ -308,6 +308,26 @@ describe('Change Password', () => {
 					newPassword
 				});
 				expect(res.status).to.equal(201);
+			} catch (err) {
+					expect(err.response.status).equal(400);
+				
+			}
+		});
+
+		it('Change Password unsuccessful with password is not correct', async () => {
+			const username = "Student_A";
+			const oldPassword = "11111111111";
+			const newPassword="111111111";
+			// Log the request data for debugging
+			console.log('Change Password with:', { username });
+
+			try {
+				const res = await axios.put("http://localhost:5000/users/:username", {
+					username,
+					oldPassword,
+					newPassword
+				});
+				expect(res.status).fail();
 			} catch (err) {
 					expect(err.response.status).equal(400);
 				
@@ -344,6 +364,22 @@ describe('Delete Account', () => {
 					expect(err.response.status).equal(400);		
 			}
 		});
+		it('Delete Account unsuccessful with the incorrect password', async () => {
+			const username = "Student_A";
+			const password = "pStudent_A1111";
+		  
+			// Log the request data for debugging
+			console.log('Delete Account with:', { username, password });
+		  
+			try {
+			  const res = await axios.delete(`http://localhost:5000/users/${username}`, {
+				data: { password }
+			  });
+			  expect(res.status).to.equal(401);
+			} catch (err) {
+			  expect(err.response.status).to.equal(401);
+			}
+		  });
 	});
 });
 	
