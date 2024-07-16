@@ -110,4 +110,64 @@ router.put('/:questionId', (req, res) => {
 
     res.send("Changed the specific question successfully!");
 });
+
+
+/ view gradebook (MARK）
+app.put("/gradebook_data", (req, res) => {
+        const username = req.body.username;
+        const password = req.body.password;
+    
+        if (!username || !password) return res.status(400).json({error:"element missing."});
+    
+        // test whether accessing with researcher account
+        const check_user = users.find(c => c.username === username);
+        if (!check_user) return res.status(404).json({error: "User does not exist."});
+        if (check_user.password !== password) return res.status(401).json({error: "Wrong password."});
+        if (check_user.type !== "Researcher") return res.status(401).json({error: "Unauthorized to access this feature."});
+    
+        const gradebook = [];
+        
+        users.forEach(user => {
+            if (user.type !== "Student") return;
+    
+            const question_list = [];
+            
+            user.questions.forEach(question => {
+                //if (!question.attempts) return;
+                //if (!question) return;
+    
+                let best_attempt = {
+                    questionId: question.questionId,
+                    testCorrect: -1,
+                    testTotal: -1
+                };
+    
+                let highest_score = -1;
+                question.attempts.forEach(attempt => {
+                    if (attempt.testCorrect === null) return;
+                    highest_score = attempt.testCorrect > highest_score ? attempt.testCorrect : highest_score;
+                });
+    
+                // keep testCorrect and testTotal -1 when this question has never been taken or finished, 
+                // score will be represented as "N/A"
+                if (highest_score !== -1) { 
+                    best_attempt.testCorrect = highest_score;
+                    best_attempt.testTotal = question.attempts[0].testTotal;
+                }
+    
+                question_list.push(best_attempt);
+            });
+            
+            const a_user = {
+                username: user.username,
+                questions: question_list
+            }
+    
+            gradebook.push(a_user);
+        });
+        
+        const output = {users: gradebook};
+    
+        res.status(200).json(output);
+    });
 export default router;
