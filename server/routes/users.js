@@ -83,11 +83,48 @@ router.post('/register',(req,res)=>{
     newUser = req.body; // both username and password
     newUser.type = "Student";
     newUser.statusLogin = false;
+    newUser.questions = [];
+    for (let i = 0; i < questions.length; i++) {
+        let question = questions[i];
+        newUser.questions.push({
+            "questionId": question.id,
+            "attempts": []
+        })
+    }
     users.push({...newUser});
     writeJsonFile(usersJsonPath, { "users": users });
     reloadDataVars();
     return res.status(201).send("just post");
 });
+
+function compareIds(a, b) {
+    return a.questionId - b.questionId;
+}
+
+function buildUserQuestions(user, questions) {
+    let existingQuestions = [];
+    for (let i = 0; i < questions.length; i++) {
+        existingQuestions.push(questions[i].id)
+    }
+    for (let i = 0; i < user.questions.length; i++) {
+        if (!existingQuestions.includes(user.questions[i].questionId)) {
+            user.questions.splice(i, 1);
+        }    
+    }
+    let userQuestions = [];
+    for (let i = 0; i < user.questions.length; i++) {
+        userQuestions.push(user.questions[i].questionId)
+    }
+    for (let i = 0 ; i < questions.length; i++) {
+        if (!userQuestions.includes(questions[i].id)) {
+            user.questions.push({
+                "questionId": questions[i].id,
+                "attempts": []
+            });
+        }
+    }
+    user.questions.sort(compareIds);
+}
 
 //login
 router.put('/login', (req, res) => {
@@ -113,6 +150,7 @@ router.put('/login', (req, res) => {
                 })
                 if (user.password === password) {
                     user.statusLogin = true;
+                    buildUserQuestions(user, questions);
                     fs.writeFileSync(usersJsonPath, JSON.stringify({"users": users}, null, 2));
                     res.cookie('token', token, {
                         httpOnly: true,
