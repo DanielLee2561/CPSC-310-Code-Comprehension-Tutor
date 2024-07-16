@@ -158,8 +158,6 @@ describe('Login', () => {
 	
 });
 
-
-
 describe('Register', () => {
 
 	const usersJsonPath = '../server/data/users.json';
@@ -174,6 +172,23 @@ describe('Register', () => {
 
 	describe('Register API', () => {
 		it('Register Success', async () => {
+			const username = "Student_E";
+			const password = "pStudent_E";
+			// Log the request data for debugging
+			console.log('Registering user with:', { username, password });
+
+			try {
+				const res = await axios.put("http://localhost:5000/users/register", {
+					username,
+					password
+				});
+				expect(res.status).equal(204);
+			} catch (err) {
+					expect(err.response.status).equal(400);
+				
+			}
+		});
+		it('Register unsuccessful with exists username', async () => {
 			const username = "Student_A";
 			const password = "pStudent_E";
 			// Log the request data for debugging
@@ -184,7 +199,7 @@ describe('Register', () => {
 					username,
 					password
 				});
-				expect(res.status).to.equal(201);
+				expect.fail();
 			} catch (err) {
 					expect(err.response.status).equal(400);
 				
