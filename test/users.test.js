@@ -691,7 +691,7 @@ describe('View Questions', () => {
 			// Log the request data for debugging
 			console.log('View Questions with:', { username });
 			try {
-				const res = await axios.get("http://localhost:5000/users/:username/questions", {
+				const res = await axios.put("http://localhost:5000/users/:username/questions", {
 					username,
 					password
 				});
