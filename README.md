@@ -13,5 +13,5 @@
 
 1) Install "Docker Desktop"
 2) Open "Docker Desktop"
-3) In top-level of project folder, execute without quotes "docker compose up -d".
+3) In top-level of project folder, execute without quotes "docker compose up --build -d".
 4) Open "http://localhost:5000/"
