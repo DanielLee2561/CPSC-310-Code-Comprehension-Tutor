@@ -692,7 +692,6 @@ describe('View Questions', () => {
 			console.log('View Questions with:', { username });
 			try {
 				const res = await axios.put("http://localhost:5000/users/:username/questions", {
-					username,
 					password
 				});
 				expect(res.status).to.equal(200);
