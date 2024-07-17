@@ -158,6 +158,7 @@ describe('Login', () => {
 	
 });
 
+
 describe('Register', () => {
 
 	const usersJsonPath = '../server/data/users.json';
@@ -207,6 +208,7 @@ describe('Register', () => {
 		});
 	});	
 });
+
 
 
 
@@ -296,6 +298,7 @@ describe('Logout', () => {
 		expect(res.status).equal(204);
 	});
 });
+
 
 describe('Change Password', () => {
 
@@ -426,12 +429,28 @@ describe('Start Attempt', () => {
 				});
 				expect(res.status).to.equal(200);
 			} catch (err) {
-					expect(err.response.status).equal(400);		
+					expect(err.response.status).equal(404);		
+			}
+		});
+		it('Start Attempt unsuccessful with wrong password', async () => {
+			const username = "Student_A";
+			const password = "Student_A";
+			// Log the request data for debugging
+			console.log('Start Attempt with:', { username });
+			try {
+				const res = await axios.post("http://localhost:5000/users/:username/questions/:id", {
+					username,
+					password
+				});
+				expect(res.status).to.equal(400);
+			} catch (err) {
+					expect(err.response.status).equal(404);		
 			}
 		});
 	});	
 
 });
+
 
 
 describe('Save and Submit Attempt', () => {
@@ -681,8 +700,23 @@ describe('View Questions', () => {
 					expect(err.response.status).equal(404);		
 			}
 		});
+		it('View Questions unsuccessful with wrong password', async () => {
+			const username = "Student_A";
+			const password = "Student_A";
+			// Log the request data for debugging
+			console.log('View Questions with:', { username });
+			try {
+				const res = await axios.put("http://localhost:5000/users/:username/questions", {
+					password
+				});
+				expect(res.status).to.equal(401);
+			} catch (err) {
+					expect(err.response.status).equal(404);		
+			}
+		});
 	});	
 });
+
 
 describe('Delete Question', () => {
 
@@ -769,6 +803,7 @@ describe('View Questions (Researcher)', () => {
 	
 });
 
+// mark need to change test in here
 describe('View Gradebook', () => {
 
 	const usersJsonPath = '../server/data/users.json';
@@ -780,8 +815,69 @@ describe('View Gradebook', () => {
         writeJsonFile(usersJsonPath, usersJSON);
 		writeJsonFile(questionsJsonPath, questoinsJSON);
     });
-	
-	
+
+    describe('Viewing Gradebook API', async () => {
+
+        it('Access Gradebook Successfully', async () => {
+            const username = "Researcher_A";
+            const password = "pResearcher_A";
+            try {
+                const res = await axios.put("http://localhost:5000/gradebook_data", 
+                    {"username": username, "password": password});
+                expect(res.status).eql(200);
+            } catch (err) {
+                assert.fail();
+            }
+        });
+
+        it('Access Gradebook Unsuccessfully (Missing Element)', async () => {
+            const username = "Researcher_A";
+            try {
+                const res = await axios.put("http://localhost:5000/gradebook_data", 
+                    {"username": username});
+                assert.fail();
+            } catch (err) {
+                expect(err.res.status).eql(400);
+            }
+        });
+
+        it('Access Gradebook Unsuccessfully (Nonexist User)', async () => {
+            const username = "Researcher_";
+            const password = "pResearcher_A";
+            try {
+                const res = await axios.put("http://localhost:5000/gradebook_data", 
+                    {"username": username, "password": password});
+                assert.fail();
+            } catch (err) {
+                expect(err.res.status).eql(404);
+            }
+        });
+
+        it('Access Gradebook Unsuccessfully (Wrong Password)', async () => {
+            const username = "Researcher_A";
+            const password = "pResearcher_";
+            try {
+                const res = await axios.put("http://localhost:5000/gradebook_data", 
+                    {"username": username, "password": password});
+                assert.fail();
+            } catch (err) {
+                expect(err.res.status).eql(401);
+            }
+        });
+
+        it('Access Gradebook Unsuccessfully (Not Researcher Account)', async () => {
+            const username = "Student_A";
+            const password = "pStudent_A";
+            try {
+                const res = await axios.put("http://localhost:5000/gradebook_data", 
+                    {"username": username, "password": password});
+                assert.fail();
+            } catch (err) {
+                expect(err.res.status).eql(401);
+            }
+        });
+
+    });	
 	
 	
 });
