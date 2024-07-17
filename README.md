@@ -13,5 +13,12 @@
 
 1) Install "Docker Desktop"
 2) Open "Docker Desktop"
-3) In top-level of project folder, execute without quotes "docker compose up -d".
+3) In top-level of project folder, execute without quotes "docker compose up --build -d".
 4) Open "http://localhost:5000/"
+
+## Test Setup
+
+1) In backend folder, execute "npm i nodemon --save".
+2) In backend folder, execute "npm start".
+3) In test folder, execute "npm i axios --save".
+4) In test folder, execute "npx mocha users.test.js".
