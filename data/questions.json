@@ -6,7 +6,8 @@
             "tests": [
                 {
                     "title": "foo() should return \"Hello World!\"",
-                    "assertion": "chai.expect(global.foo()).to.equal('Hello World!');"
+                    "assertion": "chai.expect(global.foo()).to.equal('Hello World!');",
+                    "pass": true
                 }
             ]
         },
@@ -16,27 +17,33 @@
             "tests": [
                 {
                     "title": "foo([]) should return 0",
-                    "assertion": "chai.expect(global.foo([])).to.equal(0);"
+                    "assertion": "chai.expect(global.foo([])).to.equal(0);",
+                    "pass": true
                 },
                 {
                     "title": "foo([1]) should return 1",
-                    "assertion": "chai.expect(global.foo([1])).to.equal(1);"
+                    "assertion": "chai.expect(global.foo([1])).to.equal(1);",
+                    "pass": true
                 },
                 {
                     "title": "foo([1, 2]) should return 3",
-                    "assertion": "chai.expect(global.foo([1, 2])).to.equal(3);"
+                    "assertion": "chai.expect(global.foo([1, 2])).to.equal(3);",
+                    "pass": true
                 },
                 {
                     "title": "foo([-2, 2]) should return 0",
-                    "assertion": "chai.expect(global.foo([-2, 2])).to.equal(0);"
+                    "assertion": "chai.expect(global.foo([-2, 2])).to.equal(0);",
+                    "pass": true
                 },
                 {
                     "title": "foo([5, 13, -4]) should return 14",
-                    "assertion": "chai.expect(global.foo([5, 13, -4])).to.equal(14);"
+                    "assertion": "chai.expect(global.foo([5, 13, -4])).to.equal(14);",
+                    "pass": true
                 },
                 {
                     "title": "foo([9, 10, 21]) should return 40",
-                    "assertion": "chai.expect(global.foo([9, 10, 21])).to.equal(40);"
+                    "assertion": "chai.expect(global.foo([9, 10, 21])).to.equal(40);",
+                    "pass": true
                 }
             ]
         },
@@ -46,39 +53,48 @@
             "tests": [
                 {
                     "title": "foo([], 4, 5) should return []",
-                    "assertion": "chai.expect(global.foo([], 4, 5)).to.eql([]);"
+                    "assertion": "chai.expect(global.foo([], 4, 5)).to.eql([]);",
+                    "pass": true
                 },
                 {
                     "title": "foo([1], 4, 5) should return [1]",
-                    "assertion": "chai.expect(global.foo([1], 4, 5)).to.eql([1]);"
+                    "assertion": "chai.expect(global.foo([1], 4, 5)).to.eql([1]);",
+                    "pass": true
                 },
                 {
                     "title": "foo([1], 1, 2) should return [2]",
-                    "assertion": "chai.expect(global.foo([1], 1, 2)).to.eql([2]);"
+                    "assertion": "chai.expect(global.foo([1], 1, 2)).to.eql([2]);",
+                    "pass": true
                 },
                 {
                     "title": "foo([1, 2, 3], 1, 2) should return [2, 2, 3]",
-                    "assertion": "chai.expect(global.foo([1, 2, 3], 1, 2)).to.eql([2, 2, 3]);"
+                    "assertion": "chai.expect(global.foo([1, 2, 3], 1, 2)).to.eql([2, 2, 3]);",
+                    "pass": true
                 },
                 {
                     "title": "foo([1, 2, 3], 3, 1) should return [1, 2, 1]",
-                    "assertion": "chai.expect(global.foo([1, 2, 3], 3, 1)).to.eql([1, 2, 1]);"
+                    "assertion": "chai.expect(global.foo([1, 2, 3], 3, 1)).to.eql([1, 2, 1]);",
+                    "pass": true
                 },
                 {
                     "title": "foo([1, 2, 3], 4, 1) should return [1, 2, 3]",
-                    "assertion": "chai.expect(global.foo([1, 2, 3], 4, 1)).to.eql([1, 2, 3]);"
+                    "assertion": "chai.expect(global.foo([1, 2, 3], 4, 1)).to.eql([1, 2, 3]);",
+                    "pass": true
                 },
                 {
                     "title": "foo([1, 2, 3], 2, 420) should return [1, 420, 3]",
-                    "assertion": "chai.expect(global.foo([1, 2, 3], 2, 420)).to.eql([1, 420, 3]);"
+                    "assertion": "chai.expect(global.foo([1, 2, 3], 2, 420)).to.eql([1, 420, 3]);",
+                    "pass": true
                 },
                 {
                     "title": "foo([69, 21, 69], 69, 420) should return [420, 21, 420]",
-                    "assertion": "chai.expect(global.foo([69, 21, 69], 69, 420)).to.eql([420, 21, 420]);"
+                    "assertion": "chai.expect(global.foo([69, 21, 69], 69, 420)).to.eql([420, 21, 420]);",
+                    "pass": true
                 },
                 {
                     "title": "foo([69, 69, 69], 69, 420) should return [420, 420, 420]",
-                    "assertion": "chai.expect(global.foo([69, 69, 69], 69, 420)).to.eql([420, 420, 420]);"
+                    "assertion": "chai.expect(global.foo([69, 69, 69], 69, 420)).to.eql([420, 420, 420]);",
+                    "pass": true
                 }
             ]
         },
@@ -88,39 +104,48 @@
             "tests": [
                 {
                     "title": "foo(-2) should equal -1",
-                    "assertion": "chai.expect(global.foo(-2)).to.eql(-1);"
+                    "assertion": "chai.expect(global.foo(-2)).to.eql(-1);",
+                    "pass": true
                 },
                 {
                     "title": "foo(-1) should equal -1",
-                    "assertion": "chai.expect(global.foo(-1)).to.eql(-1);"
+                    "assertion": "chai.expect(global.foo(-1)).to.eql(-1);",
+                    "pass": true
                 },
                 {
                     "title": "foo(0) should equal 1",
-                    "assertion": "chai.expect(global.foo(0)).to.eql(1);"
+                    "assertion": "chai.expect(global.foo(0)).to.eql(1);",
+                    "pass": true
                 },
                 {
                     "title": "foo(1) should equal 1",
-                    "assertion": "chai.expect(global.foo(1)).to.eql(1);"
+                    "assertion": "chai.expect(global.foo(1)).to.eql(1);",
+                    "pass": true
                 },
                 {
                     "title": "foo(2) should equal 2",
-                    "assertion": "chai.expect(global.foo(2)).to.eql(2);"
+                    "assertion": "chai.expect(global.foo(2)).to.eql(2);",
+                    "pass": true
                 },
                 {
                     "title": "foo(3) should equal 6",
-                    "assertion": "chai.expect(global.foo(3)).to.eql(6);"
+                    "assertion": "chai.expect(global.foo(3)).to.eql(6);",
+                    "pass": true
                 },
                 {
                     "title": "foo(4) should equal 24",
-                    "assertion": "chai.expect(global.foo(4)).to.eql(24);"
+                    "assertion": "chai.expect(global.foo(4)).to.eql(24);",
+                    "pass": true
                 },
                 {
                     "title": "foo(5) should equal 120",
-                    "assertion": "chai.expect(global.foo(5)).to.eql(120);"
+                    "assertion": "chai.expect(global.foo(5)).to.eql(120);",
+                    "pass": true
                 },
                 {
                     "title": "foo(6) should equal 720",
-                    "assertion": "chai.expect(global.foo(6)).to.eql(720);"
+                    "assertion": "chai.expect(global.foo(6)).to.eql(720);",
+                    "pass": true
                 }
             ]
         },
@@ -130,39 +155,48 @@
             "tests": [
                 {
                     "title": "foo(-2) should equal -1",
-                    "assertion": "chai.expect(global.foo(-2)).to.eql(-1);"
+                    "assertion": "chai.expect(global.foo(-2)).to.eql(-1);",
+                    "pass": true
                 },
                 {
                     "title": "foo(-1) should equal -1",
-                    "assertion": "chai.expect(global.foo(-1)).to.eql(-1);"
+                    "assertion": "chai.expect(global.foo(-1)).to.eql(-1);",
+                    "pass": true
                 },
                 {
                     "title": "foo(0) should equal 0",
-                    "assertion": "chai.expect(global.foo(0)).to.eql(0);"
+                    "assertion": "chai.expect(global.foo(0)).to.eql(0);",
+                    "pass": true
                 },
                 {
                     "title": "foo(1) should equal 1",
-                    "assertion": "chai.expect(global.foo(1)).to.eql(1);"
+                    "assertion": "chai.expect(global.foo(1)).to.eql(1);",
+                    "pass": true
                 },
                 {
                     "title": "foo(2) should equal 1",
-                    "assertion": "chai.expect(global.foo(2)).to.eql(1);"
+                    "assertion": "chai.expect(global.foo(2)).to.eql(1);",
+                    "pass": true
                 },
                 {
                     "title": "foo(3) should equal 2",
-                    "assertion": "chai.expect(global.foo(3)).to.eql(2);"
+                    "assertion": "chai.expect(global.foo(3)).to.eql(2);",
+                    "pass": true
                 },
                 {
                     "title": "foo(4) should equal 3",
-                    "assertion": "chai.expect(global.foo(4)).to.eql(3);"
+                    "assertion": "chai.expect(global.foo(4)).to.eql(3);",
+                    "pass": true
                 },
                 {
                     "title": "foo(5) should equal 5",
-                    "assertion": "chai.expect(global.foo(5)).to.eql(5);"
+                    "assertion": "chai.expect(global.foo(5)).to.eql(5);",
+                    "pass": true
                 },
                 {
                     "title": "foo(6) should equal 8",
-                    "assertion": "chai.expect(global.foo(6)).to.eql(8);"
+                    "assertion": "chai.expect(global.foo(6)).to.eql(8);",
+                    "pass": true
                 }
             ]
         },
@@ -172,31 +206,38 @@
             "tests": [
                 {
                     "title": "foo(1, []) should equal []",
-                    "assertion": "chai.expect(global.foo(1, [])).to.eql([]);"
+                    "assertion": "chai.expect(global.foo(1, [])).to.eql([]);",
+                    "pass": true
                 },
                 {
                     "title": "foo(0, [6]) should equal [6]",
-                    "assertion": "chai.expect(global.foo(0, [6])).to.eql([6]);"
+                    "assertion": "chai.expect(global.foo(0, [6])).to.eql([6]);",
+                    "pass": true
                 },
                 {
                     "title": "foo(1, [6]) should equal [7]",
-                    "assertion": "chai.expect(global.foo(1, [6])).to.eql([7]);"
+                    "assertion": "chai.expect(global.foo(1, [6])).to.eql([7]);",
+                    "pass": true
                 },
                 {
                     "title": "foo(2, [6]) should equal [8]",
-                    "assertion": "chai.expect(global.foo(2, [6])).to.eql([8]);"
+                    "assertion": "chai.expect(global.foo(2, [6])).to.eql([8]);",
+                    "pass": true
                 },
                 {
                     "title": "foo(0, [-1, 3, 6]) should equal [-1, 3, 6]",
-                    "assertion": "chai.expect(global.foo(0, [-1, 3, 6])).to.eql([-1, 3, 6]);"
+                    "assertion": "chai.expect(global.foo(0, [-1, 3, 6])).to.eql([-1, 3, 6]);",
+                    "pass": true
                 },
                 {
                     "title": "foo(1, [-1, 3, 6]) should equal [0, 4, 7]",
-                    "assertion": "chai.expect(global.foo(1, [-1, 3, 6])).to.eql([0, 4, 7]);"
+                    "assertion": "chai.expect(global.foo(1, [-1, 3, 6])).to.eql([0, 4, 7]);",
+                    "pass": true
                 },
                 {
                     "title": "foo(2, [-1, 3, 6]) should equal [1, 5, 8]",
-                    "assertion": "chai.expect(global.foo(2, [-1, 3, 6])).to.eql([1, 5, 8]);"
+                    "assertion": "chai.expect(global.foo(2, [-1, 3, 6])).to.eql([1, 5, 8]);",
+                    "pass": true
                 }
             ]
         },
@@ -206,35 +247,43 @@
             "tests": [
                 {
                     "title": "foo((a) => true, []) should equal []",
-                    "assertion": "chai.expect(global.foo((a) => true, [])).to.eql([]);"
+                    "assertion": "chai.expect(global.foo((a) => true, [])).to.eql([]);",
+                    "pass": true
                 },
                 {
                     "title": "foo((a) => true, [1]) should equal [1]",
-                    "assertion": "chai.expect(global.foo((a) => true, [1])).to.eql([1]);"
+                    "assertion": "chai.expect(global.foo((a) => true, [1])).to.eql([1]);",
+                    "pass": true
                 },
                 {
                     "title": "foo((a) => false, [1,23,345,-1222]) should equal []",
-                    "assertion": "chai.expect(global.foo((a) => false, [1,23,345,-1222])).to.eql([]);"
+                    "assertion": "chai.expect(global.foo((a) => false, [1,23,345,-1222])).to.eql([]);",
+                    "pass": true
                 },
                 {
                     "title": "foo((a) => a>0, [1]) should equal [1]",
-                    "assertion": "chai.expect(global.foo((a) => a>0, [1])).to.eql([1]);"
+                    "assertion": "chai.expect(global.foo((a) => a>0, [1])).to.eql([1]);",
+                    "pass": true
                 },
                 {
                     "title": "foo((a) => a<0, [1]) should equal [1]",
-                    "assertion": "chai.expect(global.foo((a) => a<0, [1])).to.eql([]);"
+                    "assertion": "chai.expect(global.foo((a) => a<0, [1])).to.eql([]);",
+                    "pass": true
                 },
                 {
                     "title": "foo((a) => a>0, [1,-1,2,-3,-5,22]) should equal [1,2,22]",
-                    "assertion": "chai.expect(global.foo((a) => a>0, [1,-1,2,-3,-5,22])).to.eql([1,2,22]);"
+                    "assertion": "chai.expect(global.foo((a) => a>0, [1,-1,2,-3,-5,22])).to.eql([1,2,22]);",
+                    "pass": true
                 },
                 {
                     "title": "foo((a) => a<0, [1,-1,2,-3,-5,22]) should equal [-1,-3,-5]",
-                    "assertion": "chai.expect(global.foo((a) => a<0, [1,-1,2,-3,-5,22])).to.eql([-1,-3,-5]);"
+                    "assertion": "chai.expect(global.foo((a) => a<0, [1,-1,2,-3,-5,22])).to.eql([-1,-3,-5]);",
+                    "pass": true
                 },
                 {
                     "title": "foo((a) => a % 10 === 0, [-10,-2,344,789,220,4560,-1000,22,0]) should equal [-10,220,4560,-1000,0]",
-                    "assertion": "chai.expect(global.foo((a) => a % 10 === 0, [-10,-2,344,789,220,4560,-1000,22,0])).to.eql([-10,220,4560,-1000,0]);"
+                    "assertion": "chai.expect(global.foo((a) => a % 10 === 0, [-10,-2,344,789,220,4560,-1000,22,0])).to.eql([-10,220,4560,-1000,0]);",
+                    "pass": true
                 }
             ]
         },
@@ -244,39 +293,48 @@
             "tests": [
                 {
                     "title": "foo(1) should equal false",
-                    "assertion": "chai.expect(global.foo(1)).to.eql(false);"
+                    "assertion": "chai.expect(global.foo(1)).to.eql(false);",
+                    "pass": true
                 },
                 {
                     "title": "foo(2) should equal true",
-                    "assertion": "chai.expect(global.foo(2)).to.eql(true);"
+                    "assertion": "chai.expect(global.foo(2)).to.eql(true);",
+                    "pass": true
                 },
                 {
                     "title": "foo(3) should equal true",
-                    "assertion": "chai.expect(global.foo(3)).to.eql(true);"
+                    "assertion": "chai.expect(global.foo(3)).to.eql(true);",
+                    "pass": true
                 },
                 {
                     "title": "foo(9) should equal false",
-                    "assertion": "chai.expect(global.foo(9)).to.eql(false);"
+                    "assertion": "chai.expect(global.foo(9)).to.eql(false);",
+                    "pass": true
                 },
                 {
                     "title": "foo(13) should equal true",
-                    "assertion": "chai.expect(global.foo(13)).to.eql(true);"
+                    "assertion": "chai.expect(global.foo(13)).to.eql(true);",
+                    "pass": true
                 },
                 {
                     "title": "foo(25) should equal false",
-                    "assertion": "chai.expect(global.foo(25)).to.eql(false);"
+                    "assertion": "chai.expect(global.foo(25)).to.eql(false);",
+                    "pass": true
                 },
                 {
                     "title": "foo(71) should equal true",
-                    "assertion": "chai.expect(global.foo(71)).to.eql(true);"
+                    "assertion": "chai.expect(global.foo(71)).to.eql(true);",
+                    "pass": true
                 },
                 {
                     "title": "foo(4573) should equal false",
-                    "assertion": "chai.expect(global.foo(4573)).to.eql(false);"
+                    "assertion": "chai.expect(global.foo(4573)).to.eql(false);",
+                    "pass": true
                 },
                 {
                     "title": "foo(4583) should equal true",
-                    "assertion": "chai.expect(global.foo(4583)).to.eql(true);"
+                    "assertion": "chai.expect(global.foo(4583)).to.eql(true);",
+                    "pass": true
                 }
             ]
         },
@@ -285,88 +343,107 @@
             "code": "function foo(n, m) {\r\n for (let i = 0; i < m.length; i++) {\r\n if (m[i] === n) return i;\r\n }\r\n return -1;\r\n}",
             "tests": [
                 {
-                    "title":"foo(1,[]) should equal -1",
-                    "assertion":"chai.expect(foo(1,[])).to.eql(-1);"
+                    "title": "foo(1,[]) should equal -1",
+                    "assertion": "chai.expect(foo(1,[])).to.eql(-1);",
+                    "pass": true
                 },
                 {
-                    "title":"foo(1,[1]) should equal 0",
-                    "assertion":"chai.expect(foo(1,[1])).to.eql(0);"
+                    "title": "foo(1,[1]) should equal 0",
+                    "assertion": "chai.expect(foo(1,[1])).to.eql(0);",
+                    "pass": true
                 },
                 {
-                    "title":"foo(2,[1]) should equal -1",
-                    "assertion":"chai.expect(foo(2,[1])).to.eql(-1);"
+                    "title": "foo(2,[1]) should equal -1",
+                    "assertion": "chai.expect(foo(2,[1])).to.eql(-1);",
+                    "pass": true
                 },
                 {
-                    "title":"foo(1,[3,2,1]) should equal 2",
-                    "assertion":"chai.expect(foo(1,[3,2,1])).to.eql(2);"
+                    "title": "foo(1,[3,2,1]) should equal 2",
+                    "assertion": "chai.expect(foo(1,[3,2,1])).to.eql(2);",
+                    "pass": true
                 },
                 {
-                    "title":"foo(2,[3,2,1]) should equal 1",
-                    "assertion":"chai.expect(foo(2,[3,2,1])).to.eql(1);"
+                    "title": "foo(2,[3,2,1]) should equal 1",
+                    "assertion": "chai.expect(foo(2,[3,2,1])).to.eql(1);",
+                    "pass": true
                 },
                 {
-                    "title":"foo(20,[3,2,1]) should equal -1",
-                    "assertion":"chai.expect(foo(20,[3,2,1])).to.eql(-1);"
+                    "title": "foo(20,[3,2,1]) should equal -1",
+                    "assertion": "chai.expect(foo(20,[3,2,1])).to.eql(-1);",
+                    "pass": true
                 },
                 {
-                    "title":"foo(2,[22,3,44,3,344,5,2,666433,2]) should equal 6",
-                    "assertion":"chai.expect(foo(2,[22,3,44,3,344,5,2,666433,2])).to.eql(6);"
+                    "title": "foo(2,[22,3,44,3,344,5,2,666433,2]) should equal 6",
+                    "assertion": "chai.expect(foo(2,[22,3,44,3,344,5,2,666433,2])).to.eql(6);",
+                    "pass": true
                 },
                 {
-                    "title":"foo(3,[22,3,44,3,344,5,2,666433,2]) should equal 1",
-                    "assertion":"chai.expect(foo(3,[22,3,44,3,344,5,2,666433,2])).to.eql(1);"
+                    "title": "foo(3,[22,3,44,3,344,5,2,666433,2]) should equal 1",
+                    "assertion": "chai.expect(foo(3,[22,3,44,3,344,5,2,666433,2])).to.eql(1);",
+                    "pass": true
                 }
             ]
         },
         {
             "id": 10,
             "code": "function foo(n) {\r\n return n[0][0] * n[1][1] - n[1][0] * n[0][1];\r\n}",
-            "tests":[
+            "tests": [
                 {
-                    "title":"foo([[1,0],[0,1]]) should equal 1",
-                    "assertion":"chai.expect(foo([[1,0],[0,1]])).to.eql(1);"
+                    "title": "foo([[1,0],[0,1]]) should equal 1",
+                    "assertion": "chai.expect(foo([[1,0],[0,1]])).to.eql(1);",
+                    "pass": true
                 },
                 {
-                    "title":"foo([[0,1],[1,0]]) should equal -1",
-                    "assertion":" chai.expect(foo([[0,1],[1,0]])).to.eql(-1);"
+                    "title": "foo([[0,1],[1,0]]) should equal -1",
+                    "assertion": " chai.expect(foo([[0,1],[1,0]])).to.eql(-1);",
+                    "pass": true
                 },
                 {
-                    "title":"foo([[1,1],[1,1]]) should equal 0",
-                    "assertion":"chai.expect(foo([[1,1],[1,1]])).to.eql(0);"
+                    "title": "foo([[1,1],[1,1]]) should equal 0",
+                    "assertion": "chai.expect(foo([[1,1],[1,1]])).to.eql(0);",
+                    "pass": true
                 },
                 {
-                    "title":"foo([[1,1],[0,0]]) should equal 0",
-                    "assertion":"chai.expect(foo([[1,1],[0,0]])).to.eql(0);"
+                    "title": "foo([[1,1],[0,0]]) should equal 0",
+                    "assertion": "chai.expect(foo([[1,1],[0,0]])).to.eql(0);",
+                    "pass": true
                 },
                 {
-                    "title":"foo([[0,0],[0,0]]) should equal 0",
-                    "assertion":"chai.expect(foo([[0,0],[0,0]])).to.eql(0);"
+                    "title": "foo([[0,0],[0,0]]) should equal 0",
+                    "assertion": "chai.expect(foo([[0,0],[0,0]])).to.eql(0);",
+                    "pass": true
                 },
                 {
-                    "title":"foo([[2,0],[0,1]]) should equal 2",
-                    "assertion":"chai.expect(foo([[2,0],[0,1]])).to.eql(2);"
+                    "title": "foo([[2,0],[0,1]]) should equal 2",
+                    "assertion": "chai.expect(foo([[2,0],[0,1]])).to.eql(2);",
+                    "pass": true
                 },
                 {
-                    "title":"foo([[2,0],[1,1]]) should equal 2",
-                    "assertion":"chai.expect(foo([[2,0],[1,1]])).to.eql(2);"
+                    "title": "foo([[2,0],[1,1]]) should equal 2",
+                    "assertion": "chai.expect(foo([[2,0],[1,1]])).to.eql(2);",
+                    "pass": true
                 },
                 {
-                    "title":"foo([[2,0],[1,7]]) should equal 14",
-                    "assertion":"chai.expect(foo([[2,0],[1,7]])).to.eql(14);"
+                    "title": "foo([[2,0],[1,7]]) should equal 14",
+                    "assertion": "chai.expect(foo([[2,0],[1,7]])).to.eql(14);",
+                    "pass": true
                 },
                 {
-                    "title":"foo([[2,10],[1,7]]) should equal 4",
-                    "assertion":"chai.expect(foo([[2,10],[1,7]])).to.eql(4);"
+                    "title": "foo([[2,10],[1,7]]) should equal 4",
+                    "assertion": "chai.expect(foo([[2,10],[1,7]])).to.eql(4);",
+                    "pass": true
                 },
                 {
-                    "title":"foo([[2,100],[1,7]]) should equal -86",
-                    "assertion":"chai.expect(foo([[2,100],[1,7]])).to.eql(-86);"
+                    "title": "foo([[2,100],[1,7]]) should equal -86",
+                    "assertion": "chai.expect(foo([[2,100],[1,7]])).to.eql(-86);",
+                    "pass": true
                 },
                 {
-                    "title":"foo([[229,1011],[3321,7221]]) should equal -1703922",
-                    "assertion":"chai.expect(foo([[229,1011],[3321,7221]])).to.eql(-1703922);"
+                    "title": "foo([[229,1011],[3321,7221]]) should equal -1703922",
+                    "assertion": "chai.expect(foo([[229,1011],[3321,7221]])).to.eql(-1703922);",
+                    "pass": true
                 }
             ]
         }
     ]
-  }
+}
