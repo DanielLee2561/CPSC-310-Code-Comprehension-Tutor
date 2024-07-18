@@ -265,11 +265,11 @@ router.put("/:username/questions/:questionID/attempts/:attemptID", (req, res) =>
         return res.status(400).json({error:"element missing."});
 
     const user = users.find(c => c.username === username);
-    if (!user) return res.status(404).send('User is not found.');
-    if (user.password !== password) return res.status(401).send('Unauthorized to access this data');
+    if (!user) return res.status(404).json({error:'User is not found.'});
+    if (user.password !== password) return res.status(401).json({error:'Unauthorized to access this data'});
 
     const question = user.questions.find(c => c.questionId === parseInt(questionId));
-    if (!question) return res.status(404).send('Question is not found.');
+    if (!question) return res.status(404).json({error:'Question is not found.'});
 
     const attempts = question.attempts;
 
@@ -284,11 +284,11 @@ router.put("/:username/questions/:questionID/attempts/:attemptID", (req, res) =>
         index++;
     }
 
-    if (!foundAttempt) return res.status(404).send('Attempt is not found.');
+    if (!foundAttempt) return res.status(404).json({error:'Attempt is not found.'});
 
     // Find question function code and put in foundAttempt object
     const questionFunction = questions.find(c => c.id === parseInt(questionId));
-    if (!questionFunction) return res.status(404).send('Question is not found.');
+    if (!questionFunction) return res.status(404).jsoon({error:'Question is not found.'});
     foundAttempt.question = questionFunction.code ? questionFunction.code : "";
 
     res.status(200).json(foundAttempt);
