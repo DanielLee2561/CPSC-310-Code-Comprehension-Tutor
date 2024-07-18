@@ -131,6 +131,21 @@ describe("View Question (Researcher)", () => {
         }
     });
 
+    it ("View Question (Researcher) - No password", async () => {
+        const username = "Researcher_A";
+        const password = "";
+
+        try {
+            //login
+            await axios.put("http://localhost:5000/users/login", {username, password});
+            //view question
+            await axios.put(`http://localhost:5000/questions/${username}/researcher/questions/2`)
+            expect.fail();
+        } catch (err) {
+            expect(err.response.status).to.equal(400);
+        }
+    });
+
     it ("View Question (Researcher) - Non-existent User", async () => {
         const username = "i_do_not_exist";
         const password = "pResearcher_A";
@@ -164,7 +179,7 @@ describe("View Question (Researcher)", () => {
     });
 });
 
-// Template test that you may use.
+// View Questions (Researcher) - View all questions in questions.json
 describe("View Questions (Researcher)", () => {
 
     const usersJsonPath = '../server/data/users.json';
@@ -178,6 +193,98 @@ describe("View Questions (Researcher)", () => {
     });
 
     it("View Questions (Researcher) - Success", async () => {
-        // TODO: make api call and assertions here
+        const username = "Researcher_A";
+        const password = "pResearcher_A";
+
+        try {
+            // Login first
+            await axios.put("http://localhost:5000/users/login", {username, password});
+            // View all questions API call next
+            const response = await axios.put(`http://localhost:5000/questions/${username}/researcher/questions`,
+                {"password": password});
+            const data = response.data;
+            expect(response.status).to.equal(200);
+            expect(data.questions.length).to.equal(10);
+        } catch (err) {
+            expect.fail();
+        }
+    });
+
+    it("View Questions (Researcher) - Not logged in", async () => {
+        const username = "Researcher_A";
+        const password = "pResearcher_A";
+
+        try {
+            // View all questions API call next
+            await axios.put(`http://localhost:5000/questions/${username}/researcher/questions`,
+                {"password": password});
+            expect.fail();
+        } catch (err) {
+            expect(err.response.status).to.equal(401);
+        }
+    });
+
+    it("View Questions (Researcher) - Bad password", async () => {
+        const username = "Researcher_A";
+        const password = "bad_pass";
+
+        try {
+            // Login first
+            await axios.put("http://localhost:5000/users/login", {username, password});
+            // View all questions API call next
+            await axios.put(`http://localhost:5000/questions/${username}/researcher/questions`,
+                {"password": password});
+            expect.fail();
+        } catch (err) {
+            expect(err.response.status).to.equal(401);
+        }
+    });
+
+    it("View Questions (Researcher) - No password", async () => {
+        const username = "Researcher_A";
+        const password = "";
+
+        try {
+            // Login first
+            await axios.put("http://localhost:5000/users/login", {username, password});
+            // View all questions API call next
+            await axios.put(`http://localhost:5000/questions/${username}/researcher/questions`);
+            expect.fail();
+        } catch (err) {
+            expect(err.response.status).to.equal(400);
+        }
+    });
+
+
+    it("View Questions (Researcher) - Non-existent User", async () => {
+        const username = "i_dont_exist";
+        const password = "pResearcher_A";
+
+        try {
+            // Login first
+            await axios.put("http://localhost:5000/users/login", {username, password});
+            // View all questions API call next
+            await axios.put(`http://localhost:5000/questions/${username}/researcher/questions`,
+                {"password": password});
+            expect.fail();
+        } catch (err) {
+            expect(err.response.status).to.equal(404);
+        }
+    });
+
+    it("View Questions (Researcher) - Non-Researcher account", async () => {
+        const username = "Student_A";
+        const password = "pStudent_A";
+
+        try {
+            // Login first
+            await axios.put("http://localhost:5000/users/login", {username, password});
+            // View all questions API call next
+            await axios.put(`http://localhost:5000/questions/${username}/researcher/questions`,
+                {"password": password});
+            expect.fail();
+        } catch (err) {
+            expect(err.response.status).to.equal(401);
+        }
     });
 });

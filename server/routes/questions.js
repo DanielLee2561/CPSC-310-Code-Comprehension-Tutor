@@ -178,7 +178,36 @@ router.put("/:username/researcher/questions/:questionId",(req,res)=>{
    res.status(404).json({error: "Could not find question with given questionId"});
 });
 
-// TODO: View Questions (Researcher)
+// View Questions (Researcher) (All questions in questions.json)
+router.put("/:username/researcher/questions",(req,res)=>{
+    reload();
+
+    const username = req.params.username;
+    const password = req.body.password;
+    let auth = false;
+
+    for (let user of users) {
+        if (user.username === username) {
+            if (user.password !== password) {
+                return res.status(401).json({error: "Wrong password"});
+            } else if (!user.statusLogin) {
+                return res.status(401).json({error: "User not logged in"});
+            } else if (user.type !== "Researcher") {
+                return res.status(401).json({error: "User is not 'Researcher'. Cannot access restricted content"});
+            } else {
+                auth = true;
+                break;
+            }
+        }
+    }
+
+    if (!auth) {
+        return res.status(404).json({error: "Could not find user with given username"});
+    }
+
+    return res.status(200).json({questions: questions});
+
+});
 
 
 
