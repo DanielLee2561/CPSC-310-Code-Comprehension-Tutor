@@ -113,7 +113,7 @@ router.put('/:questionId', (req, res) => {
 
 
 // view gradebook (MARK）
-router.put("/gradebook_data", (req, res) => {
+router.put("/gradebook/gradebook_data", (req, res) => {
         const username = req.body.username;
         const password = req.body.password;
     
