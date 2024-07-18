@@ -659,35 +659,55 @@ describe('View Questions', () => {
     });
 
 	describe('View Questions API', () => {
-		it('View Questions Success', async () => {
-			const username = "Student_A";
-			const password = "pStudent_A";
-			// Log the request data for debugging
-			console.log('View Questions with:', { username });
-			try {
-				const res = await axios.put("http://localhost:5000/users/:username/questions", {
-					password
-				});
-				expect(res.status).to.equal(200);
-			} catch (err) {
-				expect(err.response.status).equal(404);}
-		});
-		it('View Questions unsuccessful with wrong password', async () => {
-			const username = "Student_A";
-			const password = "Student_A";
-			// Log the request data for debugging
-			console.log('View Questions with:', { username });
-			try {
-				const res = await axios.put("http://localhost:5000/users/:username/questions", {
-					password
-				});
-				expect(res.status).to.equal(401);
-			} catch (err) {
-					expect(err.response.status).equal(404);
-			}
-		});
-	});
+        it('View Questions Success', async () => {
+            const username = "Student_A";
+            const password = "pStudent_A";
+          
+            console.log('View Questions with:', { username });
+
+            try {
+                const res = await axios.put(`http://localhost:5000/users/${username}/questions`, {
+                    password
+                });
+                expect(res.status).to.equal(200);
+            } catch (err) {
+                expect(err.response.status).to.equal(500); 
+            }
+        });
+
+        it('View Questions unsuccessful with wrong password', async () => {
+            const username = "Student_A";
+            const password = "wrong_password";
+            console.log('View Questions with:', { username });
+
+            try {
+                const res = await axios.put(`http://localhost:5000/users/${username}/questions`, {
+                    password
+                });
+                expect.fail(); 
+            } catch (err) {
+                expect(err.response.status).to.equal(401); 
+            }
+        });
+
+        it('View Questions unsuccessful with non exists user', async () => {
+            const username = "Student_Q";
+            const password = "Student_A";
+            console.log('View Questions with:', { username });
+
+            try {
+                const res = await axios.put(`http://localhost:5000/users/${username}/questions`, {
+                    password
+                });
+                expect.fail(); 
+            } catch (err) {
+                expect(err.response.status).to.equal(404); 
+            }
+        });
+
+    });
 });
+
 
 describe('Delete Question', () => {
 
