@@ -140,6 +140,47 @@ router.put('/:questionId', (req, res) => {
     res.send("Changed the specific question successfully!");
 });
 
+// View Question (Researcher) (Specific question code and tests)
+router.put("/:username/researcher/questions/:questionId",(req,res)=>{
+   reload();
+
+   const username = req.params.username;
+   const questionId = Number(req.params.questionId);
+   const password = req.body.password;
+
+   let auth = false;
+
+   for (let user of users) {
+       if (user.username === username) {
+           if (user.password !== password) {
+               return res.status(401).json({error: "Wrong password"});
+           } else if (!user.statusLogin) {
+               return res.status(401).json({error: "User not logged in"});
+           } else if (user.type !== "Researcher") {
+               return res.status(401).json({error: "User is not 'Researcher'. Cannot access restricted content"});
+           } else {
+               auth = true;
+               break;
+           }
+       }
+   }
+
+   if (!auth) {
+       return res.status(404).json({error: "Could not find user with given username"});
+   }
+
+   for (let question of questions) {
+       if (question.id === questionId) {
+           res.status(200).json(question); // also returns id
+           return;
+       }
+   }
+   res.status(404).json({error: "Could not find question with given questionId"});
+});
+
+// TODO: View Questions (Researcher)
+
+
 
 // view gradebook (MARK）
 router.put("/gradebook/gradebook_data", (req, res) => {

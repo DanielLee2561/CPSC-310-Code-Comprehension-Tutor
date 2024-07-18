@@ -620,6 +620,7 @@ describe('Save and Submit Attempt', () => {
 					notes: "Just testing partial success... I know what the function does...",
 					inProgress: true
 				});
+			expect.fail();
 		} catch (err) {
 			expect(err.response.status).to.eql(401);
 			expect(err.response.data.error).to.eql("User is not currently logged in");
@@ -636,6 +637,7 @@ describe('Save and Submit Attempt', () => {
 					notes: "Just testing partial success... I know what the function does...",
 					inProgress: true
 				});
+			expect.fail();
 		} catch (err) {
 			expect(err.response.status).to.eql(401);
 		}
