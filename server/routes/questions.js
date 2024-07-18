@@ -3,39 +3,49 @@ const router = express.Router();
 import fs from 'fs';
 import path from 'path';
 import session from 'express-session';
+import {readJsonFile} from "../functions/fileSystemFunctions.js";
 
 // Load questions from JSON file
-const questionsJsonPath = path.join(process.cwd(), 'data', 'questions.json');
-const usersJsonPath = path.join(process.cwd(), 'data', 'users.json');
+// const questionsJsonPath = path.join(process.cwd(), 'data', 'questions.json');
+// const usersJsonPath = path.join(process.cwd(), 'data', 'users.json');
+const usersJsonPath = './data/users.json';
+const questionsJsonPath = './data/questions.json';
 
 let questions;
 let users;
 //read user json data
-fs.readFile(questionsJsonPath, 'utf8', (err, data) => {
-    if (err) {
-        console.error('Error reading question.json:', err);
-        return;
-    }
-    try {
-        questions = JSON.parse(data).questions;
-        // console.log(questions);
-    } catch (err) {
-        console.error('Error parsing user.json:', err);
-    }
-});
+// fs.readFile(questionsJsonPath, 'utf8', (err, data) => {
+//     if (err) {
+//         console.error('Error reading question.json:', err);
+//         return;
+//     }
+//     try {
+//         questions = JSON.parse(data).questions;
+//         // console.log(questions);
+//     } catch (err) {
+//         console.error('Error parsing user.json:', err);
+//     }
+// });
 
-fs.readFile(usersJsonPath, 'utf8', (err, data) => {
-    if (err) {
-        console.error('Error reading question.json:', err);
-        return;
-    }
-    try {
-        users = JSON.parse(data).users;
-        // console.log(questions);
-    } catch (err) {
-        console.error('Error parsing user.json:', err);
-    }
-});
+// fs.readFile(usersJsonPath, 'utf8', (err, data) => {
+//     if (err) {
+//         console.error('Error reading question.json:', err);
+//         return;
+//     }
+//     try {
+//         users = JSON.parse(data).users;
+//         // console.log(questions);
+//     } catch (err) {
+//         console.error('Error parsing user.json:', err);
+//     }
+// });
+
+function reload() {
+    let questions_json = readJsonFile(questionsJsonPath);
+    let users_json = readJsonFile(usersJsonPath);
+    questions = questions_json.questions;
+    users = users_json.users;
+}
 
 // if the data from the url, can use fetch to get the data from the frontend
 // fetch('../data/question.json')
@@ -53,12 +63,14 @@ const writeJsonFile = (filePath, data) => {
 }
 
 router.get('/', (req, res) => {
+    reload();
     // console.log(users);
     res.send(questions);
 });
 
 //add a question
 router.post('/',(req,res)=>{
+    reload();
     const{questionId,questionCode,test}=req.body;
     if (!questionId || !questionCode || !test){
         return res.status(400).json({error:"questionId, questionCode and test are required."});
@@ -84,6 +96,7 @@ router.post('/',(req,res)=>{
 
 // found the specific question by questionId
 router.get('/:questionId',(req,res)=>{
+    reload();
     const { questionId } = req.params;
     const foundQuestion = questions.find((question)=> question.questionId == questionId);
     console.log(foundQuestion);
@@ -92,6 +105,7 @@ router.get('/:questionId',(req,res)=>{
 
 //delete a question by questionId
 router.delete('/:questionId',(req,res)=>{
+    reload();
     const { questionId } = req.params;
     questions =questions.filter((question)=>question.questionId != questionId);
     writeJsonFile(questionsJsonPath, { questions });
@@ -100,6 +114,7 @@ router.delete('/:questionId',(req,res)=>{
 
 // PUT route to update questionCode and test for a specific questionId
 router.put('/:questionId', (req, res) => {
+    reload();
     const { questionId } = req.params;
     const { questionCode, test } = req.body;
 
@@ -128,6 +143,7 @@ router.put('/:questionId', (req, res) => {
 
 // view gradebook (MARK）
 router.put("/gradebook/gradebook_data", (req, res) => {
+    reload();
         const username = req.body.username;
         const password = req.body.password;
     
