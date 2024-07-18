@@ -6,9 +6,10 @@ import session from 'express-session';
 
 // Load questions from JSON file
 const questionsJsonPath = path.join(process.cwd(), 'data', 'questions.json');
-
+const usersJsonPath = path.join(process.cwd(), 'data', 'users.json');
 
 let questions;
+let users;
 //read user json data
 fs.readFile(questionsJsonPath, 'utf8', (err, data) => {
     if (err) {
@@ -17,6 +18,19 @@ fs.readFile(questionsJsonPath, 'utf8', (err, data) => {
     }
     try {
         questions = JSON.parse(data).questions;
+        // console.log(questions);
+    } catch (err) {
+        console.error('Error parsing user.json:', err);
+    }
+});
+
+fs.readFile(usersJsonPath, 'utf8', (err, data) => {
+    if (err) {
+        console.error('Error reading question.json:', err);
+        return;
+    }
+    try {
+        users = JSON.parse(data).users;
         // console.log(questions);
     } catch (err) {
         console.error('Error parsing user.json:', err);
