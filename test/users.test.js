@@ -415,6 +415,7 @@ describe('Start Attempt', () => {
 
 
 	describe('Start Attempt API', () => {
+		/*
 		it('Start Attempt Success', async () => {
 			const username = "Student_A";
 			const password = "pStudent_A";
@@ -445,6 +446,73 @@ describe('Start Attempt', () => {
 					expect(err.response.status).equal(404);
 			}
 		});
+		*/
+		
+		it('Start Attempt Successfully', async () => {
+            		const password = "pStudent_A";
+            		try {
+                		const res = await axios.post("http://localhost:5000/users/Student_A/questions/2", 
+                    			{"password": password});
+                		expect(res.status).eql(204);
+            		} catch (err) {
+                		expect.fail();
+            		}
+        	});
+
+        	it('Start Attempt Unsuccessfully (Missing Element)', async () => {
+            		try {
+                		const res = await axios.post("http://localhost:5000/users/Student_A/questions/1", 
+                    			{});
+				expect.fail();
+            		} catch (err) {
+                		expect(err.response.status).eql(400);
+            		}
+        	});
+
+        	it('Start Attempt Unsuccessfully (Wrong Password)', async () => {
+            		const password = "pStudent_B";
+            		try {
+                		const res = await axios.post("http://localhost:5000/users/Student_A/questions/1", 
+                    			{"password": password});
+				expect.fail();
+            		} catch (err) {
+                		expect(err.response.status).eql(401);
+            		}
+        	});
+
+        	it('Start Attempt Unsuccessfully (Nonexist user)', async () => {
+            		const password = "pStudent_A";
+            		try {
+                		const res = await axios.post("http://localhost:5000/users/Student/questions/1", 
+                    			{"password": password});
+				expect.fail();
+            		} catch (err) {
+                		expect(err.response.status).eql(404);
+            		}
+        	});
+
+        	it('Start Attempt Unsuccessfully (Nonexist Question)', async () => {
+            		const password = "pStudent_A";
+            		try {
+                		const res = await axios.post("http://localhost:5000/users/Student_A/questions/100", 
+                    			{"password": password});
+				expect.fail();
+            		} catch (err) {
+               	 		expect(err.response.status).eql(404);
+            		}
+        	});
+
+        	it('Start Attempt Unsuccessfully (Latest Attempt does not finish)', async () => {
+            		const password = "pStudent_A";
+            		try {
+                		const res = await axios.post("http://localhost:5000/users/Student_A/questions/1", 
+                    			{"password": password});
+				expect(res.status).eql(202);
+            		} catch (err) {
+                		expect.fail();
+            		}
+        	});
+		
 	});	
 
 });
@@ -582,10 +650,10 @@ describe('View Attempt', () => {
 	const questoinsJSON = readJsonFile(questionsJsonPath);
 
 	afterEach(function() {
-        writeJsonFile(usersJsonPath, usersJSON);
+        	writeJsonFile(usersJsonPath, usersJSON);
 		writeJsonFile(questionsJsonPath, questoinsJSON);
-    });
-
+    	});
+	/*
 	it('View Attempt Success', async () => {
 		const username = "Student_A";
 		const password = "pStudent_A";
@@ -642,6 +710,76 @@ describe('View Attempt', () => {
 		} catch (err) {
 			expect(err.response.status).to.eql(401);
 		}
+	});
+	*/
+	
+	describe('View Attempt API', () => {
+
+		it('View Attempt Successfully', async () => {
+			const password = "pStudent_A";
+			try {
+				const res = await axios.put("http://localhost:5000/users/Student_A/questions/1/attempts/1", 
+					{"password": password});
+				expect(res.status).eql(200);
+			} catch (err) {
+				expect.fail();
+			}
+		});
+
+		it('View Attempt Unsuccessfully (Missing Element)', async () => {
+            		try {
+                		const res = await axios.put("http://localhost:5000/users/Student_A/questions/1/attempts/1", 
+                    			{});
+				expect.fail();
+            		} catch (err) {
+                		expect(err.response.status).eql(400);
+            		}
+        	});
+
+        	it('View Attempt Unsuccessfully (Wrong Password)', async () => {
+            		const password = "pStudent_B";
+            		try {
+                		const res = await axios.put("http://localhost:5000/users/Student_A/questions/1/attempts/1", 
+                    			{"password": password});
+				expect.fail();
+            		} catch (err) {
+                		expect(err.response.status).eql(401);
+            		}
+        	});
+
+        	it('View Attempt Unsuccessfully (Nonexist User)', async () => {
+            		const password = "pStudent_A";
+            		try {
+                		const res = await axios.put("http://localhost:5000/users/Student/questions/1/attempts/1", 
+                   			{"password": password});
+				expect.fail();
+            		} catch (err) {
+                		expect(err.response.status).eql(404);
+            		}
+        	});
+
+        	it('View Attempt Unsuccessfully (Nonexist Question)', async () => {
+            		const password = "pStudent_A";
+            		try {
+                		const res = await axios.put("http://localhost:5000/users/Student_A/questions/100/attempts/1", 
+                    			{"password": password});
+				expect.fail();
+            		} catch (err) {
+                		expect(err.response.status).eql(404);
+            		}
+        	});
+
+        	it('View Attempt Unsuccessfully (Nonexist Attempt)', async () => {
+            		const password = "pStudent_A";
+            		try {
+                		const res = await axios.put("http://localhost:5000/users/Student_A/questions/1/attempts/100", 
+                    			{"password": password});
+				expect.fail();
+            		} catch (err) {
+                		expect(err.response.status).eql(404);
+            		}
+        	});
+
 	});
 
 });
@@ -813,7 +951,7 @@ describe('View Gradebook', () => {
             const username = "Researcher_A";
             const password = "pResearcher_A";
             try {
-                const res = await axios.put("http://localhost:5000/gradebook_data",
+                const res = await axios.put("http://localhost:5000/questions/gradebook/gradebook_data",
                     {"username": username, "password": password});
                 expect(res.status).eql(200);
             } catch (err) {
@@ -824,11 +962,11 @@ describe('View Gradebook', () => {
         it('Access Gradebook Unsuccessfully (Missing Element)', async () => {
             const username = "Researcher_A";
             try {
-                const res = await axios.put("http://localhost:5000/gradebook_data",
+                const res = await axios.put("http://localhost:5000/questions/gradebook/gradebook_data",
                     {"username": username});
                 assert.fail();
             } catch (err) {
-                expect(err.res.status).eql(400);
+                expect(err.response.status).eql(400);
             }
         });
 
@@ -836,11 +974,11 @@ describe('View Gradebook', () => {
             const username = "Researcher_";
             const password = "pResearcher_A";
             try {
-                const res = await axios.put("http://localhost:5000/gradebook_data",
+                const res = await axios.put("http://localhost:5000/questions/gradebook/gradebook_data",
                     {"username": username, "password": password});
                 assert.fail();
             } catch (err) {
-                expect(err.res.status).eql(404);
+                expect(err.response.status).eql(404);
             }
         });
 
@@ -848,11 +986,11 @@ describe('View Gradebook', () => {
             const username = "Researcher_A";
             const password = "pResearcher_";
             try {
-                const res = await axios.put("http://localhost:5000/gradebook_data",
+                const res = await axios.put("http://localhost:5000/questions/gradebook/gradebook_data",
                     {"username": username, "password": password});
                 assert.fail();
             } catch (err) {
-                expect(err.res.status).eql(401);
+                expect(err.response.status).eql(401);
             }
         });
 
@@ -860,11 +998,11 @@ describe('View Gradebook', () => {
             const username = "Student_A";
             const password = "pStudent_A";
             try {
-                const res = await axios.put("http://localhost:5000/gradebook_data",
+                const res = await axios.put("http://localhost:5000/questions/gradebook/gradebook_data",
                     {"username": username, "password": password});
                 assert.fail();
             } catch (err) {
-                expect(err.res.status).eql(401);
+                expect(err.response.status).eql(401);
             }
         });
 
