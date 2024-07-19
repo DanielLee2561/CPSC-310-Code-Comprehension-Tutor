@@ -1,3 +1,21 @@
+.attempts {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.questions {
+	list-style-type: none;
+	margin: 0;
+  	padding-left: 30%;
+	padding-right: 30%;
+}
+
+.question {
+	display: flex;
+	justify-content: space-between;
+}
+
 .button {
 	background-color: white;
 	background-position: center center;

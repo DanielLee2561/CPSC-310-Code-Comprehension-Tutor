@@ -79,7 +79,11 @@ const Attempt = (name, id, attempt) => {
     }
   }
 
-  return <span>{name} {id} {date} {score} {duration}</span>;
+  return (
+    <span>
+      <span>{date} {score} {duration}</span>
+    </span>
+  );
 }
 
 // Question
@@ -124,9 +128,10 @@ const Question = (question) => {
   const Attempts = () => {
     if (stateExpand) {
       return (
-        <ul>
+        <ul className='attempts'>
           {attempts.map((attempt, attemptID) =>
             <li>
+              <span>Attempt {attemptID+1}</span>
               {Attempt("Attempt", attemptID+1, attempt)}
               <ButtonView question={id} attempt={attemptID+1} />
             </li>
@@ -139,10 +144,15 @@ const Question = (question) => {
   // Return
   return (
     <li className='question'>
-      <ButtonExpand />
-      {Attempt ("Question", id, getBestAttempt(id))}
-      <ButtonStart question={id} attempts={attempts}/>
-      <Attempts />
+      <span>
+        <ButtonExpand />
+        <span>Question {id}</span>
+      </span>
+      <span>
+        {Attempt ("Question", id, getBestAttempt(id))}
+        <ButtonStart question={id} attempts={attempts}/>
+        <Attempts />
+      </span>
     </li>
   );
 }
@@ -155,7 +165,7 @@ const Questions = (props) => {
   // Return
   if (questions != null) {
     return (
-      <ul>
+      <ul className='questions'>
         {questions.map((question) =>
           <li>
             {Question(question)}
