@@ -1,6 +1,23 @@
+.attempt {
+	color: black;
+	display: flex;
+	font-size: 21px;
+	justify-content: space-between;
+}
+
+.question {
+	color: black;
+	display: flex;
+	font-size: 21px;
+	font-weight: bold;
+	justify-content: space-between;
+	margin-top: 5px;
+}
+
 .attempts {
 	list-style-type: none;
 	margin: 0;
+	margin-left: 20px;
 	padding: 0;
 }
 
@@ -9,11 +26,7 @@
 	margin: 0;
   	padding-left: 30%;
 	padding-right: 30%;
-}
-
-.question {
-	display: flex;
-	justify-content: space-between;
+	text-align: center;
 }
 
 .button {
@@ -35,13 +48,14 @@
 	background-image: url("../icons/eye-alt.png");
 	border-style: dashed;
 	border-width: 1px;
-	height: 15px;
-	width: 15px;
+	height: 20px;
+	width: 20px;
+	margin-right: 5px;
 }
 
 .expand {
-	height: 30px;
-	width: 30px;
+	height: 20px;
+	width: 20px;
 }
 
 .expand.off {

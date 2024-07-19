@@ -81,7 +81,7 @@ const Attempt = (name, id, attempt) => {
 
   return (
     <span>
-      <span>{date} {score} {duration}</span>
+      <span>{name} {id} {date} {score} {duration}</span>
     </span>
   );
 }
@@ -130,8 +130,7 @@ const Question = (question) => {
       return (
         <ul className='attempts'>
           {attempts.map((attempt, attemptID) =>
-            <li>
-              <span>Attempt {attemptID+1}</span>
+            <li className='attempt'>
               {Attempt("Attempt", attemptID+1, attempt)}
               <ButtonView question={id} attempt={attemptID+1} />
             </li>
@@ -143,17 +142,16 @@ const Question = (question) => {
   
   // Return
   return (
-    <li className='question'>
-      <span>
-        <ButtonExpand />
-        <span>Question {id}</span>
-      </span>
-      <span>
-        {Attempt ("Question", id, getBestAttempt(id))}
+    <div>
+      <li className='question'>
+        <span>
+          <ButtonExpand />
+          {Attempt ("Question", id, getBestAttempt(id))}
+        </span>
         <ButtonStart question={id} attempts={attempts}/>
-        <Attempts />
-      </span>
-    </li>
+      </li>
+      <Attempts />
+    </div>
   );
 }
 
@@ -167,9 +165,7 @@ const Questions = (props) => {
     return (
       <ul className='questions'>
         {questions.map((question) =>
-          <li>
-            {Question(question)}
-          </li>
+          <li>{Question(question)}</li>
         )}
       </ul>
     );
