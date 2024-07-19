@@ -866,22 +866,226 @@ describe('Delete Question', () => {
 	
 });
 
+
 describe('Add Question', () => {
 
-	const usersJsonPath = '../server/data/users.json';
-	const usersJSON = readJsonFile(usersJsonPath);
-	const questionsJsonPath = '../server/data/questions.json';
-	const questoinsJSON = readJsonFile(questionsJsonPath);
+    const usersJsonPath = '../server/data/users.json';
+    const usersJSON = readJsonFile(usersJsonPath);
+    const questionsJsonPath = '../server/data/questions.json';
+    const questionsJSON = readJsonFile(questionsJsonPath);
 
-	afterEach(function() {
+    afterEach(function() {
         writeJsonFile(usersJsonPath, usersJSON);
-		writeJsonFile(questionsJsonPath, questoinsJSON);
+        writeJsonFile(questionsJsonPath, questionsJSON);
     });
+
+    describe('Add Question API', () => {
+
+        it('Add Question Success', async () => {
+            const username = "Researcher_A";
+            const password = "pResearcher_A";
+            const id = "111";
+            const code = "xxxxxxxxxxx";
+            const tests = [
+                {
+                    "title": "Test 1",
+                    "assertion": "Pass"
+                },
+                {
+                    "title": "Test 2",
+                    "assertion": "Fail"
+                }
+            ];
+        
+            console.log('Adding Question with:', { username });
+
+            try {
+                const res = await axios.post(`http://localhost:5000/questions/${username}/researcher`, {
+                    password,
+                    id,
+                    code,
+                    tests
+                });
+                expect(res.status).to.equal(200);
+            } catch (err) {
+                expect(err.response.status).to.equal(500);
+            }
+        });
+		it('Add Question unsuccessful with wrong password', async () => {
+            const username = "Researcher_A";
+            const password = "Researcher_A";
+            const id = "111";
+            const code = "xxxxxxxxxxx";
+            const tests = [
+                {
+                    "title": "Test 1",
+                    "assertion": "Pass"
+                },
+                {
+                    "title": "Test 2",
+                    "assertion": "Fail"
+                }
+            ];
+        
+            console.log('Adding Question with:', { username });
+
+            try {
+                const res = await axios.post(`http://localhost:5000/questions/${username}/researcher`, {
+                    password,
+                    id,
+                    code,
+                    tests
+                });
+                expect().fail();
+            } catch (err) {
+                expect(err.response.status).to.equal(401);
+            }
+        });
+    });
+	it('Add Question unsuccessful with no password', async () => {
+		const username = "Researcher_A";
+		const id = "111";
+		const code = "xxxxxxxxxxx";
+		const tests = [
+			{
+				"title": "Test 1",
+				"assertion": "Pass"
+			},
+			{
+				"title": "Test 2",
+				"assertion": "Fail"
+			}
+		];
 	
+		console.log('Adding Question with:', { username });
+
+		try {
+			const res = await axios.post(`http://localhost:5000/questions/${username}/researcher`, {
+				id,
+				code,
+				tests
+			});
+			expect().fail();
+		} catch (err) {
+			expect(err.response.status).to.equal(400);
+		}
+	});
+	it('Add Question unsuccessful with duplicate question id', async () => {
+		const username = "Researcher_A";
+		const password = "pResearcher_A";
+		const id = "1";
+		const code = "xxxxxxxxxxx";
+		const tests = [
+			{
+				"title": "Test 1",
+				"assertion": "Pass"
+			},
+			{
+				"title": "Test 2",
+				"assertion": "Fail"
+			}
+		];
 	
+		console.log('Adding Question with:', { username });
+
+		try {
+			const res = await axios.post(`http://localhost:5000/questions/${username}/researcher`, {
+				password,
+				id,
+				code,
+				tests
+			});
+			expect().fail();
+		} catch (err) {
+			expect(err.response.status).to.equal(401);
+		}
+	});
+	it('Add Question unsuccessful with student account', async () => {
+		const username = "Student_A";
+		const password = "pStudent_A";
+		const id = "1";
+		const code = "xxxxxxxxxxx";
+		const tests = [
+			{
+				"title": "Test 1",
+				"assertion": "Pass"
+			},
+			{
+				"title": "Test 2",
+				"assertion": "Fail"
+			}
+		];
 	
+		console.log('Adding Question with:', { username });
+
+		try {
+			const res = await axios.post(`http://localhost:5000/questions/${username}/researcher`, {
+				password,
+				id,
+				code,
+				tests
+			});
+			expect().fail();
+		} catch (err) {
+			expect(err.response.status).to.equal(401);
+		}
+	});
+	it('Add Question unsuccessful with empty question code', async () => {
+		const username = "Researcher_A";
+		const password = "pResearcher_A";
+		const id = "111";
+		const code = "";
+		const tests = [
+			{
+				"title": "Test 1",
+				"assertion": "Pass"
+			},
+			{
+				"title": "Test 2",
+				"assertion": "Fail"
+			}
+		];
+	
+		console.log('Adding Question with:', { username });
+
+		try {
+			const res = await axios.post(`http://localhost:5000/questions/${username}/researcher`, {
+				password,
+				id,
+				code,
+				tests
+			});
+			expect().fail();
+		} catch (err) {
+			expect(err.response.status).to.equal(400);
+		}
+	});
+	it('Add Question unsuccessful with empty test', async () => {
+		const username = "Researcher_A";
+		const password = "pResearcher_A";
+		const id = "111";
+		const code = "xxxxxxxxxxxxx";
+		const tests = [
+			
+		];
+	
+		console.log('Adding Question with:', { username });
+
+		try {
+			const res = await axios.post(`http://localhost:5000/questions/${username}/researcher`, {
+				password,
+				id,
+				code,
+				tests
+			});
+			expect().fail();
+		} catch (err) {
+			expect(err.response.status).to.equal(400);
+		}
+	});
 	
 });
+
 
 describe('View Question (Researcher)', () => {
 
