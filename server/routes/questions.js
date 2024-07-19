@@ -72,14 +72,17 @@ router.get('/', (req, res) => {
 router.post('/:username/researcher', (req, res) => {
     reload();
     const { username } = req.params;
-    const { password, id, questionCode, tests } = req.body;
+    const { password, id, code, tests } = req.body;
 
-    if (!password || !id || !questionCode || !Array.isArray(tests) || tests.length === 0) {
-        return res.status(400).json({ error: "password, id, questionCode, and a non-empty array of tests are required." });
+    if (!password || !id || !code || !Array.isArray(tests) || tests.length === 0) {
+        return res.status(400).json({ error: "password, id, code, and a non-empty array of tests are required." });
     }
+
+    let userFound = false;
 
     for (let user of users) {
         if (user.username === username) {
+            userFound = true;
             if (user.password !== password) {
                 return res.status(401).json({ error: "Incorrect password" });
             }
@@ -89,9 +92,12 @@ router.post('/:username/researcher', (req, res) => {
             if (user.type !== "Researcher") {
                 return res.status(401).json({ error: "User is not a researcher" });
             }
-
+            const question = questions.find((question) => question.id == id);
+            if (question) {
+                return res.status(401).json({ error: "Question ID exists" });
+            }
             // Construct question and put it in JSON array with a new array for tests
-            const newQuestion = { id, questionCode, tests: [...tests] };
+            const newQuestion = { id, code, tests: [...tests] };
             questions.push(newQuestion);
             writeJsonFile(questionsJsonPath, { questions });
 
@@ -99,8 +105,11 @@ router.post('/:username/researcher', (req, res) => {
         }
     }
 
-    return res.status(404).json({ error: "User not found" });
+    if (!userFound) {
+        return res.status(404).json({ error: "User not found" });
+    }
 });
+
 
 // found the specific question by questionId
 // router.get('/:questionId',(req,res)=>{
