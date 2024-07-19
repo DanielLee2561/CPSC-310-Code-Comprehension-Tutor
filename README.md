@@ -9,16 +9,28 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp; The web application will feature several unique features, one of which are researcher accounts. These accounts are instantiated manually, and they allow researchers to add, edit, and delete questions. Furthermore, they can view students’ highest scores for each question, and see question and student averages. This may allow researchers to evaluate the effectiveness of the questions and find out which types of functions students find easy or difficult to understand. They may modify the questions or add new ones to give students more to practice with. Another unique feature is a tutorial page, which will contain a video and a short, written guide on how to answer questions on the app. Lastly, students’ accounts will be secured with a password that they may change at any time.
 
+**Citation (Icons)**
+
+- https://github.com/astrit/css.gg.git
+
+## Frontend (Non-Docker)
+
+1) In client folder, execute "npm i react-scripts --save".
+2) In client folder, execute "npm start".
+
+## Backend (Non-Docker)
+
+1) In server folder, execute "npm i nodemon --save".
+2) In server folder, execute "npm start".
+
+## Test (Non-Docker)
+
+1) In test folder, execute "npm i axios --save".
+2) In test folder, execute "npx mocha users.test.js".
+
 ## Docker Compose
 
 1) Install "Docker Desktop"
 2) Open "Docker Desktop"
 3) In top-level of project folder, execute without quotes "docker compose up --build -d".
 4) Open "http://localhost:5000/"
-
-## Test Setup
-
-1) In backend folder, execute "npm i nodemon --save".
-2) In backend folder, execute "npm start".
-3) In test folder, execute "npm i axios --save".
-4) In test folder, execute "npx mocha users.test.js".
