@@ -848,22 +848,90 @@ describe('View Questions', () => {
     });
 });
 
-
 describe('Delete Question', () => {
+    const usersJsonPath = '../server/data/users.json';
+    const usersJSON = readJsonFile(usersJsonPath);
+    const questionsJsonPath = '../server/data/questions.json';
+    const questionsJSON = readJsonFile(questionsJsonPath);
 
-	const usersJsonPath = '../server/data/users.json';
-	const usersJSON = readJsonFile(usersJsonPath);
-	const questionsJsonPath = '../server/data/questions.json';
-	const questoinsJSON = readJsonFile(questionsJsonPath);
-
-	afterEach(function() {
+    afterEach(function() {
         writeJsonFile(usersJsonPath, usersJSON);
-		writeJsonFile(questionsJsonPath, questoinsJSON);
+        writeJsonFile(questionsJsonPath, questionsJSON);
     });
-	
-	
-	
-	
+
+    describe('Delete Question API', () => {
+        it('Delete Question Success', async () => {
+            const username = "Researcher_A";
+            const password = "pResearcher_A";
+            const id = "6";
+            console.log('Deleting Question with:', { username });
+
+            try {
+                const res = await axios.delete(`http://localhost:5000/questions/${username}/researcher`, {
+                    data: {
+                        password,
+                        id
+                    }
+                });
+                expect(res.status).to.equal(200);
+            } catch (err) {
+                expect(err.response.status).to.equal(500);
+            }
+        });
+		it('Delete Question unsuccessful with wrong password', async () => {
+            const username = "Researcher_A";
+            const password = "Researcher_A";
+            const id = "6";
+            console.log('Deleting Question with:', { username });
+
+            try {
+                const res = await axios.delete(`http://localhost:5000/questions/${username}/researcher`, {
+                    data: {
+                        password,
+                        id
+                    }
+                });
+                expect().fail();
+            } catch (err) {
+                expect(err.response.status).to.equal(401);
+            }
+        });
+		it('Delete Question unsuccessful with no password', async () => {
+            const username = "Researcher_A";
+            const password = "";
+            const id = "6";
+            console.log('Deleting Question with:', { username });
+            try {
+                const res = await axios.delete(`http://localhost:5000/questions/${username}/researcher`, {
+                    data: {
+                        password,
+                        id
+                    }
+                });
+                expect().fail();
+            } catch (err) {
+                expect(err.response.status).to.equal(400);
+            }
+        });
+		it('Delete Question unsuccessful with student account', async () => {
+            const username = "Student_A";
+            const password = "pStudent_A";
+            const id = "6";
+            console.log('Deleting Question with:', { username });
+
+            try {
+                const res = await axios.delete(`http://localhost:5000/questions/${username}/researcher`, {
+                    data: {
+                        password,
+                        id
+                    }
+                });
+				expect().fail();
+            } catch (err) {
+				expect(err.response.status).to.equal(401);
+            }
+        });
+	});
 });
 
 
