@@ -6,14 +6,14 @@ import axios from 'axios';
 let state;
 let navigate;
 
-// Home Button
-const onHomeButtonClicked = () => {
-  navigate("/home", {state: state});
+const ButtonHome = () => {
+  const onClick = () => {navigate("/home", {state: state});}
+  return <button title="Go To Home Page" className='homeButton' onClick={onClick}><span className='headerSpan'>Home</span></button>;
 }
 
-// Profile Button
-const onProfileButtonClicked = () => {
-  navigate("/profile", {state: state});
+const ButtonProfile = () => {
+  const onClick = () => {navigate("/profile", {state: state});}
+  return <button title="Go To Profile Page" className='profileButton' onClick={onClick}><span className='headerSpan'>Profile</span></button>;
 }
 
 // Start Button
@@ -131,7 +131,6 @@ const Question = (question) => {
     return attemptBest;
   }
 
-  // Attempts
   const Attempts = () => {
     if (stateExpand) {
       return (
@@ -150,7 +149,7 @@ const Question = (question) => {
   // Return
   return (
     <div>
-      <li className='question'>
+      <li className='attempt question'>
         <span>
           <ButtonExpand />
           {Attempt ("Question", id, getBestAttempt(id))}
@@ -162,24 +161,22 @@ const Question = (question) => {
   );
 }
 
-// Questions
 const Questions = (props) => {
-  // Variable
   let questions = props.questions;
 
-  // Return
   if (questions != null) {
     return (
       <ul className='questions'>
         {questions.map((question) =>
-          <li>{Question(question)}</li>
+          <li>
+            {Question(question)}
+          </li>
         )}
       </ul>
     );
   }
 }
 
-// Questions Page
 const QuestionsPage = () => {
   state = useLocation().state;
   navigate = useNavigate();
@@ -209,9 +206,9 @@ const QuestionsPage = () => {
   return (
     <div>
       <div className="header">
-        <button title="Go To Home Page" className='homeButton' onClick={onHomeButtonClicked}><span className='headerSpan'>Home</span></button>
+        <ButtonHome />
         <h1 className='headerTitle'>Questions</h1>
-        <button title="Go To Profile Page" className='profileButton' onClick={onProfileButtonClicked}><span className='headerSpan'>Profile</span></button>
+        <ButtonProfile />
       </div>
       <Questions questions={questions}/>
     </div>

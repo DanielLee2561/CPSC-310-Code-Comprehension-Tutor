@@ -3,21 +3,17 @@
 	display: flex;
 	font-size: 21px;
 	justify-content: space-between;
+	margin-top: 5px;
 }
 
 .question {
-	color: black;
-	display: flex;
-	font-size: 21px;
 	font-weight: bold;
-	justify-content: space-between;
-	margin-top: 5px;
 }
 
 .attempts {
 	list-style-type: none;
 	margin: 0;
-	margin-left: 20px;
+	margin-left: 25px;
 	padding: 0;
 }
 
