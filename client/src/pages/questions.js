@@ -3,11 +3,39 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import './questions.css'
 import axios from 'axios';
 
+let state;
+let navigate;
+
+const ButtonHome = () => {
+  const onClick = () => {navigate("/home", {state: state});}
+  return <button title="Go To Home Page" className='homeButton' onClick={onClick}><span className='headerSpan'>Home</span></button>;
+}
+
+const ButtonProfile = () => {
+  const onClick = () => {navigate("/profile", {state: state});}
+  return <button title="Go To Profile Page" className='profileButton' onClick={onClick}><span className='headerSpan'>Profile</span></button>;
+}
+
+const getBestAttempt = (attempts) => {
+  let attemptBest = null;
+  let scoreBest = 0;
+  let timeBest = Infinity;
+
+  for (let i = 0; i < attempts.length; i++) {
+    let attemptNew = attempts[i];
+    let scoreNew = attemptNew.testCorrect;
+    let timeNew = attemptNew.duration;
+    if (attemptNew.inProgress == false && scoreBest <= scoreNew && timeBest > timeNew) {
+      attemptBest = attemptNew;
+      scoreBest = attemptBest.testCorrect;
+    }
+  }
+
+  return attemptBest;
+}
+
 // Start Button
 const ButtonStart = (props) => {
-  const navigate = useNavigate();
-  const state = useLocation().state;
-
   const startAttempt = async () => {
     try {
       let request = {"password":state.password};
@@ -38,21 +66,18 @@ const ButtonStart = (props) => {
     }
   };
 
-  return <button onClick={onClick}>Start</button>;
+  return <button title='Start' className='button start' onClick={onClick}></button>;
 }
 
 // View Button
 const ButtonView = (props) => {
-  const navigate = useNavigate();
-  const state = useLocation().state;
-
   const onClick = () => {
     state.question = props.question;
     state.attempt = props.attempt;
     navigate("/attempt", {state: state});
   }
 
-  return <button onClick={onClick}>View</button>;
+  return <button title='View' className='button view' onClick={onClick}></button>;
 }
 
 // Attempt
@@ -79,7 +104,11 @@ const Attempt = (name, id, attempt) => {
     }
   }
 
-  return <span>{name} {id} {date} {score} {duration}</span>;
+  return (
+    <span>
+      <span>{name} {id} {date} {score} {duration}</span>
+    </span>
+  );
 }
 
 // Question
@@ -96,37 +125,20 @@ const Question = (question) => {
 
     return (
       <input
-        className={ stateExpand ? "arrow down" : "arrow right" }
+        title={ stateExpand ? "Hide Attempts" : "Show Attempts" }
+        className={ stateExpand ? "button expand on" : "button expand off" }
         type="button"
         onClick={onClick}
       />
     );
   }
-  
-  // Best Attempt
-  const getBestAttempt = () => {
-    let attemptBest = null;
-    
-    if (attempts.length > 0) {
-      attemptBest = attempts[0]; 
-    }
 
-    for (let i = 1; i < attempts.length; i++) {
-      if (attemptBest.testCorrect < attempts[i].testCorrect) {
-        attemptBest = attempts[i];
-      }
-    }
-
-    return attemptBest;
-  }
-
-  // Attempts
   const Attempts = () => {
     if (stateExpand) {
       return (
-        <ul>
+        <ul className='attempts'>
           {attempts.map((attempt, attemptID) =>
-            <li>
+            <li className='attempt'>
               {Attempt("Attempt", attemptID+1, attempt)}
               <ButtonView question={id} attempt={attemptID+1} />
             </li>
@@ -138,24 +150,25 @@ const Question = (question) => {
   
   // Return
   return (
-    <li>
-      <ButtonExpand />
-      {Attempt ("Question", id, getBestAttempt(id))}
-      <ButtonStart question={id} attempts={attempts}/>
+    <div>
+      <li className='attempt question'>
+        <span>
+          <ButtonExpand />
+          {Attempt ("Question", id, getBestAttempt(attempts))}
+        </span>
+        <ButtonStart question={id} attempts={attempts}/>
+      </li>
       <Attempts />
-    </li>
+    </div>
   );
 }
 
-// Questions
 const Questions = (props) => {
-  // Variable
   let questions = props.questions;
 
-  // Return
   if (questions != null) {
     return (
-      <ul>
+      <ul className='questions'>
         {questions.map((question) =>
           <li>
             {Question(question)}
@@ -166,24 +179,11 @@ const Questions = (props) => {
   }
 }
 
-// Questions Page
 const QuestionsPage = () => {
-  // Variable
-  const state = useLocation().state;
-  const navigate = useNavigate();
+  state = useLocation().state;
+  navigate = useNavigate();
   const [questions, setQuestions] = useState(null);
-  
-  // Home Button
-  const onHomeButtonClicked = () => {
-    navigate("/home", {state: state});
-  }
 
-  // Profile Button
-  const onProfileButtonClicked = () => {
-    navigate("/profile", {state: state});
-  }
-
-  // State
   useEffect(() => {
     if (state === null) {
       navigate("/");
@@ -192,7 +192,6 @@ const QuestionsPage = () => {
     }
   }, [state])
 
-  // Initialize
   useEffect(() => {
     const initialize = async () => {
       try {
@@ -206,13 +205,12 @@ const QuestionsPage = () => {
     initialize();
   }, []);
 
-  // Return
   return (
     <div>
       <div className="header">
-        <button title="Go To Home Page" className='homeButton' onClick={onHomeButtonClicked}><span className='headerSpan'>Home</span></button>
+        <ButtonHome />
         <h1 className='headerTitle'>Questions</h1>
-        <button title="Go To Profile Page" className='profileButton' onClick={onProfileButtonClicked}><span className='headerSpan'>Profile</span></button>
+        <ButtonProfile />
       </div>
       <Questions questions={questions}/>
     </div>
