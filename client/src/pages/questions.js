@@ -16,6 +16,24 @@ const ButtonProfile = () => {
   return <button title="Go To Profile Page" className='profileButton' onClick={onClick}><span className='headerSpan'>Profile</span></button>;
 }
 
+const getBestAttempt = (attempts) => {
+  let attemptBest = null;
+  let scoreBest = 0;
+  let timeBest = Infinity;
+
+  for (let i = 0; i < attempts.length; i++) {
+    let attemptNew = attempts[i];
+    let scoreNew = attemptNew.testCorrect;
+    let timeNew = attemptNew.duration;
+    if (attemptNew.inProgress == false && scoreBest <= scoreNew && timeBest > timeNew) {
+      attemptBest = attemptNew;
+      scoreBest = attemptBest.testCorrect;
+    }
+  }
+
+  return attemptBest;
+}
+
 // Start Button
 const ButtonStart = (props) => {
   const startAttempt = async () => {
@@ -107,28 +125,12 @@ const Question = (question) => {
 
     return (
       <input
+        title={ stateExpand ? "Hide Attempts" : "Show Attempts" }
         className={ stateExpand ? "button expand on" : "button expand off" }
         type="button"
         onClick={onClick}
       />
     );
-  }
-  
-  // Best Attempt
-  const getBestAttempt = () => {
-    let attemptBest = null;
-    
-    if (attempts.length > 0) {
-      attemptBest = attempts[0]; 
-    }
-
-    for (let i = 1; i < attempts.length; i++) {
-      if (attemptBest.testCorrect < attempts[i].testCorrect) {
-        attemptBest = attempts[i];
-      }
-    }
-
-    return attemptBest;
   }
 
   const Attempts = () => {
@@ -152,7 +154,7 @@ const Question = (question) => {
       <li className='attempt question'>
         <span>
           <ButtonExpand />
-          {Attempt ("Question", id, getBestAttempt(id))}
+          {Attempt ("Question", id, getBestAttempt(attempts))}
         </span>
         <ButtonStart question={id} attempts={attempts}/>
       </li>
