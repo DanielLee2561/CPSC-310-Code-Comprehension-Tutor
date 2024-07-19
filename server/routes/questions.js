@@ -120,18 +120,21 @@ router.post('/:username/researcher', (req, res) => {
 //     res.send(foundQuestion);
 // })
 
+
 // DELETE route to delete a question by questionId
 router.delete('/:username/researcher', (req, res) => {
     reload();
     const { username } = req.params;
     const { password, id } = req.body;
+
     if (!password || !id) {
         return res.status(400).json({ error: "password and id are needed to delete this question" });
     }
+
     let userFound = false;
     for (let user of users) {
         if (user.username === username) {
-            userFound = true;
+
             if (user.password !== password) {
                 return res.status(401).json({ error: "Incorrect password" });
             }
@@ -141,19 +144,19 @@ router.delete('/:username/researcher', (req, res) => {
             if (user.type !== "Researcher") {
                 return res.status(401).json({ error: "User is not a researcher" });
             }
-
+            userFound = true;
             // Find the question by questionId and delete it
-           
             questions = questions.filter((question) => question.id != id);
 
             writeJsonFile(questionsJsonPath, { questions });
-            return res.send("Deleted the specific question successfully!");
+            return res.status(200).json("Deleted the specific question successfully!");
         }
     }
     if (!userFound) {
         return res.status(404).json({ error: "User not found" });
     }
 });
+
 
 
 // PUT route to edit the question content
