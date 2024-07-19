@@ -4,11 +4,10 @@ import './questions.css'
 import axios from 'axios';
 
 let state;
+let navigate;
 
 // Start Button
 const ButtonStart = (props) => {
-  const navigate = useNavigate();
-
   const startAttempt = async () => {
     try {
       let request = {"password":state.password};
@@ -44,8 +43,6 @@ const ButtonStart = (props) => {
 
 // View Button
 const ButtonView = (props) => {
-  const navigate = useNavigate();
-
   const onClick = () => {
     state.question = props.question;
     state.attempt = props.attempt;
@@ -176,7 +173,7 @@ const Questions = (props) => {
 const QuestionsPage = () => {
   // Variable
   state = useLocation().state;
-  const navigate = useNavigate();
+  navigate = useNavigate();
   const [questions, setQuestions] = useState(null);
   
   // Home Button
