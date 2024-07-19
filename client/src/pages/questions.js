@@ -3,10 +3,11 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import './questions.css'
 import axios from 'axios';
 
+let state;
+
 // Start Button
 const ButtonStart = (props) => {
   const navigate = useNavigate();
-  const state = useLocation().state;
 
   const startAttempt = async () => {
     try {
@@ -44,7 +45,6 @@ const ButtonStart = (props) => {
 // View Button
 const ButtonView = (props) => {
   const navigate = useNavigate();
-  const state = useLocation().state;
 
   const onClick = () => {
     state.question = props.question;
@@ -175,7 +175,7 @@ const Questions = (props) => {
 // Questions Page
 const QuestionsPage = () => {
   // Variable
-  const state = useLocation().state;
+  state = useLocation().state;
   const navigate = useNavigate();
   const [questions, setQuestions] = useState(null);
   
