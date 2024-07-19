@@ -38,7 +38,7 @@ const ButtonStart = (props) => {
     }
   };
 
-  return <button onClick={onClick}>Start</button>;
+  return <button title='Start' className='button start' onClick={onClick}></button>;
 }
 
 // View Button
@@ -52,7 +52,7 @@ const ButtonView = (props) => {
     navigate("/attempt", {state: state});
   }
 
-  return <button onClick={onClick}>View</button>;
+  return <button title='View' className='button view' onClick={onClick}></button>;
 }
 
 // Attempt
@@ -96,7 +96,7 @@ const Question = (question) => {
 
     return (
       <input
-        className={ stateExpand ? "arrow down" : "arrow right" }
+        className={ stateExpand ? "button expand on" : "button expand off" }
         type="button"
         onClick={onClick}
       />
@@ -138,7 +138,7 @@ const Question = (question) => {
   
   // Return
   return (
-    <li>
+    <li className='question'>
       <ButtonExpand />
       {Attempt ("Question", id, getBestAttempt(id))}
       <ButtonStart question={id} attempts={attempts}/>
