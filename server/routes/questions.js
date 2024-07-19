@@ -68,31 +68,38 @@ router.get('/', (req, res) => {
     res.send(questions);
 });
 
-//add a question
-router.post('/',(req,res)=>{
+//researcher can add a question
+router.post('/:username/researcher', (req, res) => {
     reload();
-    const{questionId,questionCode,test}=req.body;
-    if (!questionId || !questionCode || !test){
-        return res.status(400).json({error:"questionId, questionCode and test are required."});
+    const { username } = req.params;
+    const { password, questionId, questionCode, tests } = req.body;
+
+    if (!questionId || !questionCode || !Array.isArray(tests) || tests.length === 0) {
+        return res.status(400).json({ error: "questionId, questionCode, and a non-empty array of tests are required." });
     }
 
-    // construct question and put in json array
-    const newQuestion={questionId,questionCode,test};
-    questions.push({...newQuestion});
-    writeJsonFile(questionsJsonPath, { questions });
-    res.send("just post a question");
-});
+    for (let user of users) {
+        if (user.username === username) {
+            if (user.password !== password) {
+                return res.status(401).json({ error: "Incorrect password" });
+            }
+            if (!user.statusLogin) {
+                return res.status(401).json({ error: "User not logged in" });
+            }
+            if (user.type !== "Researcher") {
+                return res.status(401).json({ error: "User is not a researcher" });
+            }
 
-//logout account-----need to test later with frontend 
-// app.post('/api/logout', (req, res) => {
-//     req.session.destroy(err => {
-//         if (err) {
-//             return res.status(500).send('Failed to logout');
-//         }
-//         res.clearCookie('connect.sid');
-//         res.send('Logout successful');
-//     });
-// });
+            // Construct question and put it in JSON array with a new array for tests
+            const newQuestion = { questionId, questionCode, tests: [...tests] };
+            questions.push(newQuestion);
+            writeJsonFile(questionsJsonPath, { questions });
+            return res.status(200).send("Question successfully posted");
+        }
+    }
+
+    return res.status(404).json({ error: "User not found" });
+});
 
 // found the specific question by questionId
 router.get('/:questionId',(req,res)=>{
