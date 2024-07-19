@@ -6,6 +6,16 @@ import axios from 'axios';
 let state;
 let navigate;
 
+// Home Button
+const onHomeButtonClicked = () => {
+  navigate("/home", {state: state});
+}
+
+// Profile Button
+const onProfileButtonClicked = () => {
+  navigate("/profile", {state: state});
+}
+
 // Start Button
 const ButtonStart = (props) => {
   const startAttempt = async () => {
@@ -171,22 +181,10 @@ const Questions = (props) => {
 
 // Questions Page
 const QuestionsPage = () => {
-  // Variable
   state = useLocation().state;
   navigate = useNavigate();
   const [questions, setQuestions] = useState(null);
-  
-  // Home Button
-  const onHomeButtonClicked = () => {
-    navigate("/home", {state: state});
-  }
 
-  // Profile Button
-  const onProfileButtonClicked = () => {
-    navigate("/profile", {state: state});
-  }
-
-  // State
   useEffect(() => {
     if (state === null) {
       navigate("/");
@@ -195,7 +193,6 @@ const QuestionsPage = () => {
     }
   }, [state])
 
-  // Initialize
   useEffect(() => {
     const initialize = async () => {
       try {
@@ -209,7 +206,6 @@ const QuestionsPage = () => {
     initialize();
   }, []);
 
-  // Return
   return (
     <div>
       <div className="header">
