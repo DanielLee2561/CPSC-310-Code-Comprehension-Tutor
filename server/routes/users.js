@@ -98,11 +98,48 @@ router.post('/register',(req,res)=>{
     newUser = req.body; // both username and password
     newUser.type = "Student";
     newUser.statusLogin = false;
+    newUser.questions = [];
+    for (let i = 0; i < questions.length; i++) {
+        let question = questions[i];
+        newUser.questions.push({
+            "questionId": question.id,
+            "attempts": []
+        })
+    }
     users.push({...newUser});
     writeJsonFile(usersJsonPath, { "users": users });
     reloadDataVars();
     return res.status(201).send("just post");
 });
+
+function compareIds(a, b) {
+    return a.questionId - b.questionId;
+}
+
+function buildUserQuestions(user, questions) {
+    let existingQuestions = [];
+    for (let i = 0; i < questions.length; i++) {
+        existingQuestions.push(questions[i].id)
+    }
+    for (let i = 0; i < user.questions.length; i++) {
+        if (!existingQuestions.includes(user.questions[i].questionId)) {
+            user.questions.splice(i, 1);
+        }    
+    }
+    let userQuestions = [];
+    for (let i = 0; i < user.questions.length; i++) {
+        userQuestions.push(user.questions[i].questionId)
+    }
+    for (let i = 0 ; i < questions.length; i++) {
+        if (!userQuestions.includes(questions[i].id)) {
+            user.questions.push({
+                "questionId": questions[i].id,
+                "attempts": []
+            });
+        }
+    }
+    user.questions.sort(compareIds);
+}
 
 //login
 router.put('/login', (req, res) => {
@@ -128,6 +165,7 @@ router.put('/login', (req, res) => {
                 })
                 if (user.password === password) {
                     user.statusLogin = true;
+                    buildUserQuestions(user, questions);
                     fs.writeFileSync(usersJsonPath, JSON.stringify({"users": users}, null, 2));
                     res.cookie('token', token, {
                         httpOnly: true,
@@ -242,11 +280,11 @@ router.put("/:username/questions/:questionID/attempts/:attemptID", (req, res) =>
         return res.status(400).json({error:"element missing."});
 
     const user = users.find(c => c.username === username);
-    if (!user) return res.status(404).send('User is not found.');
-    if (user.password !== password) return res.status(401).send('Unauthorized to access this data');
+    if (!user) return res.status(404).json({error:'User is not found.'});
+    if (user.password !== password) return res.status(401).json({error:'Unauthorized to access this data'});
 
     const question = user.questions.find(c => c.questionId === parseInt(questionId));
-    if (!question) return res.status(404).send('Question is not found.');
+    if (!question) return res.status(404).json({error:'Question is not found.'});
 
     const attempts = question.attempts;
 
@@ -261,11 +299,11 @@ router.put("/:username/questions/:questionID/attempts/:attemptID", (req, res) =>
         index++;
     }
 
-    if (!foundAttempt) return res.status(404).send('Attempt is not found.');
+    if (!foundAttempt) return res.status(404).json({error:'Attempt is not found.'});
 
     // Find question function code and put in foundAttempt object
     const questionFunction = questions.find(c => c.id === parseInt(questionId));
-    if (!questionFunction) return res.status(404).send('Question is not found.');
+    if (!questionFunction) return res.status(404).jsoon({error:'Question is not found.'});
     foundAttempt.question = questionFunction.code ? questionFunction.code : "";
 
     res.status(200).json(foundAttempt);

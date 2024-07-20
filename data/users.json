@@ -4,44 +4,44 @@
       "username": "Student_A",
       "password": "pStudent_A",
       "type": "Student",
-      "statusLogin": false,
+      "statusLogin": true,
       "questions": [
         {
           "questionId": 1,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 0,
               "testTotal": 1
             },
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
               "testTotal": 1
             },
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
-              "endTime": "2024-07-01T07:10:00.000Z",
+              "endTime": "2024-07-01T07:08:20.000Z",
               "duration": 500,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
               "testTotal": 1
             },
@@ -63,14 +63,14 @@
           "questionId": 2,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
               "testTotal": 2
             }
@@ -80,14 +80,14 @@
           "questionId": 3,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
               "testTotal": 2
             }
@@ -97,14 +97,14 @@
           "questionId": 4,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
               "testTotal": 2
             }
@@ -114,14 +114,14 @@
           "questionId": 5,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
               "testTotal": 2
             }
@@ -131,14 +131,14 @@
           "questionId": 6,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
               "testTotal": 2
             }
@@ -148,14 +148,14 @@
           "questionId": 7,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
               "testTotal": 2
             }
@@ -165,14 +165,14 @@
           "questionId": 8,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
               "testTotal": 2
             }
@@ -182,10 +182,10 @@
           "questionId": 9,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "",
+              "notes": "",
               "inProgress": true,
-              "startTime": null,
+              "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": null,
               "duration": null,
               "generatedCode": null,
@@ -211,46 +211,46 @@
           "questionId": 1,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
-              "testCorrect": 1,
-              "testTotal": 2
+              "failingTestCases": "Tests Failed",
+              "testCorrect": 0,
+              "testTotal": 1
             },
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
-              "testTotal": 2
+              "testTotal": 1
             },
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
-              "endTime": "2024-07-01T07:10:00.000Z",
-              "duration": 600,
+              "endTime": "2024-07-01T07:08:20.000Z",
+              "duration": 500,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
-              "testTotal": 2
+              "testTotal": 1
             },
             {
-              "description": "description",
-              "notes": "note",
+              "description": "",
+              "notes": "",
               "inProgress": true,
-              "startTime": null,
+              "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": null,
               "duration": null,
               "generatedCode": null,
@@ -264,14 +264,14 @@
           "questionId": 2,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
               "testTotal": 2
             }
@@ -281,14 +281,14 @@
           "questionId": 3,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
               "testTotal": 2
             }
@@ -298,14 +298,14 @@
           "questionId": 4,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
               "testTotal": 2
             }
@@ -315,14 +315,14 @@
           "questionId": 5,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
               "testTotal": 2
             }
@@ -332,14 +332,14 @@
           "questionId": 6,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
               "testTotal": 2
             }
@@ -349,14 +349,14 @@
           "questionId": 7,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
               "testTotal": 2
             }
@@ -366,14 +366,14 @@
           "questionId": 8,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
               "testTotal": 2
             }
@@ -383,10 +383,10 @@
           "questionId": 9,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "",
+              "notes": "",
               "inProgress": true,
-              "startTime": null,
+              "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": null,
               "duration": null,
               "generatedCode": null,
@@ -412,46 +412,46 @@
           "questionId": 1,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
-              "testCorrect": 1,
-              "testTotal": 2
+              "failingTestCases": "Tests Failed",
+              "testCorrect": 0,
+              "testTotal": 1
             },
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
-              "testTotal": 2
+              "testTotal": 1
             },
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
-              "endTime": "2024-07-01T07:10:00.000Z",
-              "duration": 600,
+              "endTime": "2024-07-01T07:08:20.000Z",
+              "duration": 500,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
-              "testTotal": 2
+              "testTotal": 1
             },
             {
-              "description": "description",
-              "notes": "note",
+              "description": "",
+              "notes": "",
               "inProgress": true,
-              "startTime": null,
+              "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": null,
               "duration": null,
               "generatedCode": null,
@@ -465,14 +465,14 @@
           "questionId": 2,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
               "testTotal": 2
             }
@@ -482,14 +482,14 @@
           "questionId": 3,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
               "testTotal": 2
             }
@@ -499,14 +499,14 @@
           "questionId": 4,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
               "testTotal": 2
             }
@@ -516,14 +516,14 @@
           "questionId": 5,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
               "testTotal": 2
             }
@@ -533,14 +533,14 @@
           "questionId": 6,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
               "testTotal": 2
             }
@@ -550,14 +550,14 @@
           "questionId": 7,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
               "testTotal": 2
             }
@@ -567,14 +567,14 @@
           "questionId": 8,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
               "testTotal": 2
             }
@@ -584,10 +584,10 @@
           "questionId": 9,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "",
+              "notes": "",
               "inProgress": true,
-              "startTime": null,
+              "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": null,
               "duration": null,
               "generatedCode": null,
@@ -613,46 +613,46 @@
           "questionId": 1,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
-              "testCorrect": 1,
-              "testTotal": 2
+              "failingTestCases": "Tests Failed",
+              "testCorrect": 0,
+              "testTotal": 1
             },
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
-              "testTotal": 2
+              "testTotal": 1
             },
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
-              "endTime": "2024-07-01T07:10:00.000Z",
-              "duration": 600,
+              "endTime": "2024-07-01T07:08:20.000Z",
+              "duration": 500,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
-              "testTotal": 2
+              "testTotal": 1
             },
             {
-              "description": "description",
-              "notes": "note",
+              "description": "",
+              "notes": "",
               "inProgress": true,
-              "startTime": null,
+              "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": null,
               "duration": null,
               "generatedCode": null,
@@ -666,14 +666,14 @@
           "questionId": 2,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
               "testTotal": 2
             }
@@ -683,14 +683,14 @@
           "questionId": 3,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
               "testTotal": 2
             }
@@ -700,14 +700,14 @@
           "questionId": 4,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
               "testTotal": 2
             }
@@ -717,14 +717,14 @@
           "questionId": 5,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
               "testTotal": 2
             }
@@ -734,14 +734,14 @@
           "questionId": 6,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
               "testTotal": 2
             }
@@ -751,14 +751,14 @@
           "questionId": 7,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
               "testTotal": 2
             }
@@ -768,14 +768,14 @@
           "questionId": 8,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "Description",
+              "notes": "Notes",
               "inProgress": false,
               "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": "2024-07-01T07:10:00.000Z",
               "duration": 600,
               "generatedCode": "LLM",
-              "failingTestCases": "testsFailed",
+              "failingTestCases": "Tests Failed",
               "testCorrect": 1,
               "testTotal": 2
             }
@@ -785,10 +785,10 @@
           "questionId": 9,
           "attempts": [
             {
-              "description": "description",
-              "notes": "note",
+              "description": "",
+              "notes": "",
               "inProgress": true,
-              "startTime": null,
+              "startTime": "2024-07-01T07:00:00.000Z",
               "endTime": null,
               "duration": null,
               "generatedCode": null,
