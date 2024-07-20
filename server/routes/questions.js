@@ -6,6 +6,7 @@ import session from 'express-session';
 import {readJsonFile} from "../functions/fileSystemFunctions.js";
 
 // Load questions from JSON file
+
 // const questionsJsonPath = path.join(process.cwd(), 'data', 'questions.json');
 // const usersJsonPath = path.join(process.cwd(), 'data', 'users.json');
 const usersJsonPath = './data/users.json';
@@ -280,7 +281,7 @@ router.put("/:username/researcher/questions",(req,res)=>{
 
 // view gradebook (MARK）
 router.put("/gradebook/gradebook_data", (req, res) => {
-    reload();
+        reload();
         const username = req.body.username;
         const password = req.body.password;
     
@@ -335,6 +336,6 @@ router.put("/gradebook/gradebook_data", (req, res) => {
         
         const output = {users: gradebook};
     
-        res.status(200).json(output);
+        return res.status(200).json(output);
     });
 export default router;

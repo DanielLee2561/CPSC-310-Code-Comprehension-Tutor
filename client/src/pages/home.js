@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import axios from "axios";
 import './header.css'
 import './home.css'
 
@@ -7,12 +8,29 @@ const Home = (props) => {
   const { loggedIn, email } = props
   const navigate = useNavigate()
   const userInfo = useLocation().state;
+  const [showGradebook, setshowGradebook] = useState(false); 
+
+  const isResearcher = async () => {
+    await axios.get("http://localhost:5000/users/research/researcher", {
+      params: {
+        username: userInfo.username,
+        password: userInfo.password
+      }
+    }).then(data => {
+      if (data.status === 200) { 
+        setshowGradebook(true);
+      } else {
+        setshowGradebook(false);
+      }
+    }).catch(err => console.log(err.response.data.message));
+  }
 
   useEffect(() => {
     if (userInfo === null) {
       navigate("/")
     } 
-  })
+    isResearcher();
+  }, [])
 
   // console.log(useLocation().state.username);
   // console.log(useLocation().state.password);
@@ -30,6 +48,10 @@ const Home = (props) => {
     navigate("/question_bank", {state: userInfo});
   }
 
+  const onGradebookButtonClicked = () => {
+    navigate("/gradebook", {state: userInfo});
+  }
+
   return (
     <div className="mainContainer">
       <div className="header">
@@ -39,6 +61,9 @@ const Home = (props) => {
       </div>
       <div className='buttonContainer'>
         <button title="Go To Question Page" className='questionsButton' onClick={onQuestionsButtonClicked}>Questions</button>
+      </div>
+      <div className='buttonContainer'>
+        <button title="Go To Gradebook Page" className='questionsButton' onClick={onGradebookButtonClicked} style={{ display: showGradebook ? "block" : "none" }}>Gradebook</button>
       </div>
     </div>
   )
