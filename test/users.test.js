@@ -1172,6 +1172,7 @@ describe('View Question (Researcher)', () => {
 	
 });
 
+
 describe('Edit Question', () => {
 
 	const usersJsonPath = '../server/data/users.json';
@@ -1184,10 +1185,175 @@ describe('Edit Question', () => {
 		writeJsonFile(questionsJsonPath, questoinsJSON);
     });
 	
-	
-	
-	
+	describe('Edit Question API', () => {
+        it('Edit Question Success', async () => {
+            const username = "Researcher_A";
+            const password = "pResearcher_A";
+            const id = "5";
+			const code="xxxxxxxx";
+			const tests = [
+                {
+                    "title": "Test 1",
+                    "assertion": "Pass"
+                },
+                {
+                    "title": "Test 2",
+                    "assertion": "Fail"
+                }
+            ];
+            console.log('Edit Question with:', { username });
+
+            try {
+                const res = await axios.put(`http://localhost:5000/questions/${username}/researcher/questions/${id}`, {
+                        password,
+                        id,
+						code,
+						tests
+                });
+                expect(res.status).to.equal(200);
+            } catch (err) {
+                expect(err.response.status).to.equal(500);
+            }
+        });
+		it('Edit Question unsuccessful with wrong password', async () => {
+            const username = "Researcher_A";
+            const password = "Researcher_A";
+            const id = "5";
+			const code="xxxxxxxx";
+			const tests = [
+                {
+                    "title": "Test 1",
+                    "assertion": "Pass"
+                },
+                {
+                    "title": "Test 2",
+                    "assertion": "Fail"
+                }
+            ];
+            console.log('Edit Question with:', { username });
+
+            try {
+                const res = await axios.put(`http://localhost:5000/questions/${username}/researcher/questions/${id}`, {
+                        password,
+                        id,
+						code,
+						tests
+                });
+                expect().fail();
+            } catch (err) {
+                expect(err.response.status).to.equal(401);
+            }
+        });
+		it('Edit Question unsuccessful with empty test array', async () => {
+            const username = "Researcher_A";
+            const password = "Researcher_A";
+            const id = "5";
+			const code="xxxxxxxx";
+			const tests = [];
+            console.log('Edit Question with:', { username });
+
+            try {
+                const res = await axios.put(`http://localhost:5000/questions/${username}/researcher/questions/${id}`, {
+                        password,
+                        id,
+						code,
+						tests
+                });
+                expect().fail();
+            } catch (err) {
+                expect(err.response.status).to.equal(400);
+            }
+        });
+		it('Edit Question unsuccessful with student account', async () => {
+            const username = "Student_A";
+            const password = "pStudent_A";
+            const id = "5";
+			const code="xxxxxxxx";
+			const tests = [
+                {
+                    "title": "Test 1",
+                    "assertion": "Pass"
+                },
+                {
+                    "title": "Test 2",
+                    "assertion": "Fail"
+                }
+            ];
+            console.log('Edit Question with:', { username });
+
+            try {
+                const res = await axios.put(`http://localhost:5000/questions/${username}/researcher/questions/${id}`, {
+                        password,
+                        id,
+						code,
+						tests
+                });
+                expect().fail();
+            } catch (err) {
+                expect(err.response.status).to.equal(401);
+            }
+        });
+		it('Edit Question unsuccessful with non exists question', async () => {
+			const username = "Researcher_A";
+            const password = "Researcher_A";
+            const id = "1111";
+			const code="xxxxxxxx";
+			const tests = [
+                {
+                    "title": "Test 1",
+                    "assertion": "Pass"
+                },
+                {
+                    "title": "Test 2",
+                    "assertion": "Fail"
+                }
+            ];
+            console.log('Edit Question with:', { username });
+
+            try {
+                const res = await axios.put(`http://localhost:5000/questions/${username}/researcher/questions/${id}`, {
+                        password,
+                        id,
+						code,
+						tests
+                });
+                expect().fail();
+            } catch (err) {
+                expect(err.response.status).to.equal(401);
+            }
+        });
+		it('Edit Question unsuccessful with non exists username', async () => {
+            const username = "Researcher_Ac";
+            const password = "Researcher_A";
+            const id = "1111";
+			const code="xxxxxxxx";
+			const tests = [
+                {
+                    "title": "Test 1",
+                    "assertion": "Pass"
+                },
+                {
+                    "title": "Test 2",
+                    "assertion": "Fail"
+                }
+            ];
+            console.log('Edit Question with:', { username });
+
+            try {
+                const res = await axios.put(`http://localhost:5000/questions/${username}/researcher/questions/${id}`, {
+                        password,
+                        id,
+						code,
+						tests
+                });
+                expect().fail();
+            } catch (err) {
+                expect(err.response.status).to.equal(404);
+            }
+        });
+	});
 });
+
 
 describe('View Questions (Researcher)', () => {
 
