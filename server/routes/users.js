@@ -63,6 +63,21 @@ router.get('/', (req, res) => {
     res.send(users);
 });
 
+router.get('/research/researcher', (req, res) => {
+    reloadDataVars();
+    const { username, password } = req.query;
+    for (let user of users){
+        if ((user.username===username) && (user.password===password)){
+            if (user.type === "Researcher") {
+                return res.status(200).send();
+            } else {
+                return res.status(400).send();
+            }
+        }
+    }
+    return res.status(400).send();
+});
+
 
 //register a user
 router.post('/register',(req,res)=>{

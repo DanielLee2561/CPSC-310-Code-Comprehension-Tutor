@@ -1,3 +1,14 @@
+table {
+  margin-right: auto;
+  margin-left: auto;
+  border-collapse: collapse;
+}
+
 table, th, td {
-    border: 1px solid;
-  }
+  border: 2px solid;
+  color: black;
+}
+
+.averages {
+  background-color: lightgray;
+}

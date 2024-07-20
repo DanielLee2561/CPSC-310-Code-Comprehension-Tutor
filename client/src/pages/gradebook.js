@@ -10,6 +10,7 @@ const Gradebook = (props) => {
   const navigate = useNavigate()
   const userInfo = useLocation().state;
   const [averageScores, setAverageScores] = useState([0]);
+  const [showGradebook, setshowGradebook] = useState(false); 
 
   const onHomeButtonClicked = () => {
     navigate("/home", {state: userInfo});
@@ -86,12 +87,29 @@ const Gradebook = (props) => {
     return (Math.round(10 * totalScore/numCompletedQuestions))/10 + "%";
   }
 
+  const isResearcher = async () => {
+    await axios.get("http://localhost:5000/users/research/researcher", {
+      params: {
+        username: userInfo.username,
+        password: userInfo.password
+      }
+    }).then(data => {
+      if (data.status === 200) { 
+        setshowGradebook(true);
+      } else {
+        setshowGradebook(false);
+        navigate("/")
+      }
+    }).catch(err => console.log(err.response.data.message));
+  }
+
   useEffect(() => {
     if (userInfo === null) {
-    //   navigate("/")
+      navigate("/")
     } 
     getGrades();
-    getQuestions()
+    getQuestions();
+    isResearcher();
   }, [])
 
   return (
@@ -125,14 +143,14 @@ const Gradebook = (props) => {
                 </tr>
         })}
         <tr>
-        <td>Question Averages</td>
+        <td className='averages'>Question Averages</td>
         {questions.map((ques) => {
-          return <td>
+          return <td className='averages'>
                     {questionAverages(ques)}
                   </td>
         })}
         {console.log(averageScores)}
-        <td>{getAverageScore(averageScores)}</td>
+        <td className='averages'>{getAverageScore(averageScores)}</td>
         </tr>
       </table>
     </div>
