@@ -43,7 +43,7 @@ const Profile = (props) => {
     <div className="mainContainer">
       <div className="header">
         <button title="Go To Home Page" className='homeButton' onClick={onHomeButtonClicked}><span className='headerSpan'>Home</span></button>
-        <h1 className='headerTitle'>Profile</h1>
+        <h1 className='headerTitle'>{userInfo.username} Profile</h1>
         <button title="Go To Profile Page" className='profileButton' onClick={onProfileButtonClicked}><span className='headerSpan'>Profile</span></button>
       </div>
       <div className='buttonContainer'>
