@@ -113,16 +113,17 @@ function Register() {
           </label>
         </div>
         <br/>
-        <div className={'input'}>
+        <div className={'input consent'}>
+            <div className={'consentText'}>
+              <label>{textConsent}</label>
+            </div>
             <input
             value={consent}
             className={'inputBox'}
             type = "checkbox"
             onChange={() => setConsent(!consent)}
             />
-            <div className={'consentText'}>
-              <label>{textConsent}</label>
-            </div>
+            <span className={'consentText'}>Agree</span>
         </div>
         <br/>
         <div className="errorLabel">

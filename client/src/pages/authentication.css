@@ -48,3 +48,7 @@ form > *{
 #passwordConfirmation {
     margin-left: 225px;
 }
+
+.input.consent {
+    text-align: center;
+}
