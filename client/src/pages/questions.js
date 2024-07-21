@@ -16,22 +16,25 @@ const ButtonProfile = () => {
   return <button title="Go To Profile Page" className='profileButton' onClick={onClick}><span className='headerSpan'>Profile</span></button>;
 }
 
-const getBestAttempt = (attempts) => {
-  let attemptBest = null;
-  let scoreBest = 0;
-  let timeBest = Infinity;
+function getBestAttempt (attempts) {
+	let attemptBest = null;
+	let scoreBest = 0;
+	let timeBest = Infinity;
 
-  for (let i = 0; i < attempts.length; i++) {
-    let attemptNew = attempts[i];
-    let scoreNew = attemptNew.testCorrect;
-    let timeNew = attemptNew.duration;
-    if (attemptNew.inProgress == false && scoreBest <= scoreNew && timeBest > timeNew) {
-      attemptBest = attemptNew;
-      scoreBest = attemptBest.testCorrect;
-    }
-  }
+	for (let i = 0; i < attempts.length; i++) {
+		let attemptNew = attempts[i];
+		let scoreNew = attemptNew.testCorrect;
+		let timeNew = attemptNew.duration;
+		if (attemptNew.inProgress == false) {
+		if (scoreBest < scoreNew || scoreBest == scoreNew && timeNew < timeBest) {
+			attemptBest = attemptNew;
+			scoreBest = attemptBest.testCorrect;
+			timeBest = timeNew;
+		}
+		}
+	}
 
-  return attemptBest;
+	return attemptBest;
 }
 
 // Start Button
