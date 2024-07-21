@@ -12,7 +12,7 @@ services:
       - ./data/users.json:/usr/app/server/data/users.json
       - ./data/questions.json:/usr/app/server/data/questions.json
   ollama:
-    image: ollama/ollama:latest
+    image: ollama/ollama
     ports:
         - "11434:11434"
     volumes:

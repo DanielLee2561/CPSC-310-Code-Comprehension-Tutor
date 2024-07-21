@@ -233,13 +233,10 @@ function AttemptPage() {
                     readOnly={!isInProgress}
                 />
 
-                {isInProgress ? <pre className="grid-item" id="failing-test-case-box"
-                                     style={{fontFamily: 'Arial, sans-serif', textAlign: 'left'}}>
-                    Submit to see if you have any failing test cases
-                </pre> : <pre className="grid-item" id="failing-test-case-box"
-                              style={{fontFamily: 'Arial, sans-serif', textAlign: 'left', color: 'red'}}>
-                    {failingTestCases}
-                </pre>}
+                <pre className="grid-item readonly-textarea" id="failing-test-case-box"
+                     style={{fontFamily: 'Arial, sans-serif', textAlign: 'left'}}>
+                    {isInProgress ? "Submit to see if you have any failing test cases" : failingTestCases}
+                </pre>
 
                 <textarea
                     className={`grid-item ${isInProgress ? "" : "readonly-textarea"}`}

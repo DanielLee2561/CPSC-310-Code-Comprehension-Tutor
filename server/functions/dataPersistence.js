@@ -78,7 +78,7 @@ async function submit(username, question_id, desc, notes) {
                             attempt.notes = notes;
                             attempt.endTime = endTime;
                             const startTime = new Date(attempt.startTime);
-                            attempt.duration = (endTime - startTime) / 1000;
+                            attempt.duration = Math.round((endTime - startTime) / 1000);
                             attempt.generatedCode = generated_code;
                             attempt.testCorrect = evaluatedAttempt.testCorrect;
                             attempt.testTotal = evaluatedAttempt.testTotal;
