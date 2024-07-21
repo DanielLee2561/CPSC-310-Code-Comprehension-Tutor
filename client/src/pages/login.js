@@ -32,23 +32,7 @@ const Login = (props) => {
       return;
     }
 
-    // API call here 
     let valid = false;
-    // let userInput = {
-    //   username:username,
-    //   password:password
-    // };
-    // await fetch("/login", {
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(userInput),
-    //   method: "PUT"
-    //   }
-    // ).then(res => res.json()).then(data => {
-    //   valid = data.login;
-    //   console.log(valid); // For testing can be removed
-    // })
 
     try {
       const res = await axios.put("http://localhost:5000/users/login", {
