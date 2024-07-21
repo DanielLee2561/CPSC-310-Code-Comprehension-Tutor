@@ -128,7 +128,7 @@ const Login = (props) => {
       <br/> */}
       <div className={'input'}>
         <input className={'registerButton'} type="button" onClick={onRegisterClick} value={'Don’t have an account? Register here'} />
-        <input className={'inputButton'} type="button" onClick={onButtonClick} value={'Log in'} />
+        <input className={'inputButton'} type="button" onClick={onButtonClick} value={'Login'} />
       </div>
     </div>
   )
