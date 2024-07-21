@@ -203,7 +203,7 @@ function AttemptPage() {
                     className='headerSpan'>Home</span></button>
                 <button className="returnButton" title="Back" onClick={handleReturn}><span
                     className='headerSpan'>Return</span></button>
-                <h1 className='headerTitleAttempt'>Question: {question_id} - Attempt: {attemptId}</h1>
+                <h1 className='headerTitleAttempt'>Question {question_id} (Attempt {attemptId})</h1>
                 <button title="Go To Profile Page" className='profileButton' onClick={onProfileButtonClicked}><span
                     className='headerSpan'>Profile</span></button>
             </div>
