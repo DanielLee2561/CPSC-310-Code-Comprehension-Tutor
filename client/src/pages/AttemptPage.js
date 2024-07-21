@@ -229,7 +229,7 @@ function AttemptPage() {
                 <textarea
                     className={`grid-item ${isInProgress ? "" : "readonly-textarea"}`}
                     style={{fontFamily: 'Helvetica', textAlign: 'left'}}
-                    placeholder="Input your description here..."
+                    placeholder="Input your description here"
                     onChange={handleDescription}
                     value={description}
                     readOnly={!isInProgress}
