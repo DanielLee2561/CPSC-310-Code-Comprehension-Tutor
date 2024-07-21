@@ -65,6 +65,8 @@ function AttemptPage() {
     };
 
     const textInstruction = "Explain the purpose of the following code.";
+    const textDescription = "Input your description here";
+    const textNotes = "Write your notes here (optional)";
 
     // State
     useEffect(() => {
@@ -229,7 +231,7 @@ function AttemptPage() {
                 <textarea
                     className={`grid-item ${isInProgress ? "" : "readonly-textarea"}`}
                     style={{fontFamily: 'Helvetica', textAlign: 'left'}}
-                    placeholder="Input your description here"
+                    placeholder={textDescription}
                     onChange={handleDescription}
                     value={description}
                     readOnly={!isInProgress}
@@ -246,7 +248,7 @@ function AttemptPage() {
                 <textarea
                     className={`grid-item ${isInProgress ? "" : "readonly-textarea"}`}
                     style={{textAlign: 'left'}}
-                    placeholder="Write notes here (optional)"
+                    placeholder={textNotes}
                     onChange={handleNotes}
                     value={notes}
                     readOnly={!isInProgress}
