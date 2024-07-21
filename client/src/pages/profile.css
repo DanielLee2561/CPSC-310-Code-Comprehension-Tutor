@@ -1,4 +1,4 @@
-.logoutButton {
+.logoutButton, .deleteButton {
     background-color: white;
     border: solid;
     border-radius: 17px;
@@ -18,6 +18,15 @@
 }
 
 .logoutButton:hover {
+    background-color: lightgrey;
+}
+
+.deleteButton:disabled {
+    background-color: lightgrey;
+    color: gray;
+}
+
+.deleteButton:hover {
     background-color: lightgrey;
 }
 
@@ -47,6 +56,17 @@
 
 .title {
     font-weight: bold;
+}
+
+#enabled {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    text-align: center;
+    }
+
+#enabled:before {
+    display: block;
 }
 
 #oldPassword {

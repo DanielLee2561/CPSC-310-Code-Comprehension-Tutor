@@ -11,7 +11,6 @@ const Profile = (props) => {
   const { loggedIn, email } = props
   const navigate = useNavigate()
   const userInfo = useLocation().state;
-  const username = userInfo.username;
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
@@ -19,6 +18,7 @@ const Profile = (props) => {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
   const [error, setError] = useState("");
+  const [enabled, setEnabled] = useState(true);
 
   useEffect(() => {
     if (userInfo === null) {
@@ -41,6 +41,18 @@ const Profile = (props) => {
     await axios.put("http://localhost:5000/users/logout", {
       username
     });
+    window.history.replaceState({}, '');
+    navigate("/", {
+      state: null
+    });
+  }
+
+  const onDeleteButtonClicked = async () => {
+    const username = userInfo.username;
+    await axios.delete("http://localhost:5000/users/" + userInfo.username, {
+      password: userInfo.password
+    });
+    alert("Your account has been deleted")
     window.history.replaceState({}, '');
     navigate("/", {
       state: null
@@ -71,7 +83,7 @@ const Profile = (props) => {
     let valid = false;
 
     try {
-      const res = await axios.put('http://localhost:5000/users/' + username, {
+      const res = await axios.put('http://localhost:5000/users/' + userInfo.username, {
         oldPassword,
         newPassword
       });
@@ -82,6 +94,7 @@ const Profile = (props) => {
     } 
     if (valid) {
       alert("Your password has been reset");
+      window.history.replaceState({}, '');
       navigate("/home", {
         state: null
       });
@@ -182,6 +195,18 @@ const Profile = (props) => {
           <input className={'inputButton'} type="button" onClick={onButtonClick} value={'Change Password'} />
         </div>
       </div>
+      <div className='buttonContainer'>
+        <button title="Delete Account" disabled={enabled} className='deleteButton' onClick={onDeleteButtonClicked}>Delete Account</button>
+      </div>
+      <label id = "enabled">
+        <input
+        value={enabled}
+        className={'inputBox'}
+        type = "checkbox"
+        onChange={() => setEnabled(!enabled)}
+        />
+        <label>Are you sure you'd like to delete your account?</label>
+      </label>
     </div>
   )
 }
