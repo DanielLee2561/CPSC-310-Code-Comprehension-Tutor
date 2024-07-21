@@ -64,6 +64,8 @@ function AttemptPage() {
         navigate(0, {state: update_state});
     };
 
+    const textInstruction = "Explain the purpose of the following code.";
+
     // State
     useEffect(() => {
         if (state === null) {
@@ -211,7 +213,7 @@ function AttemptPage() {
                 <h2 style={{color: scoreColour}}>{testsCorrect}/{testsTotal}&emsp;&emsp;{duration}s</h2>
             </div> : <h2 style={{color: "darkorchid"}}>Attempt In Progress</h2>}
 
-            <h2>Formulate the functionality of the following foo function</h2>
+            <h2>{textInstruction}</h2>
 
             <div className="grid-container">
                 <pre className="grid-item function-text">
