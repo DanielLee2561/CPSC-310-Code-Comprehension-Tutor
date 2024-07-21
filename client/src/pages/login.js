@@ -89,7 +89,7 @@ const Login = (props) => {
       <div className={'input'}>
         <input
           value={username}
-          placeholder="Username..."
+          placeholder="Username"
           onChange={(ev) => setUsername(ev.target.value)}
           className={'inputBox'}
           maxLength="20"
@@ -99,7 +99,7 @@ const Login = (props) => {
       <div className={'input'}>
         <input
           value={password}
-          placeholder="Password..."
+          placeholder="Password"
           onChange={(ev) => setPassword(ev.target.value)}
           className={'inputBox'}
           type={showPassword ? 'text' : 'password'}
