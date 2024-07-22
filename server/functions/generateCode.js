@@ -46,7 +46,8 @@ async function generateCode(user_input, num_params) {
         return output.response.split("```javascript\n")[1].split("```")[0];
     } catch (err) {
         console.error("Error generating output:", err);
-        return 'function foo(x) {\n return "An error occurred when generating the code";\n}';
+        throw new Error("There was an error generating the function");
+        // return 'function foo(x) {\n return "An error occurred when generating the code";\n}';
     }
 }
 

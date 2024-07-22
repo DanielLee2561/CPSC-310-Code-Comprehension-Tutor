@@ -67,29 +67,59 @@ async function submit(username, question_id, desc, notes) {
 
                         const questionFunction = getQuestionFunction(question_id);
                         const numParameters = countNumParameters(questionFunction);
-                        const generated_code = await generateCode(desc, numParameters);
-                        const evaluatedAttempt = evaluateCode(question_id, generated_code);
-                        // if evaluatedAttempt does not have an invalid/error message (based on the gencode) -> then
-                        // evaluatedAttempt contains num passing tests, num all tests, failing test cases
 
-                        if (evaluatedAttempt) {
-                            attempt.inProgress = false;
-                            attempt.description = desc;
-                            attempt.notes = notes;
-                            attempt.endTime = endTime;
-                            const startTime = new Date(attempt.startTime);
-                            attempt.duration = (endTime - startTime) / 1000;
-                            attempt.generatedCode = generated_code;
-                            attempt.testCorrect = evaluatedAttempt.testCorrect;
-                            attempt.testTotal = evaluatedAttempt.testTotal;
-                            attempt.failingTestCases = evaluatedAttempt.failingTestCases;
-                            writeJsonFile(usersJsonPath, users_json);
-                            reloadDataVars();
-                            return attempt;
-                        } else {
-                            // TODO: what to do in this situation?
-                            return "There was an error when the generated code passed through the test cases";
+                        try {
+                            const generated_code = await generateCode(desc, numParameters);
+                            const evaluatedAttempt = evaluateCode(question_id, generated_code);
+                            // if evaluatedAttempt does not have an invalid/error message (based on the gencode) -> then
+                            // evaluatedAttempt contains num passing tests, num all tests, failing test cases
+
+                            if (evaluatedAttempt) {
+                                attempt.inProgress = false;
+                                attempt.description = desc;
+                                attempt.notes = notes;
+                                attempt.endTime = endTime;
+                                const startTime = new Date(attempt.startTime);
+                                attempt.duration = Math.round((endTime - startTime) / 1000);
+                                attempt.generatedCode = generated_code;
+                                attempt.testCorrect = evaluatedAttempt.testCorrect;
+                                attempt.testTotal = evaluatedAttempt.testTotal;
+                                attempt.failingTestCases = evaluatedAttempt.failingTestCases;
+                                writeJsonFile(usersJsonPath, users_json);
+                                reloadDataVars();
+                                return attempt;
+                            } else {
+                                // TODO: what to do in this situation?
+                                return "There was an error when the generated code passed through the test cases";
+                            }
+                        } catch (error) {
+                            console.log("Exception caught in submit: " + error.message);
                         }
+
+
+                        // const generated_code = await generateCode(desc, numParameters);
+                        // const evaluatedAttempt = evaluateCode(question_id, generated_code);
+                        // // if evaluatedAttempt does not have an invalid/error message (based on the gencode) -> then
+                        // // evaluatedAttempt contains num passing tests, num all tests, failing test cases
+                        //
+                        // if (evaluatedAttempt) {
+                        //     attempt.inProgress = false;
+                        //     attempt.description = desc;
+                        //     attempt.notes = notes;
+                        //     attempt.endTime = endTime;
+                        //     const startTime = new Date(attempt.startTime);
+                        //     attempt.duration = Math.round((endTime - startTime) / 1000);
+                        //     attempt.generatedCode = generated_code;
+                        //     attempt.testCorrect = evaluatedAttempt.testCorrect;
+                        //     attempt.testTotal = evaluatedAttempt.testTotal;
+                        //     attempt.failingTestCases = evaluatedAttempt.failingTestCases;
+                        //     writeJsonFile(usersJsonPath, users_json);
+                        //     reloadDataVars();
+                        //     return attempt;
+                        // } else {
+                        //     // TODO: what to do in this situation?
+                        //     return "There was an error when the generated code passed through the test cases";
+                        // }
                     } else {
                         return "ERROR: latest attempt is not in progress, but was submitted??"
                     }

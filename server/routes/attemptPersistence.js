@@ -65,7 +65,7 @@ router.put("/:username/questions/:id", async (req, res) => {
     const notes = req.body.notes;
     const inProgress = req.body.inProgress;
 
-    let error = "";
+    let error;
 
     for (let user of users) {
         if (user.username === username) {
@@ -82,7 +82,7 @@ router.put("/:username/questions/:id", async (req, res) => {
                     error = await submit(username, question_id, description, notes);
                 }
 
-                if (error === "") {
+                if (typeof error === "string") {
                     res.status(400).json({error: error});
                 } else {
                     res.status(204).send();
