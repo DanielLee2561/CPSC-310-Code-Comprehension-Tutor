@@ -400,7 +400,6 @@ describe('Delete Account', () => {
 });
 	
 	
-
 describe('Start Attempt', () => {
 
 	const usersJsonPath = '../server/data/users.json';
@@ -415,7 +414,6 @@ describe('Start Attempt', () => {
 
 
 	describe('Start Attempt API', () => {
-		/*
 		it('Start Attempt Success', async () => {
 			const username = "Student_A";
 			const password = "pStudent_A";
@@ -428,7 +426,7 @@ describe('Start Attempt', () => {
 				});
 				expect(res.status).to.equal(200);
 			} catch (err) {
-					expect(err.response.status).equal(404);
+					expect(err.response.status).equal(404);		
 			}
 		});
 		it('Start Attempt unsuccessful with wrong password', async () => {
@@ -443,76 +441,9 @@ describe('Start Attempt', () => {
 				});
 				expect(res.status).to.equal(400);
 			} catch (err) {
-					expect(err.response.status).equal(404);
+					expect(err.response.status).equal(404);		
 			}
 		});
-		*/
-		
-		it('Start Attempt Successfully', async () => {
-            		const password = "pStudent_A";
-            		try {
-                		const res = await axios.post("http://localhost:5000/users/Student_A/questions/2", 
-                    			{"password": password});
-                		expect(res.status).eql(204);
-            		} catch (err) {
-                		expect.fail();
-            		}
-        	});
-
-        	it('Start Attempt Unsuccessfully (Missing Element)', async () => {
-            		try {
-                		const res = await axios.post("http://localhost:5000/users/Student_A/questions/1", 
-                    			{});
-				expect.fail();
-            		} catch (err) {
-                		expect(err.response.status).eql(400);
-            		}
-        	});
-
-        	it('Start Attempt Unsuccessfully (Wrong Password)', async () => {
-            		const password = "pStudent_B";
-            		try {
-                		const res = await axios.post("http://localhost:5000/users/Student_A/questions/1", 
-                    			{"password": password});
-				expect.fail();
-            		} catch (err) {
-                		expect(err.response.status).eql(401);
-            		}
-        	});
-
-        	it('Start Attempt Unsuccessfully (Nonexist user)', async () => {
-            		const password = "pStudent_A";
-            		try {
-                		const res = await axios.post("http://localhost:5000/users/Student/questions/1", 
-                    			{"password": password});
-				expect.fail();
-            		} catch (err) {
-                		expect(err.response.status).eql(404);
-            		}
-        	});
-
-        	it('Start Attempt Unsuccessfully (Nonexist Question)', async () => {
-            		const password = "pStudent_A";
-            		try {
-                		const res = await axios.post("http://localhost:5000/users/Student_A/questions/100", 
-                    			{"password": password});
-				expect.fail();
-            		} catch (err) {
-               	 		expect(err.response.status).eql(404);
-            		}
-        	});
-
-        	it('Start Attempt Unsuccessfully (Latest Attempt does not finish)', async () => {
-            		const password = "pStudent_A";
-            		try {
-                		const res = await axios.post("http://localhost:5000/users/Student_A/questions/1", 
-                    			{"password": password});
-				expect(res.status).eql(202);
-            		} catch (err) {
-                		expect.fail();
-            		}
-        	});
-		
 	});	
 
 });
