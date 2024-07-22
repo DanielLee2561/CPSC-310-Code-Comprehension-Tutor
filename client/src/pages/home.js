@@ -32,10 +32,6 @@ const Home = (props) => {
     isResearcher();
   }, [])
 
-  // console.log(useLocation().state.username);
-  // console.log(useLocation().state.password);
-  // console.log(useLocation().state.loggedIn);
-
   const onHomeButtonClicked = () => {
     navigate("/home", {state: userInfo});
   }
@@ -46,6 +42,10 @@ const Home = (props) => {
 
   const onQuestionsButtonClicked = () => {
     navigate("/question_bank", {state: userInfo});
+  }
+
+  const onQuestionsManagementButtonClicked = () => {
+    navigate("/question_management", {state: userInfo});
   }
 
   const onGradebookButtonClicked = () => {
@@ -61,6 +61,9 @@ const Home = (props) => {
       </div>
       <div className='buttonContainer'>
         <button title="Go To Questions Page" className='questionsButton' onClick={onQuestionsButtonClicked}>Questions</button>
+      </div>
+      <div className='buttonContainer'>
+        <button title="Go To Question Management Page" className='questionsButton' onClick={onQuestionsManagementButtonClicked} style={{ display: showGradebook ? "block" : "none" }}>Question Management</button>
       </div>
       <div className='buttonContainer'>
         <button title="Go To Gradebook Page" className='questionsButton' onClick={onGradebookButtonClicked} style={{ display: showGradebook ? "block" : "none" }}>Gradebook</button>
