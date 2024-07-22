@@ -141,6 +141,19 @@ function buildUserQuestions(user, questions) {
     user.questions.sort(compareIds);
 }
 
+router.put('/gradebook/questions', (req, res) => {
+    try {
+        reloadDataVars();
+        for (let user of users) {
+            buildUserQuestions(user, questions);
+        }
+        fs.writeFileSync(usersJsonPath, JSON.stringify({"users": users}, null, 2));
+        return res.status(200).send();
+    } catch (err) {
+        return res.status(500).send();
+    }
+})
+
 //login
 router.put('/login', (req, res) => {
     // const usersList = users.users

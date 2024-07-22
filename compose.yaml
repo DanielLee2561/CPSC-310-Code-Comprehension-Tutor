@@ -9,8 +9,8 @@ services:
     ports: 
       - "5000:5000"
     volumes:
-      - ./data/users.json:/usr/app/server/data/users.json
-      - ./data/questions.json:/usr/app/server/data/questions.json
+      - ./server/data/users.json:/usr/app/server/data/users.json
+      - ./server/data/questions.json:/usr/app/server/data/questions.json
   ollama:
     image: ollama/ollama:latest
     ports:
