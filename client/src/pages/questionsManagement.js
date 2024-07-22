@@ -30,7 +30,7 @@ const Attempt = (name, id) => {
 const Edit = (props) => {
   const onEditClick = () => {
     state.question = props.qId;
-    navigate("/question_edit", {state: state});
+    navigate("/question_build", {state: state});
   }
 
   return (
@@ -94,7 +94,8 @@ const Question = (question) => {
 
 const Add = () => {
   const onAddButtonClicked = () => {
-    navigate("/question_builder", {state: state})
+    console.log("ADD QUESTION API HERE");
+    window.location.reload();
   }
 
   return <div className='buttonContainer'> 
