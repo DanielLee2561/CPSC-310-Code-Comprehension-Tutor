@@ -60,7 +60,7 @@ const Home = (props) => {
         <button title="Go To Profile Page" className='profileButton' onClick={onProfileButtonClicked}><span className='headerSpan'>Profile</span></button>
       </div>
       <div className='buttonContainer'>
-        <button title="Go To Question Page" className='questionsButton' onClick={onQuestionsButtonClicked}>Questions</button>
+        <button title="Go To Questions Page" className='questionsButton' onClick={onQuestionsButtonClicked}>Questions</button>
       </div>
       <div className='buttonContainer'>
         <button title="Go To Gradebook Page" className='questionsButton' onClick={onGradebookButtonClicked} style={{ display: showGradebook ? "block" : "none" }}>Gradebook</button>

@@ -10,6 +10,8 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 
+const textConsent = "By registering an account, you consent to having the following data be collected and analyzed. This includes your description, notes, generated code, failed tests, score, and duration for each question. Your data will be linked to your username.";
+const textLogin = "Already have an account? Login";
 
 function Register() {
   const [error, setError] = useState("");
@@ -112,23 +114,24 @@ function Register() {
           </label>
         </div>
         <br/>
-        <div className={'input'}>
+        <div className={'input consent'}>
+            <div className={'consentText'}>
+              <label>{textConsent}</label>
+            </div>
             <input
             value={consent}
             className={'inputBox'}
             type = "checkbox"
             onChange={() => setConsent(!consent)}
             />
-            <div className={'consentText'}>
-              <label>By tapping this checkbox and registering you consent to having the following data being collected and analyzed: Answers, Notes, Returned Code Results, Failed Test Results, Questions, Scores, and Times for all preformed questions. Your data will be associated with your username. </label>
-            </div>
+            <span className={'consentText'}>Agree</span>
         </div>
         <br/>
         <div className="errorLabel">
           <label>{error}</label>
         </div>
         <div className={'input'}>
-          <input className={'loginButton'} type="button" onClick={onLoginClick} value={'Already have an account, Login'} />
+          <input className={'loginButton'} type="button" onClick={onLoginClick} value={textLogin} />
           <input className={'inputButton'} disabled={isLoading} type="submit" value={'Register'} />
         </div>
       </form>

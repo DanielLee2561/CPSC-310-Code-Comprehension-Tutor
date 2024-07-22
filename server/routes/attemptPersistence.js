@@ -96,7 +96,6 @@ router.put("/:username/questions/:id", async (req, res) => {
 
 });
 
-/*
 // start attempt call here (Kate)
 router.post("/:username/questions/:id", async (req, res) => {
     reloadDataVars();
@@ -163,48 +162,47 @@ router.post("/:username/questions/:id", async (req, res) => {
         res.status(500).json({error: "An error occurred while processing your request"});
     }
 });
-*/
 
 // start attempt call here (Mark)
-router.post("/:username/questions/:questionID", async (req, res) => {
-    reloadDataVars();
+// router.post("/:username/questions/:questionID", async (req, res) => {
+//     reloadDataVars();
 
-    const username = req.params.username;
-    const questionID = req.params.questionID;
-    const password = req.body.password;
+//     const username = req.params.username;
+//     const questionID = req.params.questionID;
+//     const password = req.body.password;
 
-    if (!username || !questionID || !password) return res.status(400).json({error:"element missing."});
+//     if (!username || !questionID || !password) return res.status(400).json({error:"element missing."});
 
-    const user = users.find(c => c.username === username);
-    if (!user) return res.status(404).json({error:'User is not found.'});
-    if (user.password !== password) return res.status(401).json({error:'Unauthorized to access this data'});
+//     const user = users.find(c => c.username === username);
+//     if (!user) return res.status(404).json({error:'User is not found.'});
+//     if (user.password !== password) return res.status(401).json({error:'Unauthorized to access this data'});
 
-    const question = user.questions.find(c => c.questionId === parseInt(questionID));
-    if (!question) return res.status(404).json({error:'Question is not found.'});
+//     const question = user.questions.find(c => c.questionId === parseInt(questionID));
+//     if (!question) return res.status(404).json({error:'Question is not found.'});
 
-    const attempts = question.attempts;
-    if (attempts[attempts.length-1].inProgress === true) 
-        return res.status(202).json({warning:'Unable to start new attempts because of not finishing last attempt.'});
+//     const attempts = question.attempts;
+//     if (attempts[attempts.length-1].inProgress === true) 
+//         return res.status(202).json({warning:'Unable to start new attempts because of not finishing last attempt.'});
     
-    let newAttempt = {
-        description: "",
-        notes: "",
-        inProgress: true,
-        startTime: new Date(),
-        endTime: null,
-        duration: null,
-        generatedCode: null,
-        failingTestCases: null,
-        testCorrect: null,
-        testTotal: null
-    };
+//     let newAttempt = {
+//         description: "",
+//         notes: "",
+//         inProgress: true,
+//         startTime: new Date(),
+//         endTime: null,
+//         duration: null,
+//         generatedCode: null,
+//         failingTestCases: null,
+//         testCorrect: null,
+//         testTotal: null
+//     };
 
-    attempts.push(newAttempt);
+//     attempts.push(newAttempt);
 
-    writeJsonFile(usersJsonPath, users_json);
-    reloadDataVars();
+//     writeJsonFile(usersJsonPath, users_json);
+//     reloadDataVars();
 
-    res.status(204).json();
-});
+//     res.status(204).json();
+// });
 
 export default router;

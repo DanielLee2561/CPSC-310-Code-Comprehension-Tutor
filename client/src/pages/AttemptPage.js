@@ -64,6 +64,10 @@ function AttemptPage() {
         navigate(0, {state: update_state});
     };
 
+    const textInstruction = "Explain the purpose of the following code.";
+    const textDescription = "Input your description here";
+    const textNotes = "Write your notes here (optional)";
+
     // State
     useEffect(() => {
         if (state === null) {
@@ -203,7 +207,7 @@ function AttemptPage() {
                     className='headerSpan'>Home</span></button>
                 <button className="returnButton" title="Back" onClick={handleReturn}><span
                     className='headerSpan'>Return</span></button>
-                <h1 className='headerTitleAttempt'>Question: {question_id} - Attempt: {attemptId}</h1>
+                <h1 className='headerTitleAttempt'>Question {question_id} (Attempt {attemptId})</h1>
                 <button title="Go To Profile Page" className='profileButton' onClick={onProfileButtonClicked}><span
                     className='headerSpan'>Profile</span></button>
             </div>
@@ -211,7 +215,7 @@ function AttemptPage() {
                 <h2 style={{color: scoreColour}}>{testsCorrect}/{testsTotal}&emsp;&emsp;{duration}s</h2>
             </div> : <h2 style={{color: "darkorchid"}}>Attempt In Progress</h2>}
 
-            <h2>Formulate the functionality of the following foo function</h2>
+            <h2>{textInstruction}</h2>
 
             <div className="grid-container">
                 <pre className="grid-item function-text">
@@ -227,7 +231,7 @@ function AttemptPage() {
                 <textarea
                     className={`grid-item ${isInProgress ? "" : "readonly-textarea"}`}
                     style={{fontFamily: 'Helvetica', textAlign: 'left'}}
-                    placeholder="Input your description here..."
+                    placeholder={textDescription}
                     onChange={handleDescription}
                     value={description}
                     readOnly={!isInProgress}
@@ -244,7 +248,7 @@ function AttemptPage() {
                 <textarea
                     className={`grid-item ${isInProgress ? "" : "readonly-textarea"}`}
                     style={{textAlign: 'left'}}
-                    placeholder="Write notes here (optional)"
+                    placeholder={textNotes}
                     onChange={handleNotes}
                     value={notes}
                     readOnly={!isInProgress}
