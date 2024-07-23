@@ -10,7 +10,9 @@ function QuestionsBuild() {
     const [question, setQuestion] = useState("");
     const [questionCode, setQuestionCode] = useState("");
     const [questionId, setQuestionId] = useState(0);
-
+    const [failedTests,setFailedTests]=useState([]);
+    const [showError, setShowError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(""); 
     useEffect(() => {
         if (!state) {
             navigate("/");
@@ -93,14 +95,22 @@ function QuestionsBuild() {
     const handleSaveQuestion = async () => {
         try {
             const { username, password, question: id } = state;
-            await axios.put(`http://localhost:5000/questions/${username}/researcher/question/${id}`, {
+            const response=await axios.put(`http://localhost:5000/questions/${username}/researcher/question/${id}`, {
                 username,
                 password,
                 id,
                 code: questionCode,
                 tests: inputAreas
             });
-            navigate("/questions");
+            const failed=response.data.details;
+            setFailedTests(failed || []);
+            if (failed){
+                setShowError(true);
+                setErrorMessage(response.data.error);
+            }else{
+                setShowError(false);
+                window.location.reload();
+            }
         } catch (error) {
             console.error('Save Question', error);
         }
@@ -130,27 +140,36 @@ function QuestionsBuild() {
                 />
             </div>
             <div className='inputArea'>
-                {inputAreas.map((inputArea, index) => (
-                    <div key={index} className='questionInputBox'>
-                        <div className="testLabel">Test</div>
-                        <div className='titleAndText'>
-                            <input
-                                type="text"
-                                placeholder="Title"
-                                value={inputArea.title}
-                                onChange={(e) => handleInputChange(index, 'title', e.target.value)}
-                            />
-                            <input
-                                type="text"
-                                placeholder="Assertion"
-                                value={inputArea.assertion}
-                                onChange={(e) => handleInputChange(index, 'assertion', e.target.value)}
-                            />
+                {inputAreas.map((inputArea, index) => {
+                    const isFailed = failedTests.some(failedTest => failedTest.assertion === inputArea.assertion); 
+                    return (
+                        <div key={index} className='questionInputBox' style={{ backgroundColor: isFailed ? '#ff9999' : '#d4f4dd' }}
+                        >
+                            <div className="testLabel">Test</div>
+                            <div className='titleAndText'>
+                                <input
+                                    type="text"
+                                    placeholder="Title"
+                                    value={inputArea.title}
+                                    onChange={(e) => handleInputChange(index, 'title', e.target.value)}
+                                />
+                                <input
+                                    type="text"
+                                    placeholder="Assertion"
+                                    value={inputArea.assertion}
+                                    onChange={(e) => handleInputChange(index, 'assertion', e.target.value)}
+                                />
+                            </div>
+                            <button className="deleteTestButton" onClick={() => handleDelete(index)}>Delete</button>
                         </div>
-                        <button className="deleteTestButton" onClick={() => handleDelete(index)}>Delete</button>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
+            {showError && (
+                <div className="error-message" style={{ color: 'red', textAlign: 'center', marginTop: '20px' }}>
+                   {"Save Question failed :" + errorMessage}
+                </div>
+            )}
             <div className='actions'>
                 <button className="deleteQuestion" onClick={handleDeleteQuestion}>Delete Question</button>
                 <button className="addTest" onClick={handleAddTest}>Add Test</button>

@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import session from 'express-session';
 import {readJsonFile} from "../functions/fileSystemFunctions.js";
-
+import { runTests } from '../functions/test.js'; 
 // Load questions from JSON file
 
 // const questionsJsonPath = path.join(process.cwd(), 'data', 'questions.json');
@@ -160,7 +160,7 @@ router.delete('/:username/researcher', (req, res) => {
 
 
 
-// PUT route to edit the question content
+// save the question content 
 router.put('/:username/researcher/question/:id', (req, res) => {
     reload();
     const { username, id } = req.params;
@@ -190,10 +190,21 @@ router.put('/:username/researcher/question/:id', (req, res) => {
             if (!question) {
                 return res.status(404).json({ error: "Question not found" });
             }
+
+             // Run the code and tests
+             const { success, error, details } = runTests(code, tests);
+
+             if (!success) {
+                return res.send({ 
+                     error: "tests failed", 
+                     details 
+                 });
+             }
+            
             // Update questionCode and tests
-            question.id = id;
+            question.id = Number(id);
             question.code=code;
-            question.tests = tests;
+            question.tests = tests; 
 
             // Write updated questions array back to JSON file
             writeJsonFile(questionsJsonPath, { questions });

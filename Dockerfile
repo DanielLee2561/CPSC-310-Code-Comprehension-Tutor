@@ -32,6 +32,7 @@ COPY server/data/questions.json ./
 
 WORKDIR /usr/app/server/functions/
 COPY server/functions/dataPersistence.js ./
+COPY server/functions/test.js ./
 COPY server/functions/evaluateCode.js ./
 COPY server/functions/fileSystemFunctions.js ./
 COPY server/functions/generateCode.js ./
