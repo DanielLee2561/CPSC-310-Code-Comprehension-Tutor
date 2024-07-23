@@ -1,4 +1,4 @@
-.logoutButton {
+.logoutButton, .deleteButton {
     background-color: white;
     border: solid;
     border-radius: 17px;
@@ -19,4 +19,64 @@
 
 .logoutButton:hover {
     background-color: lightgrey;
+}
+
+.deleteButton:disabled {
+    background-color: lightgrey;
+    color: gray;
+}
+
+.deleteButton:hover {
+    background-color: lightgrey;
+}
+
+.changePassword {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5%;
+}
+
+.changePassword > * {
+    max-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    padding: auto;
+}
+
+.errorLabel {
+    color: red;
+    max-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.inputButton {
+    margin-left: 10px;
+}
+
+.title {
+    font-weight: bold;
+}
+
+#enabled {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    text-align: center;
+    }
+
+#enabled:before {
+    display: block;
+}
+
+#oldPassword {
+    margin-left: 160px;
+}
+
+#newPassword {
+    margin-left: 167px;
+}
+
+#confirmNewPassword {
+    margin-left: 228px;
 }
