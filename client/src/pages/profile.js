@@ -19,11 +19,29 @@ const Profile = (props) => {
   const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
   const [error, setError] = useState("");
   const [enabled, setEnabled] = useState(true);
+  const [researcher, setResearcher] = useState(false);
+
+  const isResearcher = async () => {
+    await axios.get("http://localhost:5000/users/research/researcher", {
+      params: {
+        username: userInfo.username,
+        password: userInfo.password
+      }
+    }).then(data => {
+      if (data.status === 200) { 
+        setResearcher(true);
+      } else {
+        setResearcher(false);
+      }
+    }).catch(err => console.log(err.response.data.message));
+  }
 
   useEffect(() => {
     if (userInfo === null) {
-      navigate("/")
-    } 
+      navigate("/");
+    } else {
+      isResearcher();
+    }
   })
 
   const onHomeButtonClicked = () => {
@@ -117,7 +135,7 @@ const Profile = (props) => {
         <button title="Logout" className='logoutButton' onClick={onLogoutButtonClicked}>Logout</button>
       </div>
 
-      <div className='changePassword'>
+      <div className='changePassword' style={{ display: researcher ? "none" : "block" }}>
         <div className={'title'}>
           <div>Change Password</div>
         </div>
@@ -195,17 +213,17 @@ const Profile = (props) => {
           <input className={'inputButton'} type="button" onClick={onButtonClick} value={'Change Password'} />
         </div>
       </div>
-      <div className='buttonContainer'>
+      <div className='buttonContainer' style={{ display: researcher ? "none" : "block" }}>
         <button title="Delete Account" disabled={enabled} className='deleteButton' onClick={onDeleteButtonClicked}>Delete Account</button>
       </div>
-      <label id = "enabled">
+      <label id = "enabled" style={{ display: researcher ? "none" : "block" }}>
         <input
         value={enabled}
         className={'inputBox'}
         type = "checkbox"
         onChange={() => setEnabled(!enabled)}
         />
-        <label>Are you sure you'd like to delete your account?</label>
+        <label>Are you sure you'd like to delete your account and all of its related data?</label>
       </label>
     </div>
   )
