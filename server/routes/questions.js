@@ -73,10 +73,10 @@ router.get('/', (req, res) => {
 router.post('/:username/researcher', (req, res) => {
     reload();
     const { username } = req.params;
-    const { password, id, code, tests } = req.body;
+    const { password, id } = req.body;
 
-    if (!password || !id || !code || !Array.isArray(tests) || tests.length === 0) {
-        return res.status(400).json({ error: "password, id, code, and a non-empty array of tests are required." });
+    if (!password || !id ) {
+        return res.status(400).json({ error: "password, id are required." });
     }
 
     let userFound = false;
@@ -98,7 +98,7 @@ router.post('/:username/researcher', (req, res) => {
                 return res.status(401).json({ error: "Question ID exists" });
             }
             // Construct question and put it in JSON array with a new array for tests
-            const newQuestion = { id, code, tests: [...tests] };
+            const newQuestion = { id, code:'', tests: [] };
             questions.push(newQuestion);
             writeJsonFile(questionsJsonPath, { questions });
 
@@ -161,13 +161,13 @@ router.delete('/:username/researcher', (req, res) => {
 
 
 // PUT route to edit the question content
-router.put('/:username/researcher/questions/:id', (req, res) => {
+router.put('/:username/researcher/question/:id', (req, res) => {
     reload();
     const { username, id } = req.params;
     const { password, code ,tests } = req.body;
 
     if (!password || !code || !Array.isArray(tests) || tests.length === 0) {
-        return res.status(400).json({ error: "password， code and a non-empty array of tests are required to edit the question" });
+        return res.status(400).json({ error: "password, code and a non-empty array of tests are required to edit the question" });
     }
 
     let userFound = false;

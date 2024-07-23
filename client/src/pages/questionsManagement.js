@@ -81,21 +81,34 @@ const Question = (question) => {
   // Return
   return (
     <div>
-      <li className='attempt question'>
+      <span className='attempt question'>
         <span>
           {Attempt ("Question", id)}
         </span>
         <Edit qId={id} />
         <Delete qId={id} />
-      </li>
+      </span>
     </div>
   );
 }
 
-const Add = () => {
-  const onAddButtonClicked = () => {
-    console.log("ADD QUESTION API HERE");
-    window.location.reload();
+
+const Add = ({newQuestionId}) => {
+  const onAddButtonClicked = async () => {
+    const username = state.username;
+    const password = state.password;
+    const id=newQuestionId;
+    console.log(password,id)
+    try {
+      const responseData = await axios.post(`http://localhost:5000/questions/${username}/researcher`, {
+        password,
+        id
+      });
+      console.log(responseData);
+      window.location.reload();
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   return <div className='buttonContainer'> 
@@ -110,7 +123,7 @@ const Questions = (props) => {
     return (
       <ul className='questions'>
         {questions.map((question) =>
-          <li>
+          <li key={question.id}>
             {Question(question)}
           </li>
         )}
@@ -118,12 +131,13 @@ const Questions = (props) => {
     );
   }
 }
+  
 
 const QuestionsPage = () => {
   state = useLocation().state;
   navigate = useNavigate();
   const [questions, setQuestions] = useState(null);
-
+  const [newQuestionId, setNewQuestionId] = useState(0);
   useEffect(() => {
     if (state === null) {
       navigate("/");
@@ -138,6 +152,12 @@ const QuestionsPage = () => {
         let request = {"username":state.username, "password":state.password};
         let response = await axios.get(`http://localhost:5000/questions`, request);
         setQuestions(response.data);
+        if (response.data.length > 0) {
+          const maxId = Math.max(...response.data.map(q => q.id));
+          setNewQuestionId(maxId + 1);
+        } else {
+          setNewQuestionId(1); // Start with 1 if there are no questions
+        }
       } catch (error) {
         console.error('View Questions', error);
       }
@@ -153,7 +173,7 @@ const QuestionsPage = () => {
         <ButtonProfile />
       </div>
       <Questions questions={questions}/>
-      <Add />
+      <Add newQuestionId={newQuestionId} />
     </div>
   );
 }

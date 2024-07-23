@@ -7,6 +7,7 @@ import AttemptPage from './pages/AttemptPage'
 import Profile from './pages/profile'
 import Gradebook from './pages/gradebook'
 import QuestionManagement from './pages/questionsManagement'
+import QuestionsBuild from './pages/questionBuild'
 import './App.css'
 import { useEffect, useState } from 'react'
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/attempt" element={<AttemptPage />} />
           <Route path="/question_bank" element={<QuestionsPage />} />
+          <Route path="/question_build" element={<QuestionsBuild />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/home" element={<Home />} />
