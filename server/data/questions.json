@@ -2,7 +2,7 @@
     "questions": [
         {
             "id": 1,
-            "code": "function foo() {\n return \"Hello World!\";\n}",
+            "code": "function foo() {\n\treturn \"Hello World!\";\n}",
             "tests": [
                 {
                     "title": "foo() should return \"Hello World!\"",
@@ -12,7 +12,7 @@
         },
         {
             "id": 2,
-            "code": "function foo(n) {\n  var val = 0;\n  for (i = 0; i < n.length; i++) {\n val += n[i];\n  }\n return val;\n}",
+            "code": "function foo(n) {\n\tvar val = 0;\n\tfor (i = 0; i < n.length; i++) {\n\t\tval += n[i];\n\t}\n\treturn val;\n}",
             "tests": [
                 {
                     "title": "foo([]) should return 0",
@@ -42,7 +42,7 @@
         },
         {
             "id": 3,
-            "code": "function foo(n, t, e)\n{\n  for (i = 0; i < n.length; i++) {\n if (n[i] === t) {\n n[i] = e;\n}\n  }\n return n;\n}",
+            "code": "function foo(n, t, e)\n{\n\tfor (i = 0; i < n.length; i++) {\n\t\tif (n[i] === t) {\n\t\t\tn[i] = e;\n\t\t}\n\t}\n\treturn n;\n}",
             "tests": [
                 {
                     "title": "foo([], 4, 5) should return []",
@@ -84,7 +84,7 @@
         },
         {
             "id": 4,
-            "code": "function foo(n)\r\n{\r\n if (n < 0) {\r\n return -1;\r\n } else if (n == 0) {\r\n return 1;\r\n } else {\r\n return n * foo(n - 1);\r\n }\r\n}",
+            "code": "function foo(n)\r\n{\r\n\tif (n < 0) {\r\n\t\treturn -1;\r\n\t} else if (n == 0) {\r\n\t\treturn 1;\r\n\t} else {\r\n\t\treturn n * foo(n - 1);\r\n\t}\r\n}",
             "tests": [
                 {
                     "title": "foo(-2) should equal -1",
@@ -126,7 +126,7 @@
         },
         {
             "id": 5,
-            "code": "function foo(n)\r\n{\r\n if (n < 0) {\r\n return -1;\r\n } else if (n == 0) {\r\n return 0;\r\n } else if (n == 1) {\r\n return 1;\r\n } else {\r\n return foo(n - 1) + foo(n - 2);\r\n }\r\n}",
+            "code": "function foo(n)\r\n{\r\n\tif (n < 0) {\r\n\t\treturn -1;\r\n\t} else if (n == 0) {\r\n\t\treturn 0;\r\n\t} else if (n == 1) {\r\n\t\treturn 1;\r\n\t} else {\r\n\t\treturn foo(n - 1) + foo(n - 2);\r\n\t}\r\n}",
             "tests": [
                 {
                     "title": "foo(-2) should equal -1",
@@ -168,7 +168,7 @@
         },
         {
             "id": 6,
-            "code": "function foo(n, m)\r\n{\r\n let m_copy = new Array(m.length);\r\n for (let o = 0; o < m.length; o++) {\r\n m_copy[o] = m[o] + n;\r\n }\r\n return m_copy;\r\n}",
+            "code": "function foo(n, m)\r\n{\r\n\tlet m_copy = new Array(m.length);\r\n\tfor (let o = 0; o < m.length; o++) {\r\n\t\tm_copy[o] = m[o] + n;\r\n\t}\r\n\treturn m_copy;\r\n}",
             "tests": [
                 {
                     "title": "foo(1, []) should equal []",
@@ -202,7 +202,7 @@
         },
         {
             "id": 7,
-            "code": "function foo(n, m) {\r\n let result = [];\r\n for (let i = 0; i < m.length; i++) {\r\n if (n(m[i])) {\r\n result.push(m[i]);\r\n }\r\n }\r\n return result;\r\n}",
+            "code": "function foo(n, m) {\r\n\tlet result = [];\r\n\tfor (let i = 0; i < m.length; i++) {\r\n\t\tif (n(m[i])) {\r\n\t\t\tresult.push(m[i]);\r\n\t\t}\r\n\t}\r\n\treturn result;\r\n}",
             "tests": [
                 {
                     "title": "foo((a) => true, []) should equal []",
@@ -240,7 +240,7 @@
         },
         {
             "id": 8,
-            "code": "function foo(n) {\r\n if (n <= 1) return false;\r\n if (n === 2) return true;\r\n for (let i = 2; i < n; i++) {\r\n if (n % i === 0) return false;\r\n }\r\n return true;\r\n}",
+            "code": "function foo(n) {\r\n\tif (n <= 1) return false;\r\n\tif (n === 2) return true;\r\n\tfor (let i = 2; i < n; i++) {\r\n\t\tif (n % i === 0) return false;\r\n\t}\r\n\treturn true;\r\n}",
             "tests": [
                 {
                     "title": "foo(1) should equal false",
@@ -282,7 +282,7 @@
         },
         {
             "id": 9,
-            "code": "function foo(n, m) {\r\n for (let i = 0; i < m.length; i++) {\r\n if (m[i] === n) return i;\r\n }\r\n return -1;\r\n}",
+            "code": "function foo(n, m) {\r\n\tfor (let i = 0; i < m.length; i++) {\r\n\t\tif (m[i] === n) return i;\r\n\t}\r\n\treturn -1;\r\n}",
             "tests": [
                 {
                     "title":"foo(1,[]) should equal -1",
@@ -320,7 +320,7 @@
         },
         {
             "id": 10,
-            "code": "function foo(n) {\r\n return n[0][0] * n[1][1] - n[1][0] * n[0][1];\r\n}",
+            "code": "function foo(n) {\r\n\treturn n[0][0] * n[1][1] - n[1][0] * n[0][1];\r\n}",
             "tests":[
                 {
                     "title":"foo([[1,0],[0,1]]) should equal 1",
