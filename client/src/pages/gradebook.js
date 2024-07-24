@@ -22,8 +22,8 @@ const Gradebook = (props) => {
   const getGrades = async () => {
     try {
         const res = await axios.put("http://localhost:5000/questions/gradebook/gradebook_data", {
-          username: "Researcher_A",
-          password: "pResearcher_A"
+          username: userInfo.username,
+          password: userInfo.password
         });
         setData(res.data.users);
       } catch (err) {
