@@ -542,20 +542,6 @@ describe('Add Question', () => {
 	});
 });
 
-
-describe('View Question (Researcher)', () => {
-
-	const usersJsonPath = '../server/data/users.json';
-	const usersJSON = readJsonFile(usersJsonPath);
-	const questionsJsonPath = '../server/data/questions.json';
-	const questoinsJSON = readJsonFile(questionsJsonPath);
-
-	afterEach(function() {
-        writeJsonFile(usersJsonPath, usersJSON);
-		writeJsonFile(questionsJsonPath, questoinsJSON);
-    });
-	
-	
 	
 	
 });
