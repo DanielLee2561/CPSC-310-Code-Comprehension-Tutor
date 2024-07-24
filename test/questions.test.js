@@ -305,9 +305,10 @@ describe('Delete Question', () => {
         it('Delete Question Success', async () => {
             const username = "Researcher_A";
             const password = "pResearcher_A";
-            const id = "6";
+            const id = 6;
             console.log('Deleting Question with:', { username });
-
+            // Login first
+            await axios.put("http://localhost:5000/users/login", {username, password});
             try {
                 const res = await axios.delete(`http://localhost:5000/questions/${username}/researcher`, {
                     data: {
@@ -318,6 +319,23 @@ describe('Delete Question', () => {
                 expect(res.status).to.equal(200);
             } catch (err) {
                 expect(err.response.status).to.equal(500);
+            }
+        });
+        it('Delete Question unsuccessful without login', async () => {
+            const username = "Researcher_A";
+            const password = "pResearcher_A";
+            const id = 6;
+            console.log('Deleting Question with:', { username });
+            try {
+                const res = await axios.delete(`http://localhost:5000/questions/${username}/researcher`, {
+                    data: {
+                        password,
+                        id
+                    }
+                });
+                expect().fail();
+            } catch (err) {
+                expect(err.response.status).to.equal(401);
             }
         });
 		it('Delete Question unsuccessful with wrong password', async () => {
@@ -408,7 +426,8 @@ describe('Add Question', () => {
             ];
         
             console.log('Adding Question with:', { username });
-
+            // Login first
+            await axios.put("http://localhost:5000/users/login", {username, password});
             try {
                 const res = await axios.post(`http://localhost:5000/questions/${username}/researcher`, {
                     password,
@@ -419,6 +438,35 @@ describe('Add Question', () => {
                 expect(res.status).to.equal(200);
             } catch (err) {
                 expect(err.response.status).to.equal(500);
+            }
+        });
+        it('Add Question unsuccessful without login', async () => {
+            const username = "Researcher_A";
+            const password = "pResearcher_A";
+            const id = "111";
+            const code = "xxxxxxxxxxx";
+            const tests = [
+                {
+                    "title": "Test 1",
+                    "assertion": "Pass"
+                },
+                {
+                    "title": "Test 2",
+                    "assertion": "Fail"
+                }
+            ];
+
+
+            try {
+                const res = await axios.post(`http://localhost:5000/questions/${username}/researcher`, {
+                    password,
+                    id,
+                    code,
+                    tests
+                });
+                expect().fail();
+            } catch (err) {
+                expect(err.response.status).to.equal(401);
             }
         });
 		it('Add Question unsuccessful with wrong password', async () => {
@@ -589,7 +637,8 @@ describe('Edit Question', () => {
                     "assertion": "Fail"
                 }
             ];
-            console.log('Edit Question with:', { username });
+            // Login first
+            await axios.put("http://localhost:5000/users/login", {username, password});
 
             try {
                 const res = await axios.put(`http://localhost:5000/questions/${username}/researcher/question/${id}`, {
@@ -601,6 +650,34 @@ describe('Edit Question', () => {
                 expect(res.status).to.equal(200);
             } catch (err) {
                 expect(err.response.status).to.equal(500);
+            }
+        });
+        it('Edit Question unsuccessful without login', async () => {
+            const username = "Researcher_A";
+            const password = "pResearcher_A";
+            const id = "5";
+			const code="xxxxxxxx";
+			const tests = [
+                {
+                    "title": "Test 1",
+                    "assertion": "Pass"
+                },
+                {
+                    "title": "Test 2",
+                    "assertion": "Fail"
+                }
+            ];
+
+            try {
+                const res = await axios.put(`http://localhost:5000/questions/${username}/researcher/question/${id}`, {
+                        password,
+                        id,
+						code,
+						tests
+                });
+                expect().fail();
+            } catch (err) {
+                expect(err.response.status).to.equal(401);
             }
         });
 		it('Edit Question unsuccessful with wrong password', async () => {
