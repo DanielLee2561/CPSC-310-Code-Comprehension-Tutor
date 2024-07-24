@@ -366,8 +366,8 @@ describe('Delete Account', () => {
     });
 	describe('Delete Account API', () => {
 		it('Delete Account Success', async () => {
-			const username = "Student_A";
-			const password = "pStudent_A";
+			const username = "Student_C";
+			const password = "pStudent_C";
 			// Log the request data for debugging
 			console.log('Delete Account with:', { username });
 			try {
@@ -391,13 +391,14 @@ describe('Delete Account', () => {
 			  const res = await axios.delete(`http://localhost:5000/users/${username}`, {
 				data: { password }
 			  });
-			  expect(res.status).to.equal(401);
+			  expect().fail();
 			} catch (err) {
-			  expect(err.response.status).to.equal(401);
+			  expect(err.response.status).to.equal(400);
 			}
 		  });
 	});
 });
+	
 	
 	
 describe('Start Attempt', () => {
