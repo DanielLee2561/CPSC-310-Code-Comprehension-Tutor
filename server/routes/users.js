@@ -229,17 +229,45 @@ router.get('/:username',(req,res)=>{
     res.send(foundUser);
 })
 
+
+//delete the account api
 router.delete('/:username',(req,res)=>{
     reloadDataVars();
-  
     const { username } = req.params;
     const { password } = req.body;
 
-    users =users.filter((user)=>user.username !== username);
-    writeJsonFile(usersJsonPath, { users });
-    reloadDataVars();
-    res.send("delete successful!");
-})
+    if (!username || !password) {
+        return res.status(400).json({ error: "Missing username or password" });
+    }
+
+    let userFound = false;
+    let userDeleted = false;
+
+    for (let user of users) {
+        if (user.username === username) {
+            userFound = true;
+            if (user.password === password) {
+                users = users.filter(u => u.username !== username);
+                userDeleted = true;
+                break;
+            } else {
+                return res.status(400).json({ error: "Password does not match" });
+            }
+        }
+    }
+
+    if (!userFound) {
+        return res.status(400).json({ error: "User not found" });
+    }
+    if (userDeleted) {
+        writeJsonFile(usersJsonPath, { users });
+        reloadDataVars();
+        return res.status(201).send(); 
+    } else {
+        return res.status(500).json({ error: "Failed to delete user" });
+    }
+});
+
 
 // here is to change the password 
 router.put('/:username', (req, res) => {
