@@ -542,6 +542,20 @@ describe('Add Question', () => {
 	});
 });
 
+
+describe('View Question (Researcher)', () => {
+
+	const usersJsonPath = '../server/data/users.json';
+	const usersJSON = readJsonFile(usersJsonPath);
+	const questionsJsonPath = '../server/data/questions.json';
+	const questoinsJSON = readJsonFile(questionsJsonPath);
+
+	afterEach(function() {
+        writeJsonFile(usersJsonPath, usersJSON);
+		writeJsonFile(questionsJsonPath, questoinsJSON);
+    });
+	
+	
 	
 	
 });
@@ -695,7 +709,7 @@ describe('Edit Question', () => {
             console.log('Edit Question with:', { username });
 
             try {
-                const res = await axios.put(`http://localhost:5000/questions/${username}/researcher/question/${id}`, {
+                const res = await axios.put(`http://localhost:5000/questions/${username}/researcher/questions/${id}`, {
                         password,
                         id,
 						code,
