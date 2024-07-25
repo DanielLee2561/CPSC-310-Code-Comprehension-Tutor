@@ -1,9 +1,12 @@
 import * as chai from 'chai'; // Needed to run tests on generated code.
 import {readJsonFile} from "./fileSystemFunctions.js";
 
+// TODO: Data variable reloading needed here?
 const questionsJsonPath = './data/questions.json';
 const question_json = readJsonFile(questionsJsonPath);
 const questions = question_json.questions;
+
+const FALLBACK_CODE = "function foo() {\n\treturn undefined;\n}";
 
 // Returns the tests associated with the given question_id (int).
 // If the question with the given question_id could not be found, returns null instead.
@@ -46,7 +49,12 @@ function evaluateCode(question_id, generated_code) {
         //  but does not populate it with tests.
         return null;
     } else {
-        eval("global.foo = " + generated_code); //global.foo is now usable
+        try {
+            eval("global.foo = " + generated_code); //global.foo is now usable
+        } catch (e) {
+            console.log("Error evaluating the generated code (could not change string to function): " + e.message);
+            eval("global.foo = " + FALLBACK_CODE);
+        }
         for (const test of tests) {
             totalTests++;
             try {
