@@ -231,10 +231,9 @@ router.get('/:username',(req,res)=>{
 
 
 //delete the account api
-router.delete('/:username',(req,res)=>{
+router.delete('/:username/:password',(req,res)=>{
     reloadDataVars();
-    const { username } = req.params;
-    const { password } = req.body;
+    const { username,password } = req.params;
 
     if (!username || !password) {
         return res.status(400).json({ error: "Missing username or password" });

@@ -67,9 +67,8 @@ const Profile = (props) => {
 
   const onDeleteButtonClicked = async () => {
     const username = userInfo.username;
-    await axios.delete("http://localhost:5000/users/" + userInfo.username, {
-      password: userInfo.password
-    });
+    const password = userInfo.password;
+    await axios.delete("http://localhost:5000/users/" + username + "/" + password);
     alert("Your account has been deleted")
     window.history.replaceState({}, '');
     navigate("/", {
