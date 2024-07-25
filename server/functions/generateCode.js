@@ -33,15 +33,16 @@ async function generateCode(user_input, num_params) {
         let parameters;
         parameters = num_params + " parameters";
 
-        const llm_model = "codegemma";
+        const llm_model = "stable-code";
         const prompt_header = "Generate a Javascript function named foo that has " + parameters + ", that does the following: ";
         const llm_prompt = prompt_header + user_input;
 
-        const ollama = new Ollama({host: " http://host.docker.internal:11434"});
+        const ollama = new Ollama({host: "http://host.docker.internal:11434"});
         const output = await ollama.generate({
             model: llm_model,
             prompt: llm_prompt
         });
+        console.log(output); //TODO: remove later
 
         return output.response.split("```javascript\n")[1].split("```")[0];
     } catch (err) {
