@@ -9,7 +9,6 @@ import Gradebook from './pages/gradebook'
 import QuestionManagement from './pages/questionsManagement'
 import QuestionsBuild from './pages/questionBuild'
 import Tutorial from './pages/tutorial'
-import './App.css'
 import { useEffect, useState } from 'react'
 
 function App() {
