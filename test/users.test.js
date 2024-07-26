@@ -61,6 +61,90 @@ describe('Login', () => {
 		});
 	});
 
+	it('Login Success: Filter Out Questions', async () => {
+		const username = "Student_D";
+		const password = "pStudent_D";
+		const res = await axios.put("http://localhost:5000/users/login", {
+			username,
+			password
+		});
+		const testUsersJSON = readJsonFile(usersJsonPath);
+		const testUser = testUsersJSON.users[3];
+		expect(testUser.statusLogin).equal(true);
+		expect(testUser.questions.length).to.equal(10);
+		for (let i = 0; i < testUsersJSON.users.length; i++) {
+			if (testUsersJSON.users[i].username !== username) {
+				expect(testUsersJSON.users[i].statusLogin).equal(false);
+			}
+		}
+		const existingQuestions = [1,2,3,4,5,6,7,8,9,10];
+		const questions = testUser.questions;
+		for (let j = 0; j < questions.length; j++) {
+			expect(existingQuestions).to.include(questions[j].questionId);
+		}
+		expect(res.status).equal(204);
+
+		await axios.put("http://localhost:5000/users/logout", {
+			username
+		});
+	});
+
+	it('Login Success: Missing One Question', async () => {
+		const username = "Student_F";
+		const password = "pStudent_F";
+		const res = await axios.put("http://localhost:5000/users/login", {
+			username,
+			password
+		});
+		const testUsersJSON = readJsonFile(usersJsonPath);
+		const testUser = testUsersJSON.users[5];
+		expect(testUser.statusLogin).equal(true);
+		expect(testUser.questions.length).to.equal(10);
+		for (let i = 0; i < testUsersJSON.users.length; i++) {
+			if (testUsersJSON.users[i].username !== username) {
+				expect(testUsersJSON.users[i].statusLogin).equal(false);
+			}
+		}
+		const existingQuestions = [1,2,3,4,5,6,7,8,9,10];
+		const questions = testUser.questions;
+		for (let j = 0; j < questions.length; j++) {
+			expect(existingQuestions).to.include(questions[j].questionId);
+		}
+		expect(res.status).equal(204);
+
+		await axios.put("http://localhost:5000/users/logout", {
+			username
+		});
+	});
+
+	it('Login Success: Populate Questions', async () => {
+		const username = "Student_E";
+		const password = "pStudent_E";
+		const res = await axios.put("http://localhost:5000/users/login", {
+			username,
+			password
+		});
+		const testUsersJSON = readJsonFile(usersJsonPath);
+		const testUser = testUsersJSON.users[4];
+		expect(testUser.statusLogin).equal(true);
+		expect(testUser.questions.length).to.equal(10);
+		for (let i = 0; i < testUsersJSON.users.length; i++) {
+			if (testUsersJSON.users[i].username !== username) {
+				expect(testUsersJSON.users[i].statusLogin).equal(false);
+			}
+		}
+		const existingQuestions = [1,2,3,4,5,6,7,8,9,10];
+		const questions = testUser.questions;
+		for (let j = 0; j < questions.length; j++) {
+			expect(existingQuestions).to.include(questions[j].questionId);
+		}
+		expect(res.status).equal(204);
+
+		await axios.put("http://localhost:5000/users/logout", {
+			username
+		});
+	});
+
 	it('Login Success Researcher', async () => {
 		const username = "Researcher_A";
 		const password = "pResearcher_A";
@@ -69,7 +153,7 @@ describe('Login', () => {
 			password
 		});
 		const testUsersJSON = readJsonFile(usersJsonPath);
-		expect(testUsersJSON.users[3].statusLogin).equal(true);
+		expect(testUsersJSON.users[testUsersJSON.users.length - 1].statusLogin).equal(true);
 		for (let i = 0; i < testUsersJSON.users.length; i++) {
 			if (testUsersJSON.users[i].username !== username) {
 				expect(testUsersJSON.users[i].statusLogin).equal(false);
@@ -90,7 +174,7 @@ describe('Login', () => {
 				username,
 				password
 			});
-			expect.fail();
+			expect.fail(res);
 		} catch (err) {
 			const testUsersJSON = readJsonFile(usersJsonPath);
 			for (let i = 0; i < testUsersJSON.users.length; i++) {
@@ -108,7 +192,7 @@ describe('Login', () => {
 				username,
 				password
 			});
-			expect.fail();
+			expect.fail(res);
 		} catch (err) {
 			const testUsersJSON = readJsonFile(usersJsonPath);
 			for (let i = 0; i < testUsersJSON.users.length; i++) {
@@ -126,7 +210,7 @@ describe('Login', () => {
 				username,
 				password
 			});
-			expect.fail();
+			expect.fail(res);
 		} catch (err) {
 			const testUsersJSON = readJsonFile(usersJsonPath);
 			for (let i = 0; i < testUsersJSON.users.length; i++) {
@@ -144,7 +228,7 @@ describe('Login', () => {
 				username,
 				password
 			});
-			expect.fail();
+			expect.fail(res);
 		} catch (err) {
 			const testUsersJSON = readJsonFile(usersJsonPath);
 			for (let i = 0; i < testUsersJSON.users.length; i++) {
@@ -173,20 +257,44 @@ describe('Register', () => {
 
 	describe('Register API', () => {
 		it('Register Success', async () => {
-			const username = "Student_E";
-			const password = "pStudent_E";
+			const username = "Student_Z";
+			const password = "pStudent_Z";
 			// Log the request data for debugging
 			console.log('Registering user with:', { username, password });
 
 			try {
-				const res = await axios.put("http://localhost:5000/users/register", {
+				const res = await axios.post("http://localhost:5000/users/register", {
 					username,
 					password
 				});
-				expect(res.status).equal(204);
+				expect(res.status).equal(201);
 			} catch (err) {
-					expect(err.response.status).equal(400);
+				expect.fail(err);
 				
+			}
+		});
+		it('Register Success: Check Questions', async () => {
+			const username = "Student_Z";
+			const password = "pStudent_Z";
+			// Log the request data for debugging
+			console.log('Registering user with:', { username, password });
+
+			try {
+				const res = await axios.post("http://localhost:5000/users/register", {
+					username,
+					password
+				});
+				const testUsersJSON = readJsonFile(usersJsonPath);
+				const testUser = testUsersJSON.users[testUsersJSON.users.length - 1];
+				const existingQuestions = [1,2,3,4,5,6,7,8,9,10];
+				expect(testUser.questions.length).to.equal(10);
+				const questions = testUser.questions;
+				for (let j = 0; j < questions.length; j++) {
+					expect(existingQuestions).to.include(questions[j].questionId);
+				}
+				expect(res.status).equal(201);
+			} catch (err) {
+				expect.fail(err);
 			}
 		});
 		it('Register unsuccessful with exists username', async () => {
@@ -196,14 +304,13 @@ describe('Register', () => {
 			console.log('Registering user with:', { username, password });
 
 			try {
-				const res = await axios.put("http://localhost:5000/users/register", {
+				const res = await axios.post("http://localhost:5000/users/register", {
 					username,
 					password
 				});
-				expect.fail();
+				expect.fail(res);
 			} catch (err) {
-					expect(err.response.status).equal(400);
-				
+				expect(err.response.status).equal(400);
 			}
 		});
 	});	
@@ -318,15 +425,13 @@ describe('Change Password', () => {
 			console.log('Change Password with:', { username });
 
 			try {
-				const res = await axios.put("http://localhost:5000/users/:username", {
-					username,
+				const res = await axios.put("http://localhost:5000/users/" + username, {
 					oldPassword,
 					newPassword
 				});
-				expect(res.status).to.equal(201);
+				expect(res.status).to.equal(204);
 			} catch (err) {
-					expect(err.response.status).equal(400);
-				
+				expect.fail(err);
 			}
 		});
 
@@ -338,15 +443,13 @@ describe('Change Password', () => {
 			console.log('Change Password with:', { username });
 
 			try {
-				const res = await axios.put("http://localhost:5000/users/:username", {
-					username,
+				const res = await axios.put("http://localhost:5000/users/" + username, {
 					oldPassword,
 					newPassword
 				});
-				expect(res.status).fail();
+				expect.fail(res);
 			} catch (err) {
-					expect(err.response.status).equal(400);
-				
+				expect(err.response.status).equal(400);
 			}
 		});
 	});	
@@ -371,13 +474,14 @@ describe('Delete Account', () => {
 			// Log the request data for debugging
 			console.log('Delete Account with:', { username });
 			try {
-				const res = await axios.delete("http://localhost:5000/users/:username", {
-					username,
-					password
+				const res = await axios.delete("http://localhost:5000/users/" + username, {
+					data: {
+						password
+					}
 				});
 				expect(res.status).to.equal(201);
 			} catch (err) {
-					expect(err.response.status).equal(400);		
+				expect.fail(err);		
 			}
 		});
 		it('Delete Account unsuccessful with the incorrect password', async () => {
@@ -391,7 +495,7 @@ describe('Delete Account', () => {
 			  const res = await axios.delete(`http://localhost:5000/users/${username}`, {
 				data: { password }
 			  });
-			  expect().fail();
+			  expect.fail(res);
 			} catch (err) {
 			  expect(err.response.status).to.equal(400);
 			}
@@ -551,7 +655,7 @@ describe('Save and Submit Attempt', () => {
 					notes: "Just testing partial success... I know what the function does...",
 					inProgress: true
 				});
-			expect.fail();
+			expect.fail(response);
 		} catch (err) {
 			expect(err.response.status).to.eql(401);
 			expect(err.response.data.error).to.eql("User is not currently logged in");
@@ -568,7 +672,7 @@ describe('Save and Submit Attempt', () => {
 					notes: "Just testing partial success... I know what the function does...",
 					inProgress: true
 				});
-			expect.fail();
+			expect.fail(response);
 		} catch (err) {
 			expect(err.response.status).to.eql(401);
 		}
@@ -655,7 +759,7 @@ describe('View Attempt', () => {
 					{"password": password});
 				expect(res.status).eql(200);
 			} catch (err) {
-				expect.fail();
+				expect.fail(err);
 			}
 		});
 
@@ -663,7 +767,7 @@ describe('View Attempt', () => {
             		try {
                 		const res = await axios.put("http://localhost:5000/users/Student_A/questions/1/attempts/1", 
                     			{});
-				expect.fail();
+				expect.fail(res);
             		} catch (err) {
                 		expect(err.response.status).eql(400);
             		}
@@ -674,7 +778,7 @@ describe('View Attempt', () => {
             		try {
                 		const res = await axios.put("http://localhost:5000/users/Student_A/questions/1/attempts/1", 
                     			{"password": password});
-				expect.fail();
+				expect.fail(res);
             		} catch (err) {
                 		expect(err.response.status).eql(401);
             		}
@@ -685,7 +789,7 @@ describe('View Attempt', () => {
             		try {
                 		const res = await axios.put("http://localhost:5000/users/Student/questions/1/attempts/1", 
                    			{"password": password});
-				expect.fail();
+				expect.fail(res);
             		} catch (err) {
                 		expect(err.response.status).eql(404);
             		}
@@ -696,7 +800,7 @@ describe('View Attempt', () => {
             		try {
                 		const res = await axios.put("http://localhost:5000/users/Student_A/questions/100/attempts/1", 
                     			{"password": password});
-				expect.fail();
+				expect.fail(res);
             		} catch (err) {
                 		expect(err.response.status).eql(404);
             		}
@@ -707,7 +811,7 @@ describe('View Attempt', () => {
             		try {
                 		const res = await axios.put("http://localhost:5000/users/Student_A/questions/1/attempts/100", 
                     			{"password": password});
-				expect.fail();
+				expect.fail(res);
             		} catch (err) {
                 		expect(err.response.status).eql(404);
             		}
@@ -755,7 +859,7 @@ describe('View Questions', () => {
                 const res = await axios.put(`http://localhost:5000/users/${username}/questions`, {
                     password
                 });
-                expect.fail(); 
+                expect.fail(res); 
             } catch (err) {
                 expect(err.response.status).to.equal(401); 
             }
@@ -770,7 +874,7 @@ describe('View Questions', () => {
                 const res = await axios.put(`http://localhost:5000/users/${username}/questions`, {
                     password
                 });
-                expect.fail(); 
+                expect.fail(res); 
             } catch (err) {
                 expect(err.response.status).to.equal(404); 
             }
@@ -778,3 +882,120 @@ describe('View Questions', () => {
 
     });
 });
+
+describe('Is Researcher', () => {
+
+	const usersJsonPath = '../server/data/users.json';
+	const usersJSON = readJsonFile(usersJsonPath);
+	const questionsJsonPath = '../server/data/questions.json';
+	const questionsJSON = readJsonFile(questionsJsonPath);
+
+	afterEach(function() {
+        writeJsonFile(usersJsonPath, usersJSON);
+		writeJsonFile(questionsJsonPath, questionsJSON);
+    });
+
+
+	describe('Is Researcher API', () => {
+		it('Is Researcher True', async () => {
+			const username = "Researcher_A";
+			const password = "pResearcher_A";
+
+			try {
+				const res = await axios.get("http://localhost:5000/users/research/researcher", {
+					params: {
+						username,
+						password
+					}});
+				expect(res.status).to.equal(200);
+			} catch (err) {
+				expect.fail(err);	
+			}
+		});
+
+		it('Is Researcher False', async () => {
+			const username = "Student_A";
+			const password = "pStudent_A";
+
+			try {
+				const res = await axios.get("http://localhost:5000/users/research/researcher", {
+					params: {
+						username,
+						password
+					}});
+				expect.fail(res);
+			} catch (err) {
+				expect(err.response.status).to.equal(401);
+			}
+		});
+
+		it('Is Researcher User Does Not Exist', async () => {
+			const username = "Researcher_X";
+			const password = "pResearcher_A";
+
+			try {
+				const res = await axios.get("http://localhost:5000/users/research/researcher", {
+					params: {
+						username,
+						password
+					}});
+				expect.fail(res);
+			} catch (err) {
+				expect(err.response.status).to.equal(401);
+			}
+		});
+
+		it('Is Researcher Password Is Incorrect', async () => {
+			const username = "Researcher_A";
+			const password = "pStudent_X";
+
+			try {
+				const res = await axios.get("http://localhost:5000/users/research/researcher", {
+					params: {
+						username,
+						password
+					}});
+				expect.fail(res);
+			} catch (err) {
+				expect(err.response.status).to.equal(401);
+			}
+		});
+	});	
+});
+
+describe('Build Questions', () => {
+
+	const usersJsonPath = '../server/data/users.json';
+	const usersJSON = readJsonFile(usersJsonPath);
+	const questionsJsonPath = '../server/data/questions.json';
+	const questionsJSON = readJsonFile(questionsJsonPath);
+
+	afterEach(function() {
+        writeJsonFile(usersJsonPath, usersJSON);
+		writeJsonFile(questionsJsonPath, questionsJSON);
+    });
+
+
+	describe('Build Questions API', () => {
+		it('Build Questions', async () => {
+			const existingQuestions = [1,2,3,4,5,6,7,8,9,10];
+
+			try {
+				const res = await axios.put("http://localhost:5000/users/gradebook/questions");
+				let usersUpdate = readJsonFile(usersJsonPath);
+				const users = usersUpdate.users;
+				for (let i = 0; i < users.length; i++) {
+					expect(users[i].questions.length).to.equal(10);
+					const questions = users[i].questions;
+					for (let j = 0; j < questions.length; j++) {
+						expect(existingQuestions).to.include(questions[j].questionId);
+					}
+				}
+				expect(res.status).to.equal(200);
+			} catch (err) {
+				expect.fail(err);	
+			}
+		});
+	});	
+});
+
