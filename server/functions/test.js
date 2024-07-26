@@ -5,13 +5,28 @@ import * as chai from 'chai';
  * @param {Array} tests - The array of tests to run
  * @returns {Object} The result of the test run
  */
+
+function isValidFunction(x) {
+    let result;
+    try {
+        result = eval(x);
+        return true;
+    } catch (e) {
+        return false; 
+    }
+}
+
 export function runTests(code, tests) {
     const failedTests = [];
     try {
-        eval("global.foo = " + code); 
+        if (!isValidFunction(code)){
+            throw error("not a valid function");
+        }
+        eval("global.foo = " + code);
+
         tests.forEach(test => {
             try {
-                eval(test.assertion); 
+                eval(test.assertion);
             } catch (assertionError) {
                 failedTests.push({
                     title: test.title,
@@ -30,7 +45,7 @@ export function runTests(code, tests) {
     } catch (err) {
         return { 
             success: false, 
-            error: "Code or tests failed", 
+            error: err.message,
             details: failedTests.length > 0 ? failedTests : err.message 
         };
     }

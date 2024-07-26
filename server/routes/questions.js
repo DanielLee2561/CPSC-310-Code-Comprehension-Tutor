@@ -196,7 +196,7 @@ router.put('/:username/researcher/question/:id', (req, res) => {
 
              if (!success) {
                 return res.send({ 
-                     error: "tests failed", 
+                     error,
                      details 
                  });
              }
