@@ -143,7 +143,7 @@ function QuestionsBuild() {
             <div className='questionContent'>
                 <textarea
                     className="gridItem"
-                    style={{ textAlign: 'center' }}
+                    
                     value={questionCode}
                     onChange={handleQuestionCodeChange}
                 />
