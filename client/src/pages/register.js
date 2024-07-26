@@ -4,7 +4,6 @@
 // https://clerk.com/blog/building-a-react-login-page-template
 // https://www.robinwieruch.de/react-checkbox/
 
-// import "./register.css";
 import "./authentication.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
@@ -136,31 +135,6 @@ function Register() {
         </div>
       </form>
     </div>
-
-    // <div className="registerPage">
-    //   <div className="formContainer">
-    //     <form onSubmit={handleSubmit}>
-    //       <h1>Register</h1>
-    //       <input name="username" type="text" placeholder="Username" required />
-    //       <input name="password" type="password" placeholder="Password" required />
-    //       <input name="confirmpassword" type="password" placeholder="Confirm Password" required />
-    //       <div className="input">
-    //         <input
-    //           type="checkbox"
-    //           checked={consent}
-    //           onChange={() => setConsent(!consent)}
-    //           id="consent"
-    //           required
-    //         />
-    //         <label htmlFor="consent">I agree to the terms and conditions</label>
-    //       </div>
-    //       <button disabled={isLoading}>Register</button>
-    //       {error && <span>{error}</span>}
-    //       <Link to="/login">Do you have an account?</Link>
-    //     </form>
-    //   </div>
-     
-    // </div>
   );
 }
 

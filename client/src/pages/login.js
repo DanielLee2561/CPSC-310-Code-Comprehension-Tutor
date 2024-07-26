@@ -105,11 +105,6 @@ const Login = (props) => {
       <div className="errorLabel">
         <label>{error}</label>
       </div>
-      {/* <br/> */}
-      {/* <div>
-        <input className={'registerButton'} type="button" onClick={onRegisterClick} value={'Don’t have an account? Register here'} />
-      </div>
-      <br/> */}
       <div className={'input'}>
         <input className={'registerButton'} type="button" onClick={onRegisterClick} value={'Don’t have an account? Register here'} />
         <input className={'inputButton'} type="button" onClick={onButtonClick} value={'Login'} />

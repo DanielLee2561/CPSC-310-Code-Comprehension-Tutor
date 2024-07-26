@@ -21,11 +21,6 @@ function AttemptPage() {
     const username = state.username;
     const password = state.password;
 
-    // console.log(question_id);
-    // console.log(attemptId);
-    // console.log(username);
-    // console.log(props.password);
-
     const numericAttemptId = parseInt(attemptId);
     // Initializing states and state hooks.
     const [functionText, setFunctionText] = useState("");
@@ -36,7 +31,6 @@ function AttemptPage() {
     const [failingTestCases, setFailingTestCases] = useState("");
     const [generatedCode, setGeneratedCode] = useState("");
 
-    // const question_id = props.question_id;
     const [attemptNum, setAttemptNum] = useState(attemptId);
     const [testsCorrect, setTestsCorrect] = useState(0);
     const [testsTotal, setTestsTotal] = useState(0);
@@ -101,7 +95,6 @@ function AttemptPage() {
             } catch (err) {
                 // For debugging
                 console.log(err.message);
-                // setFunctionText(err.message);
             }
         }
         fetchData();
@@ -161,8 +154,6 @@ function AttemptPage() {
             const response = await axios.post(endpoint, input);
             const data = response.data;
             console.log("New Attempt Number: " + data.attemptNum);
-            // attemptId = data.attemptNum; //read-only :(
-            // setAttemptNum(data.attemptNum);
             state.attempt = data.attemptNum;
             navigate("/attempt", {state: state});
         } catch (err) {
