@@ -58,6 +58,11 @@
     font-weight: bold;
 }
 
+.stickers {
+    display: block;
+    margin: auto;
+}
+
 #enabled {
     margin-left: auto;
     margin-right: auto;

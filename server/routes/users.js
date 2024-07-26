@@ -374,4 +374,50 @@ router.put("/:username/questions", (req, res) => {
     res.status(404).json({error: "Could not find user"});
 });
 
+// View Grades (new api for profile grade display)
+router.put("/:username/grade", (req, res) => {
+    reloadDataVars();
+
+    const username = req.params.username;
+    const password = req.body.password;
+
+    if (!username || !password)
+        return res.status(400).json({error:"element missing."});
+
+    const user = users.find(c => c.username === username);
+    if (!user) return res.status(404).json({error:'User is not found.'});
+    if (user.password !== password) return res.status(401).json({error:'Unauthorized to access this data'});
+
+    const question_list = [];
+
+    user.questions.forEach(question => {
+        //if (!question.attempts) return;
+        //if (!question) return;
+        
+        let best_attempt = {
+            questionId: question.questionId,
+            testCorrect: -1,
+            testTotal: -1
+        };
+        
+        let highest_score = -1;
+        question.attempts.forEach(attempt => {
+        if (attempt.testCorrect === null) return;
+            highest_score = attempt.testCorrect > highest_score ? attempt.testCorrect : highest_score;
+        });
+        
+        // keep testCorrect and testTotal -1 when this question has never been taken or finished, 
+        // score will be represented as "N/A"
+        if (highest_score !== -1) { 
+            best_attempt.testCorrect = highest_score;
+            best_attempt.testTotal = question.attempts[0].testTotal;
+        }
+        
+        question_list.push(best_attempt);
+    });
+
+    const output = {grade: question_list};
+    return res.status(200).json(output);
+});
+
 export default router;
