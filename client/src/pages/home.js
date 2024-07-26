@@ -5,7 +5,6 @@ import './header.css'
 import './home.css'
 
 const Home = (props) => {
-  const { loggedIn, email } = props
   const navigate = useNavigate()
   const userInfo = useLocation().state;
   const [showGradebook, setshowGradebook] = useState(false); 
