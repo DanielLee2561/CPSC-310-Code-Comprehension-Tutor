@@ -14,7 +14,7 @@
     color: #333; 
 }
 
-.header {
+.headerBuild {
     padding: 20px;
     text-align: center;
     color: black;
@@ -24,7 +24,7 @@
     height: 30px;
   }
 
-  .headerTitle {
+  .headerTitleBuild {
     margin: 0;
     line-height: 1;
   }
@@ -57,7 +57,7 @@
     width: 30px;
     cursor: pointer;
 }
-.headerTitle {
+.headerTitleBuild {
     margin-right: auto;
     margin-bottom: 0;
     margin-top: 0;

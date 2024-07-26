@@ -25,6 +25,10 @@ const Home = (props) => {
     }).catch(err => console.log(err.response.data.message));
   }
 
+  const updateQuestions = async () => {
+    await axios.put("http://localhost:5000/users/gradebook/questions").catch(err => console.log(err.response.data.message));
+  }
+
   useEffect(() => {
     if (userInfo === null) {
       navigate("/")
@@ -41,6 +45,7 @@ const Home = (props) => {
   }
 
   const onQuestionsButtonClicked = () => {
+    updateQuestions();
     navigate("/question_bank", {state: userInfo});
   }
 
@@ -52,6 +57,23 @@ const Home = (props) => {
     navigate("/gradebook", {state: userInfo});
   }
 
+  const onTutorialButtonClicked = () => {
+    navigate("/tutorial", {state: userInfo});
+  }
+
+  const ResearcherButtons = () => {
+    if (showGradebook) {
+      return (
+        <div>
+          <div className='buttonContainer'>
+            <button title="Go To Question Management Page" className='questionsButton' onClick={onQuestionsManagementButtonClicked}>Question Management</button>
+            <button title="Go To Gradebook Page" className='questionsButton' onClick={onGradebookButtonClicked}>Gradebook</button>
+          </div>
+        </div>
+      );
+    }
+  }
+
   return (
     <div className="mainContainer">
       <div className="header">
@@ -61,13 +83,9 @@ const Home = (props) => {
       </div>
       <div className='buttonContainer'>
         <button title="Go To Questions Page" className='questionsButton' onClick={onQuestionsButtonClicked}>Questions</button>
+        <button title="Go To The Tutorial Page" className='questionsButton' onClick={onTutorialButtonClicked}>Tutorial</button>
       </div>
-      <div className='buttonContainer'>
-        <button title="Go To Question Management Page" className='questionsButton' onClick={onQuestionsManagementButtonClicked} style={{ display: showGradebook ? "block" : "none" }}>Question Management</button>
-      </div>
-      <div className='buttonContainer'>
-        <button title="Go To Gradebook Page" className='questionsButton' onClick={onGradebookButtonClicked} style={{ display: showGradebook ? "block" : "none" }}>Gradebook</button>
-      </div>
+      <ResearcherButtons />
     </div>
   )
 }

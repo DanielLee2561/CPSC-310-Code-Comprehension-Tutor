@@ -71,11 +71,11 @@ router.get('/research/researcher', (req, res) => {
             if (user.type === "Researcher") {
                 return res.status(200).send();
             } else {
-                return res.status(400).send();
+                return res.status(401).send();
             }
         }
     }
-    return res.status(400).send();
+    return res.status(401).send();
 });
 
 
