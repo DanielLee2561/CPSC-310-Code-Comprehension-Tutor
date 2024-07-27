@@ -58,6 +58,10 @@
     font-weight: bold;
 }
 
+.gradeDisplay {
+    text-align: center;
+}
+
 .stickers {
     display: block;
     margin: auto;

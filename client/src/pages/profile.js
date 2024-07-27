@@ -7,7 +7,7 @@ import axios from "axios";
 import './header.css'
 import './profile.css'
 
-import aplus from '../icons/A+.png'
+import aplus from '../icons/stickers/A+.png'
 
 const Profile = (props) => {
   const { loggedIn, email } = props
@@ -174,10 +174,36 @@ const Profile = (props) => {
     if (numCompletedQuestions === 0) {
       return "N/A";
     }
-    return (Math.round(10 * totalScore/numCompletedQuestions))/10 + "%";
-  }
+    return (Math.round(10 * totalScore/numCompletedQuestions))/10;
+  };
 
   const renderGradeHeader = (grades) => {grades.map((ques) => {return <th>Question #{ques.questionId}</th>})};
+
+  const renderSticker = (score, side) => {
+    if (score >= 90) {
+      return <td><img className='stickers' src={aplus} alt='A+' width={side} height={side}/></td>
+    } else if (score >= 85) {
+      return <td>A</td>
+    } else if (score >= 80) {
+      return <td>A-</td>
+    } else if (score >= 76) {
+      return <td>B+</td>
+    } else if (score >= 72) {
+      return <td>B</td>
+    } else if (score >= 68) {
+      return <td>B-</td>
+    } else if (score >= 64) {
+      return <td>C+</td>
+    } else if (score >= 60) {
+      return <td>C</td>
+    } else if (score >= 55) {
+      return <td>C-</td>
+    } else if (score >= 50) {
+      return <td>D</td>
+    } else {
+      return <td>F</td>
+    }
+  };
 
 // 'gradeDisplay' need to be implemented, might need api call.
   return (
@@ -187,20 +213,12 @@ const Profile = (props) => {
         <h1 className='headerTitle'>{userInfo.username} Profile</h1>
         <button title="Go To Profile Page" className='profileButton' onClick={onProfileButtonClicked}><span className='headerSpan'>Profile</span></button>
       </div>
-      <div className='buttonContainer'>
-        <button title="Logout" className='logoutButton' onClick={onLogoutButtonClicked}>Logout</button>
-      </div>
-
-      <br/><br/><br/>
+      <br/><br/>
       <div className='gradeDisplay'>
         <table>
           <tr>
-            {grades.map((ques) => {
-              return <th>Question #{ques.questionId}</th>
-            })}
-            <th>
-              Average Scores
-            </th>
+            {grades.map((ques) => {return <th>Question #{ques.questionId}</th>})}
+            <th>Average Scores</th>
           </tr>
           <tr>
             {grades.map((ques) => {
@@ -210,24 +228,25 @@ const Profile = (props) => {
                 return <td>{Math.round(10 * 100 * (ques.testCorrect/ques.testTotal))/10}%</td>
               }
             })}
-            <td>{getAverageScore(grades)}</td>
+            <td>{getAverageScore(grades)}%</td>
           </tr>
           <tr>
             {grades.map((ques) => {
               if (ques.testCorrect === -1) {
-                return <td></td>
+                return <td>N/A</td>
               } else {
-                 if (Math.round(10 * 100 * (ques.testCorrect/ques.testTotal))/10 >= 95) {
-                  const side = 90;
-                  return <td><img className='stickers' src={aplus} alt='A+' width={side} height={side}/></td>
-                 } else {
-                  return <td></td>
-                 }
+                const side = 90;
+                const score = Math.round(10 * 100 * (ques.testCorrect/ques.testTotal))/10;
+                return renderSticker(score, side)
               }
             })}
-            <td></td>
+            {renderSticker(getAverageScore(grades), 90)}
           </tr>
         </table>
+      </div>
+
+      <div className='buttonContainer'>
+        <button title="Logout" className='logoutButton' onClick={onLogoutButtonClicked}>Logout</button>
       </div>
 
       <div className='changePassword' style={{ display: researcher ? "none" : "block" }}>

@@ -391,9 +391,6 @@ router.put("/:username/grade", (req, res) => {
     const question_list = [];
 
     user.questions.forEach(question => {
-        //if (!question.attempts) return;
-        //if (!question) return;
-        
         let best_attempt = {
             questionId: question.questionId,
             testCorrect: -1,
