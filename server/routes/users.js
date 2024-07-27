@@ -41,7 +41,6 @@ router.get('/research/researcher', (req, res) => {
 
 //register a user
 router.post('/register', (req, res) => {
-    // const usersList = users.users
     reloadDataVars();
     const {username, password} = req.body;
     if (!username || !password) {
