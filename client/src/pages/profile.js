@@ -181,7 +181,8 @@ const Profile = (props) => {
     return (Math.round(10 * totalScore/numCompletedQuestions))/10;
   };
 
-  const renderSticker = (score, side) => {
+  const renderSticker = (score) => {
+    const side = 90;
     if (score >= 90) {
       return <td><img className='stickers' src={Aplus} alt='A+' width={side} height={side}/></td>
     } else if (score >= 85) {
@@ -237,12 +238,11 @@ const Profile = (props) => {
               if (ques.testCorrect === -1) {
                 return <td>N/A</td>
               } else {
-                const side = 90;
                 const score = Math.round(10 * 100 * (ques.testCorrect/ques.testTotal))/10;
-                return renderSticker(score, side)
+                return renderSticker(score)
               }
             })}
-            {renderSticker(getAverageScore(grades), 90)}
+            {renderSticker(getAverageScore(grades))}
           </tr>
         </table>
       </div>
