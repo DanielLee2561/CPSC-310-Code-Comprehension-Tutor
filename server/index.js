@@ -25,7 +25,7 @@ app.use('/users', attemptPersistenceRoutes);
 
 let root = path.join(__dirname, '..', "client", "build");
 app.use(express.static(root));
-console.log(express.static(root));
+
 app.use('/*', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
 });

@@ -278,7 +278,7 @@ describe('Delete Question', () => {
             const username = "Researcher_A";
             const password = "pResearcher_A";
             const id = 6;
-            console.log('Deleting Question with:', { username });
+          
             // Login first
             await axios.put("http://localhost:5000/users/login", {username, password});
             try {
@@ -297,7 +297,7 @@ describe('Delete Question', () => {
             const username = "Researcher_A";
             const password = "pResearcher_A";
             const id = 6;
-            console.log('Deleting Question with:', { username });
+         
             try {
                 const res = await axios.delete(`http://localhost:5000/questions/${username}/researcher`, {
                     data: {
@@ -314,8 +314,7 @@ describe('Delete Question', () => {
             const username = "Researcher_A";
             const password = "Researcher_A";
             const id = "6";
-            console.log('Deleting Question with:', { username });
-
+          
             try {
                 const res = await axios.delete(`http://localhost:5000/questions/${username}/researcher`, {
                     data: {
@@ -332,7 +331,7 @@ describe('Delete Question', () => {
             const username = "Researcher_A";
             const password = "";
             const id = "6";
-            console.log('Deleting Question with:', { username });
+          
             try {
                 const res = await axios.delete(`http://localhost:5000/questions/${username}/researcher`, {
                     data: {
@@ -349,8 +348,7 @@ describe('Delete Question', () => {
             const username = "Student_A";
             const password = "pStudent_A";
             const id = "6";
-            console.log('Deleting Question with:', { username });
-
+          
             try {
                 const res = await axios.delete(`http://localhost:5000/questions/${username}/researcher`, {
                     data: {
@@ -397,7 +395,7 @@ describe('Add Question', () => {
                 }
             ];
         
-            console.log('Adding Question with:', { username });
+           
             // Login first
             await axios.put("http://localhost:5000/users/login", {username, password});
             try {
@@ -457,7 +455,7 @@ describe('Add Question', () => {
                 }
             ];
         
-            console.log('Adding Question with:', { username });
+         
 
             try {
                 const res = await axios.post(`http://localhost:5000/questions/${username}/researcher`, {
@@ -487,7 +485,6 @@ describe('Add Question', () => {
 			}
 		];
 	
-		console.log('Adding Question with:', { username });
 
 		try {
 			const res = await axios.post(`http://localhost:5000/questions/${username}/researcher`, {
@@ -516,7 +513,7 @@ describe('Add Question', () => {
 			}
 		];
 	
-		console.log('Adding Question with:', { username });
+	
 
 		try {
 			const res = await axios.post(`http://localhost:5000/questions/${username}/researcher`, {
@@ -546,7 +543,7 @@ describe('Add Question', () => {
 			}
 		];
 	
-		console.log('Adding Question with:', { username });
+	
 
 		try {
 			const res = await axios.post(`http://localhost:5000/questions/${username}/researcher`, {
@@ -667,7 +664,7 @@ describe('Edit Question', () => {
                     "assertion": "Fail"
                 }
             ];
-            console.log('Edit Question with:', { username });
+        
 
             try {
                 const res = await axios.put(`http://localhost:5000/questions/${username}/researcher/question/${id}`, {
@@ -697,8 +694,7 @@ describe('Edit Question', () => {
                     "assertion": "Fail"
                 }
             ];
-            console.log('Edit Question with:', { username });
-
+          
             try {
                 const res = await axios.put(`http://localhost:5000/questions/${username}/researcher/question/${id}`, {
                         password,
@@ -726,8 +722,7 @@ describe('Edit Question', () => {
                     "assertion": "Fail"
                 }
             ];
-            console.log('Edit Question with:', { username });
-
+          
             try {
                 const res = await axios.put(`http://localhost:5000/questions/${username}/researcher/question/${id}`, {
                         password,
@@ -755,8 +750,7 @@ describe('Edit Question', () => {
                     "assertion": "Fail"
                 }
             ];
-            console.log('Edit Question with:', { username });
-
+         
             try {
                 const res = await axios.put(`http://localhost:5000/questions/${username}/researcher/questions/${id}`, {
                         password,

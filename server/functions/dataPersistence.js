@@ -86,11 +86,9 @@ async function submit(username, question_id, desc, notes) {
                             reloadDataVars();
                             return attempt;
                         } catch (error) {
-                            console.log("Exception caught in submit: " + error.message);
+                           
                         }
-                    } else {
-                        console.log("An attempt labeled 'not in progress' was submitted.");
-                    }
+                    } 
                 }
             }
             throw new Error("Could not find question to submit");
@@ -118,9 +116,7 @@ function save(username, question_id, desc, notes) {
                         writeJsonFile(usersJsonPath, users_json);
                         reloadDataVars();
                         return;
-                    } else {
-                        console.log("An attempt labeled 'not in progress' was saved.");
-                    }
+                    } 
                 }
             }
             throw new Error("Could not find question to submit");

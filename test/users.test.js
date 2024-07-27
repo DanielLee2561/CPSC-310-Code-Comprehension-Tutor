@@ -21,7 +21,7 @@ function readJsonFile(path) {
 function writeJsonFile(path, data) {
     try {
         fs.writeFileSync(path, JSON.stringify(data, null, 2), 'utf8');
-        // console.log('File successfully written');
+       
     } catch (err) {
         console.error("Error writing file: " + err);
     }
@@ -353,7 +353,7 @@ describe('Register', () => {
 			const username = "Student_Z";
 			const password = "pStudent_Z";
 			// Log the request data for debugging
-			console.log('Registering user with:', { username, password });
+		
 
 			try {
 				const res = await axios.post("http://localhost:5000/users/register", {
@@ -370,7 +370,7 @@ describe('Register', () => {
 			const username = "Student_Z";
 			const password = "pStudent_Z";
 			// Log the request data for debugging
-			console.log('Registering user with:', { username, password });
+		
 
 			try {
 				const res = await axios.post("http://localhost:5000/users/register", {
@@ -394,7 +394,7 @@ describe('Register', () => {
 			const username = "Student_A";
 			const password = "pStudent_E";
 			// Log the request data for debugging
-			console.log('Registering user with:', { username, password });
+		
 
 			try {
 				const res = await axios.post("http://localhost:5000/users/register", {
@@ -415,7 +415,7 @@ describe('Register', () => {
             const username = "Student_A";
             const password = "pStudent_E";
             // Log the request data for debugging
-            console.log('Registering user with:', {username, password});
+         
 
             try {
                 const res = await axios.put("http://localhost:5000/users/register", {
@@ -531,8 +531,7 @@ describe('Change Password', () => {
             const oldPassword = "pStudent_A";
             const newPassword = "111111111";
             // Log the request data for debugging
-            console.log('Change Password with:', {username});
-
+     
             try {
                 const res = await axios.put("http://localhost:5000/users/:username", {
                     username, oldPassword, newPassword
@@ -549,7 +548,7 @@ describe('Change Password', () => {
             const oldPassword = "11111111111";
             const newPassword = "111111111";
             // Log the request data for debugging
-            console.log('Change Password with:', {username});
+         
 
             try {
                 const res = await axios.put("http://localhost:5000/users/:username", {
@@ -568,7 +567,7 @@ describe('Change Password', () => {
 			const oldPassword = "pStudent_A";
 			const newPassword="111111111";
 			// Log the request data for debugging
-			console.log('Change Password with:', { username });
+		
 
 			try {
 				const res = await axios.put("http://localhost:5000/users/" + username, {
@@ -586,8 +585,7 @@ describe('Change Password', () => {
 			const oldPassword = "11111111111";
 			const newPassword="111111111";
 			// Log the request data for debugging
-			console.log('Change Password with:', { username });
-
+			
 			try {
 				const res = await axios.put("http://localhost:5000/users/" + username, {
 					oldPassword,
@@ -618,7 +616,7 @@ describe('Delete Account', () => {
             const username = "Student_C";
             const password = "pStudent_C";
             // Log the request data for debugging
-            console.log('Delete Account with:', {username});
+            
             try {
                 const res = await axios.delete("http://localhost:5000/users/:username", {
                     username, password
@@ -633,8 +631,7 @@ describe('Delete Account', () => {
             const password = "pStudent_A1111";
 
             // Log the request data for debugging
-            console.log('Delete Account with:', {username, password});
-
+            
             try {
                 const res = await axios.delete(`http://localhost:5000/users/${username}`, {
                     data: {password}
@@ -650,7 +647,7 @@ describe('Delete Account', () => {
 			const username = "Student_C";
 			const password = "pStudent_C";
 			// Log the request data for debugging
-			console.log('Delete Account with:', { username });
+		
 			try {
 				const res = await axios.delete("http://localhost:5000/users/" + username, {
 					data: {
@@ -667,8 +664,7 @@ describe('Delete Account', () => {
 			const password = "pStudent_A1111";
 		  
 			// Log the request data for debugging
-			console.log('Delete Account with:', { username, password });
-		  
+		
 			try {
 			  const res = await axios.delete(`http://localhost:5000/users/${username}`, {
 				data: { password }
@@ -700,7 +696,7 @@ describe('Start Attempt', () => {
             const username = "Student_A";
             const password = "pStudent_A";
             // Log the request data for debugging
-            console.log('Start Attempt with:', {username});
+         
             try {
                 const res = await axios.post("http://localhost:5000/users/:username/questions/:id", {
                     username, password
@@ -714,7 +710,7 @@ describe('Start Attempt', () => {
             const username = "Student_A";
             const password = "Student_A";
             // Log the request data for debugging
-            console.log('Start Attempt with:', {username});
+           
             try {
                 const res = await axios.post("http://localhost:5000/users/:username/questions/:id", {
                     username, password
@@ -1067,8 +1063,7 @@ describe('View Questions', () => {
             const username = "Student_A";
             const password = "pStudent_A";
 
-            console.log('View Questions with:', {username});
-
+           
             try {
                 // login
                 await axios.put("http://localhost:5000/users/login", {
@@ -1086,8 +1081,7 @@ describe('View Questions', () => {
         it('View Questions unsuccessful with wrong password', async () => {
             const username = "Student_A";
             const password = "wrong_password";
-            console.log('View Questions with:', {username});
-
+            
             try {
                 // login (with correct password)
                 await axios.put("http://localhost:5000/users/login", {
@@ -1105,8 +1099,7 @@ describe('View Questions', () => {
         it('View Questions unsuccessful with non exists user', async () => {
             const username = "Student_Q";
             const password = "Student_A";
-            console.log('View Questions with:', {username});
-
+            
             try {
                 const res = await axios.put(`http://localhost:5000/users/${username}/questions`, {
                     password

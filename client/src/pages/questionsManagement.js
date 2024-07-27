@@ -57,7 +57,7 @@ const Delete = (props) => {
         }});
         window.location.reload();
       } catch (err) {
-        console.log(err.response.data.message);
+     
       
       }
     } 
@@ -108,7 +108,7 @@ const Add = ({newQuestionId}) => {
     
       window.location.reload();
     } catch (error) {
-      console.log(error.message);
+      
   
     }
   }

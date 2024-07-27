@@ -103,8 +103,7 @@ function AttemptPage() {
                 setDuration(result.duration);
                 setFunctionText(result.question);
             } catch (err) {
-                // For debugging
-                console.log(err.message);
+                
             }
         }
         fetchData();
@@ -131,7 +130,7 @@ function AttemptPage() {
         try {
             await axios.put(endpoint, input);
         } catch (err) {
-            console.log("ERROR: Could not send/fetch data (submit): " + err);
+           
         } finally {
             setSubmitEnabled(true);
             reloadPage();
@@ -149,7 +148,7 @@ function AttemptPage() {
         try {
             await axios.put(endpoint, input);
         } catch (err) {
-            console.log("ERROR: Could not send/fetch data (save): " + err);
+          
         } finally {
             setSaveEnabled(true);
         }
@@ -167,7 +166,7 @@ function AttemptPage() {
             state.attempt = data.attemptNum;
             navigate("/attempt", {state: state});
         } catch (err) {
-            console.log(attemptId);
+          
            
         } finally {
             setRetryEnabled(true);
