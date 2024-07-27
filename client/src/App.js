@@ -8,7 +8,7 @@ import Profile from './pages/profile'
 import Gradebook from './pages/gradebook'
 import QuestionManagement from './pages/questionsManagement'
 import QuestionsBuild from './pages/questionBuild'
-import './App.css'
+import Tutorial from './pages/tutorial'
 import { useEffect, useState } from 'react'
 
 function App() {
@@ -17,6 +17,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
+          <Route path="/tutorial" element={<Tutorial />} />
           <Route path="/question_management" element={<QuestionManagement />} />
           <Route path="/gradebook" element={<Gradebook />} />
           <Route path="/profile" element={<Profile />} />

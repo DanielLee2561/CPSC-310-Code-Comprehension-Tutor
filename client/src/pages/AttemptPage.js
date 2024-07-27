@@ -15,13 +15,25 @@ function AttemptPage() {
     // State
     const state = useLocation().state;
     const props = useLocation().state;
+    const navigate = useNavigate();
 
-    const question_id = state.question;
-    const attemptId = state.attempt;
-    const username = state.username;
-    const password = state.password;
+    let question_id_check;
+    let attemptId_check;
+    let username_check;
+    let password_check;
 
-  
+    try {
+        question_id_check = state.question;
+        attemptId_check = state.attempt;
+        username_check = state.username;
+        password_check = state.password;
+    } catch (err) {
+        navigate("/");
+    }
+    const question_id = question_id_check;
+    const attemptId = attemptId_check;
+    const username = username_check;
+    const password = password_check;
 
     const numericAttemptId = parseInt(attemptId);
     // Initializing states and state hooks.
@@ -33,7 +45,6 @@ function AttemptPage() {
     const [failingTestCases, setFailingTestCases] = useState("");
     const [generatedCode, setGeneratedCode] = useState("");
 
-    // const question_id = props.question_id;
     const [attemptNum, setAttemptNum] = useState(attemptId);
     const [testsCorrect, setTestsCorrect] = useState(0);
     const [testsTotal, setTestsTotal] = useState(0);
@@ -50,7 +61,6 @@ function AttemptPage() {
     // Attempt number can change (due to retry/redo) so it cannot be statically included.
     const endpoint = "http://localhost:5000/users/" + username + "/questions/" + question_id;
     // For refreshing the page, use reloadPage()
-    const navigate = useNavigate();
     const reloadPage = (newAttemptId) => {
         const update_state = {
             question: question_id,
@@ -95,7 +105,6 @@ function AttemptPage() {
             } catch (err) {
                 // For debugging
                 console.log(err.message);
-                // setFunctionText(err.message);
             }
         }
         fetchData();
@@ -154,7 +163,7 @@ function AttemptPage() {
         try {
             const response = await axios.post(endpoint, input);
             const data = response.data;
-          
+         
             state.attempt = data.attemptNum;
             navigate("/attempt", {state: state});
         } catch (err) {

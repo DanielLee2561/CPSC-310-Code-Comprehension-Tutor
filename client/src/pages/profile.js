@@ -8,7 +8,6 @@ import './header.css'
 import './profile.css'
 
 const Profile = (props) => {
-  const { loggedIn, email } = props
   const navigate = useNavigate()
   const userInfo = useLocation().state;
   const [oldPassword, setOldPassword] = useState('');
@@ -131,7 +130,7 @@ const Profile = (props) => {
     <div className="mainContainer">
       <div className="header">
         <button title="Go To Home Page" className='homeButton' onClick={onHomeButtonClicked}><span className='headerSpan'>Home</span></button>
-        <h1 className='headerTitle'>{userInfo.username} Profile</h1>
+        <h1 className='headerTitle'>{userInfo !== null ? userInfo.username : navigate("/")} Profile</h1>
         <button title="Go To Profile Page" className='profileButton' onClick={onProfileButtonClicked}><span className='headerSpan'>Profile</span></button>
       </div>
       <div className='buttonContainer'>

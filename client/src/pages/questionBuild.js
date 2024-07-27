@@ -127,14 +127,14 @@ function QuestionsBuild() {
 
     return (
         <div className="questionBuild">
-            <div className="header">
+            <div className="headerBuild">
                 <button title="Go To Home Page" className='homeButton' onClick={onHomeButtonClicked}>
                     <span className='headerSpan'>Home</span>
                 </button>
                 <button title="Go Back" className='returnButton' onClick={handleReturn}>
                     <span className='headerSpan'>Return</span>
                 </button>
-                <h1 className='headerTitle'>Question Builder</h1>
+                <h1 className='headerTitleBuild'>Question Builder</h1>
                 <button title="Go To Profile Page" className='profileButton' onClick={onProfileButtonClicked}>
                     <span className='headerSpan'>Profile</span>
                 </button>
