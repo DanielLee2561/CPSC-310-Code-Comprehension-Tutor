@@ -65,34 +65,32 @@ router.put("/:username/questions/:id", async (req, res) => {
     const notes = req.body.notes;
     const inProgress = req.body.inProgress;
 
-    let error;
-
     for (let user of users) {
         if (user.username === username) {
             if (user.password !== password) {
                 res.status(401).json({error: "Incorrect password"});
-                return;
             } else if (!user.statusLogin) {
                 res.status(401).json({error: "User is not currently logged in"});
-                return;
             } else {
-                if (inProgress) {
-                    error = save(username, question_id, description, notes);
-                } else {
-                    error = await submit(username, question_id, description, notes);
+                // User confirmed to exist, correct password, and logged in
+                // now try to save or submit
+                try {
+                    if (inProgress) {
+                        save(username, question_id, description, notes);
+                    } else {
+                        await submit(username, question_id, description, notes);
+                    }
+                    res.status(204).send();
+                } catch (e) {
+                    res.status(400).json({error: e.message});
                 }
 
-                if (typeof error === "string") {
-                    res.status(400).json({error: error});
-                } else {
-                    res.status(204).send();
-                }
                 reloadDataVars();
-                return;
             }
+            return;
         }
     }
-    res.status(404).json({error: "Could not find user"});
+    res.status(404).json({error: "Could not find user: " + username});
 
 });
 
@@ -162,47 +160,5 @@ router.post("/:username/questions/:id", async (req, res) => {
         res.status(500).json({error: "An error occurred while processing your request"});
     }
 });
-
-// start attempt call here (Mark)
-// router.post("/:username/questions/:questionID", async (req, res) => {
-//     reloadDataVars();
-
-//     const username = req.params.username;
-//     const questionID = req.params.questionID;
-//     const password = req.body.password;
-
-//     if (!username || !questionID || !password) return res.status(400).json({error:"element missing."});
-
-//     const user = users.find(c => c.username === username);
-//     if (!user) return res.status(404).json({error:'User is not found.'});
-//     if (user.password !== password) return res.status(401).json({error:'Unauthorized to access this data'});
-
-//     const question = user.questions.find(c => c.questionId === parseInt(questionID));
-//     if (!question) return res.status(404).json({error:'Question is not found.'});
-
-//     const attempts = question.attempts;
-//     if (attempts[attempts.length-1].inProgress === true) 
-//         return res.status(202).json({warning:'Unable to start new attempts because of not finishing last attempt.'});
-    
-//     let newAttempt = {
-//         description: "",
-//         notes: "",
-//         inProgress: true,
-//         startTime: new Date(),
-//         endTime: null,
-//         duration: null,
-//         generatedCode: null,
-//         failingTestCases: null,
-//         testCorrect: null,
-//         testTotal: null
-//     };
-
-//     attempts.push(newAttempt);
-
-//     writeJsonFile(usersJsonPath, users_json);
-//     reloadDataVars();
-
-//     res.status(204).json();
-// });
 
 export default router;

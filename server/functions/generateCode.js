@@ -1,5 +1,4 @@
 import {Ollama} from 'ollama';
-// import ollama from 'ollama';
 
 /*
     Function: generateCode
@@ -22,16 +21,8 @@ import {Ollama} from 'ollama';
         foo(), you must instead call global.foo().
 */
 async function generateCode(user_input, num_params) {
-
-    // const stub = 'function foo(x) {\n return 0;\n}';
-    // return stub;
-
-    // Stub above, real code below.
-
     try {
-
-        let parameters;
-        parameters = num_params + " parameters";
+        let parameters = num_params + " parameters";
 
         const llm_model = "stable-code";
         const prompt_header = "Generate a Javascript function named foo that has " + parameters + ", that does the following: ";
@@ -39,16 +30,12 @@ async function generateCode(user_input, num_params) {
 
         const ollama = new Ollama({host: "http://host.docker.internal:11434"});
         const output = await ollama.generate({
-            model: llm_model,
-            prompt: llm_prompt
+            model: llm_model, prompt: llm_prompt
         });
-        console.log(output); //TODO: remove later
 
         return output.response.split("```javascript\n")[1].split("```")[0];
     } catch (err) {
-        console.error("Error generating output:", err); //TODO Remove later
         throw new Error("There was an error generating the function: " + err.message);
-        // return 'function foo(x) {\n return "An error occurred when generating the code";\n}';
     }
 }
 

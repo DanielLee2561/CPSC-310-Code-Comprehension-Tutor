@@ -1,18 +1,22 @@
 import * as chai from 'chai'; // Needed to run tests on generated code.
 import {readJsonFile} from "./fileSystemFunctions.js";
 
-// TODO: Data variable reloading needed here?
-const questionsJsonPath = './data/questions.json';
-const question_json = readJsonFile(questionsJsonPath);
-const questions = question_json.questions;
-
 const FALLBACK_CODE = "function foo() {\n\treturn undefined;\n}";
+
+const questionsJsonPath = './data/questions.json';
+let questions;
+
+// Reloads the questions variable to account for changes in questions.json
+function reloadQuestions() {
+    const question_json = readJsonFile(questionsJsonPath);
+    questions = question_json.questions;
+}
 
 // Returns the tests associated with the given question_id (int).
 // If the question with the given question_id could not be found, returns null instead.
 function getQuestionTests(question_id) {
     for (let question of questions) {
-        if (question.id == question_id) {
+        if (question.id === question_id) {
             return question.tests; // array of tests with title and assertion
         }
     }
@@ -40,14 +44,17 @@ function getQuestionTests(question_id) {
                 the generated code failed. Each test title is separated by \n.
  */
 function evaluateCode(question_id, generated_code) {
-    const tests = getQuestionTests(question_id);
+    reloadQuestions();
+    const tests = getQuestionTests(Number(question_id));
     let totalTests = 0;
     let passingTests = 0;
     let failingTestCases = "";
     if (tests === undefined || tests == null) {
-        // TODO: What should it return? This case may happen when a researcher creates a question
-        //  but does not populate it with tests.
-        return null;
+        return {
+            testTotal: 0,
+            testCorrect: 0,
+            failingTestCases: ""
+        };
     } else {
         try {
             eval("global.foo = " + generated_code); //global.foo is now usable
