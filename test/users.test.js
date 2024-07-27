@@ -797,7 +797,7 @@ describe('Profile View Grade', () => {
 			const username = "Student_A";
 			const password = "pStudent_A";
 			try {
-				const res = axios.put(`http://localhost:5000/users/${username}/grade`, {
+				const res = await axios.put(`http://localhost:5000/users/${username}/grade`, {
 					"password": password
 				});
 				expect(res.status).to.equal(200);
@@ -809,7 +809,7 @@ describe('Profile View Grade', () => {
 		it('View Grade Unsuccessfully (Missing Element)', async () => {
 			const username = "Student_A";
 			try {
-				const res = axios.put(`http://localhost:5000/users/${username}/grade`, {});
+				const res = await axios.put(`http://localhost:5000/users/${username}/grade`, {});
 				expect.fail();
 			} catch (err) {
 				expect(err.response.status).to.equal(400);
@@ -820,7 +820,7 @@ describe('Profile View Grade', () => {
 			const username = "Student";
 			const password = "pStudent_A";
 			try {
-				const res = axios.put(`http://localhost:5000/users/${username}/grade`, {
+				const res = await axios.put(`http://localhost:5000/users/${username}/grade`, {
 					"password": password
 				});
 				expect.fail();
@@ -833,7 +833,7 @@ describe('Profile View Grade', () => {
 			const username = "Student_A";
 			const password = "pStudent";
 			try {
-				const res = axios.put(`http://localhost:5000/users/${username}/grade`, {
+				const res = await axios.put(`http://localhost:5000/users/${username}/grade`, {
 					"password": password
 				});
 				expect.fail();
