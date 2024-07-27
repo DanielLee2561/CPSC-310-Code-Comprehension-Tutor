@@ -12,7 +12,7 @@
         },
         {
             "id": 2,
-            "code": "function foo(n) {\n\tvar val = 0;\n\tfor (i = 0; i < n.length; i++) {\n\t\tval += n[i];\n\t}\n\treturn val;\n}",
+            "code": "function foo(n) {\n\tvar val = 0;\n\tfor (let i = 0; i < n.length; i++) {\n\t\tval += n[i];\n\t}\n\treturn val;\n}",
             "tests": [
                 {
                     "title": "foo([]) should return 0",
@@ -42,7 +42,7 @@
         },
         {
             "id": 3,
-            "code": "function foo(n, t, e)\n{\n\tfor (i = 0; i < n.length; i++) {\n\t\tif (n[i] === t) {\n\t\t\tn[i] = e;\n\t\t}\n\t}\n\treturn n;\n}",
+            "code": "function foo(n, t, e)\n{\n\tfor (let i = 0; i < n.length; i++) {\n\t\tif (n[i] === t) {\n\t\t\tn[i] = e;\n\t\t}\n\t}\n\treturn n;\n}",
             "tests": [
                 {
                     "title": "foo([], 4, 5) should return []",

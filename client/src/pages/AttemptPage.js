@@ -30,7 +30,6 @@ function AttemptPage() {
     } catch (err) {
         navigate("/");
     }
-
     const question_id = question_id_check;
     const attemptId = attemptId_check;
     const username = username_check;
@@ -80,9 +79,7 @@ function AttemptPage() {
     useEffect(() => {
         if (state === null) {
             navigate("/");
-        } else {
-            console.log(state);
-        }
+        } 
     }, [state])
 
     // get the corresponding data from the questionid and check user whether done this question before?
@@ -93,7 +90,6 @@ function AttemptPage() {
             try {
                 // sessionStorage.setItem("attemptNumber", props.attempt_num);
                 // setAttemptNum(attemptId);
-                console.log("Fetching data..." + attemptId);
                 const response = await axios.put(endpoint + "/attempts/" + attemptId, {password: props.password});
                 const result = response.data;
 
@@ -167,12 +163,12 @@ function AttemptPage() {
         try {
             const response = await axios.post(endpoint, input);
             const data = response.data;
-            console.log("New Attempt Number: " + data.attemptNum);
+         
             state.attempt = data.attemptNum;
             navigate("/attempt", {state: state});
         } catch (err) {
-            console.log("There was a problem retrying the attempt: " + err);
             console.log(attemptId);
+           
         } finally {
             setRetryEnabled(true);
         }

@@ -190,9 +190,7 @@ const QuestionsPage = () => {
   useEffect(() => {
     if (state === null) {
       navigate("/");
-    } else {
-      console.log(state);
-    }
+    } 
   }, [state])
 
   useEffect(() => {

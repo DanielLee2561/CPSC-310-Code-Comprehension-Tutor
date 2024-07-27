@@ -21,7 +21,6 @@ RUN npm install
 COPY server/index.js ./
 
 WORKDIR /usr/app/server/routes/
-COPY server/routes/ollama.js ./
 COPY server/routes/questions.js ./
 COPY server/routes/users.js ./
 COPY server/routes/attemptPersistence.js ./

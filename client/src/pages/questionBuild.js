@@ -13,11 +13,10 @@ function QuestionsBuild() {
     const [failedTests,setFailedTests]=useState([]);
     const [showError, setShowError] = useState(false);
     const [errorMessage, setErrorMessage] = useState(""); 
+
     useEffect(() => {
         if (!state) {
             navigate("/");
-        } else {
-            console.log(state);
         }
     }, [state, navigate]);
 
@@ -77,7 +76,7 @@ function QuestionsBuild() {
                         id
                     }
                 });
-                navigate("/questions");
+                navigate("/question_management", {state: state});
             } catch (error) {
                 console.error('Delete Question', error);
             }
@@ -103,16 +102,26 @@ function QuestionsBuild() {
                 tests: inputAreas
             });
             const failed=response.data.details;
-            setFailedTests(failed || []);
-            if (failed){
-                setShowError(true);
-                setErrorMessage(response.data.error);
-            }else{
+            if (typeof failed === 'undefined') {
                 setShowError(false);
                 window.location.reload();
-            }
+            } else if (!Array.isArray(failed)) {
+                setShowError(true);
+                setErrorMessage('The function is not valid.');
+            } else {
+                setFailedTests(failed);
+                if (failed.length > 0) {
+                    setShowError(true);
+                    setErrorMessage(response.data.error);
+                } else {
+                    setShowError(false);
+                    window.location.reload();
+                }
+            }     
         } catch (error) {
             console.error('Save Question', error);
+            setShowError(true);
+            setErrorMessage("code or tests are empty");
         }
     };
 
@@ -134,7 +143,7 @@ function QuestionsBuild() {
             <div className='questionContent'>
                 <textarea
                     className="gridItem"
-                    style={{ textAlign: 'center' }}
+                    style={{ textAlign: 'left' }}
                     value={questionCode}
                     onChange={handleQuestionCodeChange}
                 />
