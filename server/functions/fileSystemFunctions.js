@@ -19,7 +19,7 @@ function readJsonFile(path) {
 function writeJsonFile(path, data) {
     try {
         fs.writeFileSync(path, JSON.stringify(data, null, 2), 'utf8');
-        console.log('File successfully written');
+
     } catch (err) {
         console.error("Error writing file: " + err);
     }

@@ -15,7 +15,6 @@ const Login = (props) => {
 
   const navigate = useNavigate();
 
-  console.log(useLocation().state);
 
   const onRegisterClick = () => {
     navigate("/register");
@@ -39,8 +38,7 @@ const Login = (props) => {
         username,
         password
       });
-      
-      console.log(res);
+
       valid = res.status === 204 ? true : false;
     } catch (err) {
       setError(err.response.data.message);

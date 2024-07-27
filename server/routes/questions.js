@@ -14,32 +14,9 @@ const questionsJsonPath = './data/questions.json';
 
 let questions;
 let users;
-//read user json data
-// fs.readFile(questionsJsonPath, 'utf8', (err, data) => {
-//     if (err) {
-//         console.error('Error reading question.json:', err);
-//         return;
-//     }
-//     try {
-//         questions = JSON.parse(data).questions;
-//         // console.log(questions);
-//     } catch (err) {
-//         console.error('Error parsing user.json:', err);
-//     }
-// });
 
-// fs.readFile(usersJsonPath, 'utf8', (err, data) => {
-//     if (err) {
-//         console.error('Error reading question.json:', err);
-//         return;
-//     }
-//     try {
-//         users = JSON.parse(data).users;
-//         // console.log(questions);
-//     } catch (err) {
-//         console.error('Error parsing user.json:', err);
-//     }
-// });
+
+
 
 function reload() {
     let questions_json = readJsonFile(questionsJsonPath);
@@ -48,11 +25,6 @@ function reload() {
     users = users_json.users;
 }
 
-// if the data from the url, can use fetch to get the data from the frontend
-// fetch('../data/question.json')
-//         .then((response)=>response.json())
-//         .then((json)=>console.log(json));
-// console.log(questions);
 
 // write to the user json data
 const writeJsonFile = (filePath, data) => {
@@ -65,7 +37,7 @@ const writeJsonFile = (filePath, data) => {
 
 router.get('/', (req, res) => {
     reload();
-    // console.log(users);
+
     res.send(questions);
 });
 
@@ -111,15 +83,6 @@ router.post('/:username/researcher', (req, res) => {
     }
 });
 
-
-// found the specific question by questionId
-// router.get('/:questionId',(req,res)=>{
-//     reload();
-//     const { questionId } = req.params;
-//     const foundQuestion = questions.find((question)=> question.questionId == questionId);
-//     console.log(foundQuestion);
-//     res.send(foundQuestion);
-// })
 
 
 // DELETE route to delete a question by questionId

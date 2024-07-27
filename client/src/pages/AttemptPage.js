@@ -21,10 +21,6 @@ function AttemptPage() {
     const username = state.username;
     const password = state.password;
 
-    // console.log(question_id);
-    // console.log(attemptId);
-    // console.log(username);
-    // console.log(props.password);
 
     const numericAttemptId = parseInt(attemptId);
     // Initializing states and state hooks.
@@ -72,9 +68,7 @@ function AttemptPage() {
     useEffect(() => {
         if (state === null) {
             navigate("/");
-        } else {
-            console.log(state);
-        }
+        } 
     }, [state])
 
     // get the corresponding data from the questionid and check user whether done this question before?
@@ -83,9 +77,6 @@ function AttemptPage() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // sessionStorage.setItem("attemptNumber", props.attempt_num);
-                // setAttemptNum(attemptId);
-                console.log("Fetching data..." + attemptId);
                 const response = await axios.put(endpoint + "/attempts/" + attemptId, {password: props.password});
                 const result = response.data;
 
@@ -100,7 +91,7 @@ function AttemptPage() {
                 setFunctionText(result.question);
             } catch (err) {
                 // For debugging
-                console.log(err.message);
+              
                 // setFunctionText(err.message);
             }
         }
@@ -128,7 +119,7 @@ function AttemptPage() {
         try {
             await axios.put(endpoint, input);
         } catch (err) {
-            console.log("ERROR: Could not send/fetch data (submit): " + err);
+           
         } finally {
             setSubmitEnabled(true);
             reloadPage();
@@ -146,7 +137,7 @@ function AttemptPage() {
         try {
             await axios.put(endpoint, input);
         } catch (err) {
-            console.log("ERROR: Could not send/fetch data (save): " + err);
+         
         } finally {
             setSaveEnabled(true);
         }
@@ -160,14 +151,10 @@ function AttemptPage() {
         try {
             const response = await axios.post(endpoint, input);
             const data = response.data;
-            console.log("New Attempt Number: " + data.attemptNum);
-            // attemptId = data.attemptNum; //read-only :(
-            // setAttemptNum(data.attemptNum);
             state.attempt = data.attemptNum;
             navigate("/attempt", {state: state});
         } catch (err) {
-            console.log("There was a problem retrying the attempt: " + err);
-            console.log(attemptId);
+    
         } finally {
             setRetryEnabled(true);
         }

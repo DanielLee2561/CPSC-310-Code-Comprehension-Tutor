@@ -93,7 +93,7 @@ async function submit(username, question_id, desc, notes) {
                                 return "There was an error when the generated code passed through the test cases";
                             }
                         } catch (error) {
-                            console.log("Exception caught in submit: " + error.message);
+                         
                         }
 
 

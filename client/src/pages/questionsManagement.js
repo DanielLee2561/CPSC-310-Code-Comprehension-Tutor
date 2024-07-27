@@ -57,7 +57,7 @@ const Delete = (props) => {
         }});
         window.location.reload();
       } catch (err) {
-        console.log(err.response.data.message);
+    
       }
     } 
   }
@@ -98,16 +98,16 @@ const Add = ({newQuestionId}) => {
     const username = state.username;
     const password = state.password;
     const id=newQuestionId;
-    console.log(password,id)
+
     try {
       const responseData = await axios.post(`http://localhost:5000/questions/${username}/researcher`, {
         password,
         id
       });
-      console.log(responseData);
+  
       window.location.reload();
     } catch (error) {
-      console.log(error.message);
+ 
     }
   }
 
@@ -142,7 +142,7 @@ const QuestionsPage = () => {
     if (state === null) {
       navigate("/");
     } else {
-      console.log(state);
+ 
     }
   }, [state])
 

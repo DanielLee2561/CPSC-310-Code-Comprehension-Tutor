@@ -27,7 +27,7 @@ const Gradebook = (props) => {
         });
         setData(res.data.users);
       } catch (err) {
-        console.log(err.response.data.message);
+      
       } 
   }
 
@@ -36,7 +36,7 @@ const Gradebook = (props) => {
         const res = await axios.get("http://localhost:5000/questions/");
         setQuestions(res.data);
       } catch (err) {
-        console.log(err);
+       
       } 
   }
 
@@ -56,7 +56,7 @@ const Gradebook = (props) => {
       let question = questions.find((q) => (q.questionId === ques.id));
       if (question !== undefined) {
         if (question.testCorrect !== -1) {
-          console.log(question)
+       
           totalScore += (question.testCorrect/question.testTotal) * 100;
           totalStudents++;
         }

@@ -26,39 +26,7 @@ function reloadDataVars() {
     questions = questions_json.questions;
 }
 
-// let users;
-// //read user json data
-// fs.readFile(usersJsonPath, 'utf8', (err, data) => {
-//     if (err) {
-//         console.error('Error reading user.json:', err);
-//         return;
-//     }
-//     try {
-//          users = JSON.parse(data).users;
-//
-//         console.log(users);
-//     } catch (err) {
-//         console.error('Error parsing user.json:', err);
-//     }
-// });
-//
-// // if the data from the url, can use fetch to get the data from the frontend
-// // fetch('../data/user.json')
-// //         .then((response)=>response.json())
-// //         .then((json)=>console.log(json));
-// // console.log(users);
-//
-// // write to the user json data
-// const writeJsonFile = (filePath, data) => {
-//     try {
-//         fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
-//     } catch (err) {
-//         console.error('Error writing JSON file:', err);
-//     }
-// }
-
 router.get('/', (req, res) => {
-    // console.log(users);
     reloadDataVars();
     res.send(users);
 });

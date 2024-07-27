@@ -42,7 +42,7 @@ async function generateCode(user_input, num_params) {
             model: llm_model,
             prompt: llm_prompt
         });
-        console.log(output); //TODO: remove later
+   
 
         return output.response.split("```javascript\n")[1].split("```")[0];
     } catch (err) {

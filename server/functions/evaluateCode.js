@@ -53,7 +53,7 @@ function evaluateCode(question_id, generated_code) {
                 eval(test.assertion);
                 passingTests++;
             } catch (err) {
-                // console.log(err);
+         
                 failingTestCases += test.title + "\n";
             }
         }
