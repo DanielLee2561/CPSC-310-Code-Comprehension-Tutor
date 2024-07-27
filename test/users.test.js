@@ -475,7 +475,7 @@ describe('Save and Submit Attempt', () => {
 			failingTestCases: null,
 			testCorrect: null,
 			testTotal: null,
-			question: "function foo() {\n return \"Hello World!\";\n}"
+			question: "function foo() {\n\treturn \"Hello World!\";\n}"
 		}
 		// Student_A log-in
 		await axios.put("http://localhost:5000/users/login", {
@@ -737,6 +737,11 @@ describe('View Questions', () => {
             console.log('View Questions with:', { username });
 
             try {
+				// login
+				await axios.put("http://localhost:5000/users/login", {
+					username: username,
+					password: password
+				});
                 const res = await axios.put(`http://localhost:5000/users/${username}/questions`, {
                     password
                 });
@@ -752,6 +757,11 @@ describe('View Questions', () => {
             console.log('View Questions with:', { username });
 
             try {
+				// login (with correct password)
+				await axios.put("http://localhost:5000/users/login", {
+					username: username,
+					password: "pStudent_A"
+				});
                 const res = await axios.put(`http://localhost:5000/users/${username}/questions`, {
                     password
                 });
