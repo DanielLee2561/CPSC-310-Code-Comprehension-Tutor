@@ -59,7 +59,7 @@ function evaluateCode(question_id, generated_code) {
         try {
             eval("global.foo = " + generated_code); //global.foo is now usable
         } catch (e) {
-            console.log("Error evaluating the generated code (could not change string to function): " + e.message);
+           
             eval("global.foo = " + FALLBACK_CODE);
         }
         for (const test of tests) {
@@ -68,7 +68,7 @@ function evaluateCode(question_id, generated_code) {
                 eval(test.assertion);
                 passingTests++;
             } catch (err) {
-                // console.log(err);
+              
                 failingTestCases += test.title + "\n";
             }
         }

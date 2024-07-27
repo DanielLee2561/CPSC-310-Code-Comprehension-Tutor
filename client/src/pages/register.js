@@ -34,7 +34,7 @@ function Register() {
     const username = formData.get("username");
     const password = formData.get("password");
     const confirmPassword = formData.get("confirmpassword");
-    console.log(username + " " + password + " " + confirmPassword + " " + consent);
+   
     if ((username === "") || (username.length < 5)) {
       setError("ERROR: Input a username that is at least 5 characters long to register");
       setIsLoading(false);
