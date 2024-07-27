@@ -7,7 +7,17 @@ import axios from "axios";
 import './header.css'
 import './profile.css'
 
-import aplus from '../icons/stickers/A+.png'
+import Aplus from '../icons/sticker/A+.jpg'
+import Anorm from '../icons/sticker/A.jpg'
+import Aminus from '../icons/sticker/A-.jpg'
+import Bplus from '../icons/sticker/B+.jpg'
+import Bnorm from '../icons/sticker/B.jpg'
+import Bminus from '../icons/sticker/B-.jpg'
+import Cplus from '../icons/sticker/C+.jpg'
+import Cnorm from '../icons/sticker/C.jpg'
+import Cminus from '../icons/sticker/C-.jpg'
+import Dnorm from '../icons/sticker/D.jpg'
+import Fnorm from '../icons/sticker/F.jpg'
 
 const Profile = (props) => {
   const { loggedIn, email } = props
@@ -149,13 +159,7 @@ const Profile = (props) => {
       const res = await axios.put("http://localhost:5000/users/" + userInfo.username + "/grade", {
         username: userInfo.username,
         password: userInfo.password
-      })
-      /*
-      const res = await axios.put("http://localhost:5000/questions/gradebook/gradebook_data", {
-        username: "Researcher_A",
-        password: "pResearcher_A"
       });
-      */
       setGrade(res.data.grade);
     } catch (err) {
       console.log(err);
@@ -177,31 +181,29 @@ const Profile = (props) => {
     return (Math.round(10 * totalScore/numCompletedQuestions))/10;
   };
 
-  const renderGradeHeader = (grades) => {grades.map((ques) => {return <th>Question #{ques.questionId}</th>})};
-
   const renderSticker = (score, side) => {
     if (score >= 90) {
-      return <td><img className='stickers' src={aplus} alt='A+' width={side} height={side}/></td>
+      return <td><img className='stickers' src={Aplus} alt='A+' width={side} height={side}/></td>
     } else if (score >= 85) {
-      return <td>A</td>
+      return <td><img className='stickers' src={Anorm} alt='A' width={side} height={side}/></td>
     } else if (score >= 80) {
-      return <td>A-</td>
+      return <td><img className='stickers' src={Aminus} alt='A-' width={side} height={side}/></td>
     } else if (score >= 76) {
-      return <td>B+</td>
+      return <td><img className='stickers' src={Bplus} alt='B+' width={side} height={side}/></td>
     } else if (score >= 72) {
-      return <td>B</td>
+      return <td><img className='stickers' src={Bnorm} alt='B' width={side} height={side}/></td>
     } else if (score >= 68) {
-      return <td>B-</td>
+      return <td><img className='stickers' src={Bminus} alt='B-' width={side} height={side}/></td>
     } else if (score >= 64) {
-      return <td>C+</td>
+      return <td><img className='stickers' src={Cplus} alt='C+' width={side} height={side}/></td>
     } else if (score >= 60) {
-      return <td>C</td>
+      return <td><img className='stickers' src={Cnorm} alt='C' width={side} height={side}/></td>
     } else if (score >= 55) {
-      return <td>C-</td>
+      return <td><img className='stickers' src={Cminus} alt='C-' width={side} height={side}/></td>
     } else if (score >= 50) {
-      return <td>D</td>
+      return <td><img className='stickers' src={Dnorm} alt='D' width={side} height={side}/></td>
     } else {
-      return <td>F</td>
+      return <td><img className='stickers' src={Fnorm} alt='F' width={side} height={side}/></td>
     }
   };
 
