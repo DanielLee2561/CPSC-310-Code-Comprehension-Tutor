@@ -4,8 +4,8 @@
 import React, { useEffect,useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import axios from "axios";
-import styles from '../css/header.module.css'
-import stylesB from '../css/profile.module.css'
+import styles_header from '../css/header.module.css'
+import styles from '../css/profile.module.css'
 
 import Aplus from '../icons/sticker/A+.jpg'
 import Anorm from '../icons/sticker/A.jpg'
@@ -167,39 +167,39 @@ const Profile = (props) => {
   const renderSticker = (score) => {
     const side = 90;
     if (score >= 90) {
-      return <td><img className='stickers' src={Aplus} alt='A+' width={side} height={side}/></td>
+      return <td><img className={styles.stickers} src={Aplus} alt='A+' width={side} height={side}/></td>
     } else if (score >= 85) {
-      return <td><img className='stickers' src={Anorm} alt='A' width={side} height={side}/></td>
+      return <td><img className={styles.stickers} src={Anorm} alt='A' width={side} height={side}/></td>
     } else if (score >= 80) {
-      return <td><img className='stickers' src={Aminus} alt='A-' width={side} height={side}/></td>
+      return <td><img className={styles.stickers} src={Aminus} alt='A-' width={side} height={side}/></td>
     } else if (score >= 76) {
-      return <td><img className='stickers' src={Bplus} alt='B+' width={side} height={side}/></td>
+      return <td><img className={styles.stickers} src={Bplus} alt='B+' width={side} height={side}/></td>
     } else if (score >= 72) {
-      return <td><img className='stickers' src={Bnorm} alt='B' width={side} height={side}/></td>
+      return <td><img className={styles.stickers} src={Bnorm} alt='B' width={side} height={side}/></td>
     } else if (score >= 68) {
-      return <td><img className='stickers' src={Bminus} alt='B-' width={side} height={side}/></td>
+      return <td><img className={styles.stickers} src={Bminus} alt='B-' width={side} height={side}/></td>
     } else if (score >= 64) {
-      return <td><img className='stickers' src={Cplus} alt='C+' width={side} height={side}/></td>
+      return <td><img className={styles.stickers} src={Cplus} alt='C+' width={side} height={side}/></td>
     } else if (score >= 60) {
-      return <td><img className='stickers' src={Cnorm} alt='C' width={side} height={side}/></td>
+      return <td><img className={styles.stickers} src={Cnorm} alt='C' width={side} height={side}/></td>
     } else if (score >= 55) {
-      return <td><img className='stickers' src={Cminus} alt='C-' width={side} height={side}/></td>
+      return <td><img className={styles.stickers} src={Cminus} alt='C-' width={side} height={side}/></td>
     } else if (score >= 50) {
-      return <td><img className='stickers' src={Dnorm} alt='D' width={side} height={side}/></td>
+      return <td><img className={styles.stickers} src={Dnorm} alt='D' width={side} height={side}/></td>
     } else {
-      return <td><img className='stickers' src={Fnorm} alt='F' width={side} height={side}/></td>
+      return <td><img className={styles.stickers} src={Fnorm} alt='F' width={side} height={side}/></td>
     }
   };
 
   return (
-    <div className="mainContainer">
-      <div className="header">
-        <button title="Go To Home Page" className='homeButton' onClick={onHomeButtonClicked}><span className='headerSpan'>Home</span></button>
-        <h1 className='headerTitle'>{userInfo !== null ? userInfo.username : navigate("/")} Profile</h1>
-        <button title="Go To Profile Page" className='profileButton' onClick={onProfileButtonClicked}><span className='headerSpan'>Profile</span></button>
+    <div className={styles.mainContainer}>
+      <div className={styles_header.header}>
+        <button title="Go To Home Page" className={styles_header.homeButton} onClick={onHomeButtonClicked}><span className={styles_header.headerSpan}>Home</span></button>
+        <h1 className={styles_header.headerTitle}>{userInfo !== null ? userInfo.username : navigate("/")} Profile</h1>
+        <button title="Go To Profile Page" className={styles_header.profileButton} onClick={onProfileButtonClicked}><span className={styles_header.headerSpan}>Profile</span></button>
       </div>
       <br/><br/>
-      <div className='gradeDisplay'>
+      <div className={styles.gradeDisplay}>
         <table>
           <tr>
             {grades.map((ques) => {return <th>Question #{ques.questionId}</th>})}
@@ -229,11 +229,11 @@ const Profile = (props) => {
         </table>
       </div>
 
-      <div className='buttonContainer'>
-        <button title="Logout" className='logoutButton' onClick={onLogoutButtonClicked}>Logout</button>
+      <div className={styles.buttonContainer}>
+        <button title="Logout" className={styles.logoutButton} onClick={onLogoutButtonClicked}>Logout</button>
       </div>
 
-      <div className='changePassword' style={{ display: researcher ? "none" : "block" }}>
+      <div className={styles.changePassword} style={{ display: researcher ? "none" : "block" }}>
         <div className={'title'}>
           <div>Change Password</div>
         </div>
@@ -304,15 +304,15 @@ const Profile = (props) => {
           </label>
         </div>
         <br/>
-        <div className="errorLabel">
+        <div className={styles.errorLabel}>
           <label>{error}</label>
         </div>
         <div className={'input'}>
           <input className={'inputButton'} type="button" onClick={onButtonClick} value={'Change Password'} />
         </div>
       </div>
-      <div className='buttonContainer' style={{ display: researcher ? "none" : "block" }}>
-        <button title="Delete Account" disabled={enabled} className='deleteButton' onClick={onDeleteButtonClicked}>Delete Account</button>
+      <div className={styles.buttonContainer} style={{ display: researcher ? "none" : "block" }}>
+        <button title="Delete Account" disabled={enabled} className={styles.deleteButton} onClick={onDeleteButtonClicked}>Delete Account</button>
       </div>
       <label id = "enabled" style={{ display: researcher ? "none" : "block" }}>
         <input
