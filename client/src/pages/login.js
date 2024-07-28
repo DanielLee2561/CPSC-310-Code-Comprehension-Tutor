@@ -5,7 +5,7 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import { useNavigate, useLocation } from 'react-router-dom';
-import './authentication.css'
+import styles from '../css/authentication.module.css'
 
 const Login = (props) => {
   const [username, setUsername] = useState('');

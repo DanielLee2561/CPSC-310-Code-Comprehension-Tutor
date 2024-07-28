@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import './questions.css'
+import styles from '../css/questions.module.css'
 import axios from 'axios';
 
 let state;

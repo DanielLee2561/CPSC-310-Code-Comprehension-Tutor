@@ -1,8 +1,8 @@
 import React, { useEffect,useState } from 'react'
 import axios from "axios";
 import { useLocation, useNavigate } from 'react-router-dom'
-import './header.css'
-import './gradebook.css'
+import styles from '../css/header.module.css'
+import stylesB from '../css/gradebook.module.css'
 
 const Gradebook = (props) => {
   const [data, setData] = useState([]);

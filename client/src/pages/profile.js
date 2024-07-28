@@ -4,8 +4,8 @@
 import React, { useEffect,useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import axios from "axios";
-import './header.css'
-import './profile.css'
+import styles from '../css/header.module.css'
+import stylesB from '../css/profile.module.css'
 
 import Aplus from '../icons/sticker/A+.jpg'
 import Anorm from '../icons/sticker/A.jpg'

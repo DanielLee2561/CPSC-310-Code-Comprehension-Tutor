@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import './questions.css'
-import './questionsManagement.css'
+import styles from '../css/questions.module.css'
+import stylesB from '../css/questionsManagement.module.css'
 import axios from 'axios';
 
 let state;

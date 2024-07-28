@@ -1,7 +1,7 @@
 import React, { useEffect,useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import './header.css'
-import './tutorial.css'
+import styles from '../css/header.module.css'
+import stylesB from '../css/tutorial.module.css'
 
 const Tutorial = (props) => {
   const navigate = useNavigate()

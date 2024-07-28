@@ -1,8 +1,8 @@
 import React, { useEffect,useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import axios from "axios";
-import './header.css'
-import './home.css'
+import styles from '../css/header.module.css'
+import stylesB from '../css/home.module.css'
 
 const Home = (props) => {
   const navigate = useNavigate()

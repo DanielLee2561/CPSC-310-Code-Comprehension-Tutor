@@ -4,7 +4,7 @@
 // https://clerk.com/blog/building-a-react-login-page-template
 // https://www.robinwieruch.de/react-checkbox/
 
-import "./authentication.css";
+import styles from "../css/authentication.module.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
