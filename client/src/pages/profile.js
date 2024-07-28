@@ -7,6 +7,18 @@ import axios from "axios";
 import './header.css'
 import './profile.css'
 
+import Aplus from '../icons/sticker/A+.jpg'
+import Anorm from '../icons/sticker/A.jpg'
+import Aminus from '../icons/sticker/A-.jpg'
+import Bplus from '../icons/sticker/B+.jpg'
+import Bnorm from '../icons/sticker/B.jpg'
+import Bminus from '../icons/sticker/B-.jpg'
+import Cplus from '../icons/sticker/C+.jpg'
+import Cnorm from '../icons/sticker/C.jpg'
+import Cminus from '../icons/sticker/C-.jpg'
+import Dnorm from '../icons/sticker/D.jpg'
+import Fnorm from '../icons/sticker/F.jpg'
+
 const Profile = (props) => {
   const navigate = useNavigate()
   const userInfo = useLocation().state;
@@ -19,6 +31,7 @@ const Profile = (props) => {
   const [error, setError] = useState("");
   const [enabled, setEnabled] = useState(true);
   const [researcher, setResearcher] = useState(false);
+  const [grades, setGrade] = useState([]);
 
   const isResearcher = async () => {
     await axios.get("http://localhost:5000/users/research/researcher", {
@@ -40,16 +53,15 @@ const Profile = (props) => {
       navigate("/");
     } else {
       isResearcher();
+      getGrades();
     }
   })
 
   const onHomeButtonClicked = () => {
- 
     navigate("/home", {state: userInfo});
   }
 
   const onProfileButtonClicked = () => {
-  
     navigate("/profile", {state: userInfo});
   }
 
@@ -123,8 +135,61 @@ const Profile = (props) => {
       setError("ERROR: Old password is incorrect");
       return;
     }
-  }
+  };
 
+  const getGrades = async () => {
+    try {
+      const res = await axios.put("http://localhost:5000/users/" + userInfo.username + "/grade", {
+        username: userInfo.username,
+        password: userInfo.password
+      });
+      setGrade(res.data.grade);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getAverageScore = (grades) => {
+    let totalScore = 0
+    let numCompletedQuestions = 0;
+    for (let i = 0; i < grades.length; i++) {
+      if (grades[i].testCorrect !== -1) {
+        totalScore += 100 * (grades[i].testCorrect/grades[i].testTotal);
+        numCompletedQuestions++;
+      }
+    }
+    if (numCompletedQuestions === 0) {
+      return "N/A";
+    }
+    return (Math.round(10 * totalScore/numCompletedQuestions))/10;
+  };
+
+  const renderSticker = (score) => {
+    const side = 90;
+    if (score >= 90) {
+      return <td><img className='stickers' src={Aplus} alt='A+' width={side} height={side}/></td>
+    } else if (score >= 85) {
+      return <td><img className='stickers' src={Anorm} alt='A' width={side} height={side}/></td>
+    } else if (score >= 80) {
+      return <td><img className='stickers' src={Aminus} alt='A-' width={side} height={side}/></td>
+    } else if (score >= 76) {
+      return <td><img className='stickers' src={Bplus} alt='B+' width={side} height={side}/></td>
+    } else if (score >= 72) {
+      return <td><img className='stickers' src={Bnorm} alt='B' width={side} height={side}/></td>
+    } else if (score >= 68) {
+      return <td><img className='stickers' src={Bminus} alt='B-' width={side} height={side}/></td>
+    } else if (score >= 64) {
+      return <td><img className='stickers' src={Cplus} alt='C+' width={side} height={side}/></td>
+    } else if (score >= 60) {
+      return <td><img className='stickers' src={Cnorm} alt='C' width={side} height={side}/></td>
+    } else if (score >= 55) {
+      return <td><img className='stickers' src={Cminus} alt='C-' width={side} height={side}/></td>
+    } else if (score >= 50) {
+      return <td><img className='stickers' src={Dnorm} alt='D' width={side} height={side}/></td>
+    } else {
+      return <td><img className='stickers' src={Fnorm} alt='F' width={side} height={side}/></td>
+    }
+  };
 
   return (
     <div className="mainContainer">
@@ -133,6 +198,37 @@ const Profile = (props) => {
         <h1 className='headerTitle'>{userInfo !== null ? userInfo.username : navigate("/")} Profile</h1>
         <button title="Go To Profile Page" className='profileButton' onClick={onProfileButtonClicked}><span className='headerSpan'>Profile</span></button>
       </div>
+      <br/><br/>
+      <div className='gradeDisplay'>
+        <table>
+          <tr>
+            {grades.map((ques) => {return <th>Question #{ques.questionId}</th>})}
+            <th>Average Scores</th>
+          </tr>
+          <tr>
+            {grades.map((ques) => {
+              if (ques.testCorrect === -1) {
+                return <td>N/A</td>
+              } else {
+                return <td>{Math.round(10 * 100 * (ques.testCorrect/ques.testTotal))/10}%</td>
+              }
+            })}
+            <td>{getAverageScore(grades)}%</td>
+          </tr>
+          <tr>
+            {grades.map((ques) => {
+              if (ques.testCorrect === -1) {
+                return <td>N/A</td>
+              } else {
+                const score = Math.round(10 * 100 * (ques.testCorrect/ques.testTotal))/10;
+                return renderSticker(score)
+              }
+            })}
+            {renderSticker(getAverageScore(grades))}
+          </tr>
+        </table>
+      </div>
+
       <div className='buttonContainer'>
         <button title="Logout" className='logoutButton' onClick={onLogoutButtonClicked}>Logout</button>
       </div>

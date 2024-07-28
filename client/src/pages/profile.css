@@ -58,6 +58,15 @@
     font-weight: bold;
 }
 
+.gradeDisplay {
+    text-align: center;
+}
+
+.stickers {
+    display: block;
+    margin: auto;
+}
+
 #enabled {
     margin-left: auto;
     margin-right: auto;

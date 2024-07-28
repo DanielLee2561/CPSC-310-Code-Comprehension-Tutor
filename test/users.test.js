@@ -406,11 +406,7 @@ describe('Register', () => {
 				expect(err.response.status).equal(400);
 			}
 		});
-	});	
-});
 
-            }
-        });
         it('Register unsuccessful with exists username', async () => {
             const username = "Student_A";
             const password = "pStudent_E";
@@ -1229,3 +1225,66 @@ describe('Build Questions', () => {
 	});	
 });
 
+describe('Profile View Grade', () => {
+	const usersJsonPath = '../server/data/users.json';
+	const usersJSON = readJsonFile(usersJsonPath);
+	const questionsJsonPath = '../server/data/questions.json';
+	const questoinsJSON = readJsonFile(questionsJsonPath);
+
+	afterEach(function() {
+        writeJsonFile(usersJsonPath, usersJSON);
+		writeJsonFile(questionsJsonPath, questoinsJSON);
+    });
+
+	describe('View Grade Api', () => {
+		
+		it('View Grade Successfully', async () => {
+			const username = "Student_A";
+			const password = "pStudent_A";
+			try {
+				const res = await axios.put(`http://localhost:5000/users/${username}/grade`, {
+					"password": password
+				});
+				expect(res.status).to.equal(200);
+			} catch (err) {
+				expect.fail();
+			}
+		});
+
+		it('View Grade Unsuccessfully (Missing Element)', async () => {
+			const username = "Student_A";
+			try {
+				const res = await axios.put(`http://localhost:5000/users/${username}/grade`, {});
+				expect.fail();
+			} catch (err) {
+				expect(err.response.status).to.equal(400);
+			}
+		});
+
+		it('View Grade Unsuccessfully (Nonexist User)', async () => {
+			const username = "Student";
+			const password = "pStudent_A";
+			try {
+				const res = await axios.put(`http://localhost:5000/users/${username}/grade`, {
+					"password": password
+				});
+				expect.fail();
+			} catch (err) {
+				expect(err.response.status).to.equal(404);
+			}
+		});
+
+		it('View Grade Unsuccessfully (Wrong Password)', async () => {
+			const username = "Student_A";
+			const password = "pStudent";
+			try {
+				const res = await axios.put(`http://localhost:5000/users/${username}/grade`, {
+					"password": password
+				});
+				expect.fail();
+			} catch (err) {
+				expect(err.response.status).to.equal(401);
+			}
+		});
+	});
+});
