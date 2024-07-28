@@ -28,9 +28,9 @@ const writeJsonFile = (filePath, data) => {
 }
 
 router.get('/', (req, res) => {
-    // console.log(users);
     reload();
-    res.send(users);
+    // console.log(users);
+    res.send(questions);
 });
 
 //researcher can add a question

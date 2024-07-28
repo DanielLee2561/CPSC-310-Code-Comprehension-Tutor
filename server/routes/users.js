@@ -39,6 +39,11 @@ router.get('/research/researcher', (req, res) => {
     return res.status(401).send();
 });
 
+router.get('/', (req, res) => {
+    // console.log(users);
+    reloadDataVars();
+    res.send(users);
+});
 
 //register a user
 router.post('/register', (req, res) => {
