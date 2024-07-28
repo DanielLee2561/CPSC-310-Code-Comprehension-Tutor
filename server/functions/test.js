@@ -5,7 +5,7 @@ import * as chai from 'chai';
  * @param {Array} tests - The array of tests to run
  * @returns {Object} The result of the test run
  */
-
+// check the questionCode whether is valid
 function isValidFunction(x) {
     let result;
     try {
@@ -15,7 +15,7 @@ function isValidFunction(x) {
         return false; 
     }
 }
-
+// check the questionCode can pass all tests or not
 export function runTests(code, tests) {
     const failedTests = [];
     try {
