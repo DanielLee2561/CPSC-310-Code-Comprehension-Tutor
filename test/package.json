@@ -39,5 +39,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "mocha": "^10.7.0",
+    "mocha-simple-html-reporter": "^2.0.0"
   }
 }

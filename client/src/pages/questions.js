@@ -92,7 +92,7 @@ const Attempt = (name, id, attempt) => {
   if (attempt != null) {
     if (attempt.endTime != null) {
       date = new Date(attempt.endTime);
-      let day = date.getDay();
+      let day = date.getDate();
       let month = date.getMonth() + 1;
       let year = date.getFullYear();
       date = `${day}-${month}-${year}`;

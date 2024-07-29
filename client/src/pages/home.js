@@ -21,14 +21,14 @@ const Home = (props) => {
       } else {
         setshowGradebook(false);
       }
-    }).catch(err => console.log(err.response.data.message));
+    }).catch(err => {});
   }
 
   const updateQuestions = async () => {
     await axios.put("http://localhost:5000/users/gradebook/questions", {
       username: userInfo.username,
       password: userInfo.password
-    }).catch(err => console.log(err.response.data.message));
+    }).catch(err => {});
   }
 
   useEffect(() => {

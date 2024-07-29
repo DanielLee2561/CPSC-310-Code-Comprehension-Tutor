@@ -70,7 +70,7 @@ describe("View Question (Researcher)", () => {
 
         expect(response.status).to.equal(200);
         expect(data.id).to.equal(2);
-        expect(data.code).to.equal("function foo(n) {\n\tvar val = 0;\n\tfor (i = 0; i < n.length; i++) {\n\t\tval += n[i];\n\t}\n\treturn val;\n}");
+        expect(data.code).to.equal("function foo(n) {\n\tvar val = 0;\n\tfor (let i = 0; i < n.length; i++) {\n\t\tval += n[i];\n\t}\n\treturn val;\n}");
         expect(data.tests.length).to.equal(6);
     });
 
