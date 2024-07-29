@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import styles from '../css/questions.module.css'
-import stylesB from '../css/questionsManagement.module.css'
+import style_header from '../css/header.module.css'
+import style_questions from '../css/questions.module.css'
+import style from '../css/questionsManagement.module.css'
 import axios from 'axios';
 
 let state;
@@ -9,12 +10,12 @@ let navigate;
 
 const ButtonHome = () => {
   const onClick = () => {navigate("/home", {state: state});}
-  return <button title="Go To Home Page" className='homeButton' onClick={onClick}><span className='headerSpan'>Home</span></button>;
+  return <button title="Go To Home Page" className={style_header.homeButton} onClick={onClick}><span className={style_header.headerSpan}>Home</span></button>;
 }
 
 const ButtonProfile = () => {
   const onClick = () => {navigate("/profile", {state: state});}
-  return <button title="Go To Profile Page" className='profileButton' onClick={onClick}><span className='headerSpan'>Profile</span></button>;
+  return <button title="Go To Profile Page" className={style_header.profileButton} onClick={onClick}><span className={style_header.headerSpan}>Profile</span></button>;
 }
 
 // Attempt
@@ -34,9 +35,9 @@ const Edit = (props) => {
   }
 
   return (
-    <div className='editDiv'>
+    <div className={style.editDiv}>
       <span>
-        <input className={'editButton'} type="button" onClick={onEditClick} value={"Edit"}/>
+        <input className={style.editButton} type="button" onClick={onEditClick} value={"Edit"}/>
       </span>
     </div>
   );
@@ -70,7 +71,7 @@ const Delete = (props) => {
 
   return (
     <span>
-      <input type="button" className={'editButton'} onClick={onDeleteClick} value={"Delete"}/>
+      <input type="button" className={style.editButton} onClick={onDeleteClick} value={"Delete"}/>
     </span>
   );
 }
@@ -82,7 +83,7 @@ const Question = (question) => {
   // Return
   return (
     <div>
-      <span className='attempt question'>
+      <span className={`${style_questions.attempt} ${style_questions.question}`}>
         <span>
           {Attempt ("Question", id)}
         </span>
@@ -113,8 +114,8 @@ const Add = ({newQuestionId}) => {
     }
   }
 
-  return <div className='buttonContainer'> 
-      <button title="Go To Question Builder Page" className='addButton' onClick={onAddButtonClicked}>Add Question</button>
+  return <div className={style.buttonContainer}> 
+      <button title="Go To Question Builder Page" className={style.addButton} onClick={onAddButtonClicked}>Add Question</button>
     </div>
 }
 
@@ -123,7 +124,7 @@ const Questions = (props) => {
 
   if (questions != null) {
     return (
-      <ul className='questions'>
+      <ul className={style_questions.questions}>
         {questions.map((question) =>
           <li key={question.id}>
             {Question(question)}
@@ -167,9 +168,9 @@ const QuestionsPage = () => {
 
   return (
     <div>
-      <div className="header">
+      <div className={style_header.header}>
         <ButtonHome />
-        <h1 className='headerTitle'>Questions Management</h1>
+        <h1 className={style_header.headerTitle}>Questions Management</h1>
         <ButtonProfile />
       </div>
       <Questions questions={questions}/>

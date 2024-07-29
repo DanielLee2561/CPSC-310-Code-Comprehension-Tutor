@@ -1,7 +1,7 @@
 import React, { useEffect,useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import styles from '../css/header.module.css'
-import stylesB from '../css/tutorial.module.css'
+import style_header from '../css/header.module.css'
+import style from '../css/tutorial.module.css'
 
 const Tutorial = (props) => {
   const navigate = useNavigate()
@@ -21,13 +21,13 @@ const Tutorial = (props) => {
   }
 
   return (
-    <div className="mainContainer">
-      <div className="header">
-        <button title="Go To Home Page" className='homeButton' onClick={onHomeButtonClicked}><span className='headerSpan'>Home</span></button>
-        <h1 className='headerTitle'>Tutorial</h1>
-        <button title="Go To Profile Page" className='profileButton' onClick={onProfileButtonClicked}><span className='headerSpan'>Profile</span></button>
+    <div className = {style.mainContainer}>
+      <div className = {style_header.header}>
+        <button title="Go To Home Page" className = {style_header.homeButton} onClick={onHomeButtonClicked}><span className = {style_header.headerSpan}>Home</span></button>
+        <h1 className = {style_header.headerTitle}>Tutorial</h1>
+        <button title="Go To Profile Page" className = {style_header.profileButton} onClick={onProfileButtonClicked}><span className = {style_header.headerSpan}>Profile</span></button>
       </div>
-      <div className='videoContainer'>
+      <div className = {style.videoContainer}>
         <iframe 
           width="560" 
           height="315" 
@@ -40,7 +40,7 @@ const Tutorial = (props) => {
         </iframe>
       </div>
 
-      <div className='textContainer'>
+      <div className = {style.textContainer}>
         <p>Tutorial text: Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo  ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis  dis parturient montes, nascetur ridiculus mus. Donec quam felis,  ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa  quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate  eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae,  justo. </p>
       </div>
     </div>

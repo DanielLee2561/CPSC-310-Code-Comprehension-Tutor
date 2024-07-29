@@ -4,8 +4,9 @@
 import React, { useEffect,useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import axios from "axios";
-import styles_header from '../css/header.module.css'
-import styles from '../css/profile.module.css'
+import style_auth from '../css/authentication.module.css'
+import style_header from '../css/header.module.css'
+import style from '../css/profile.module.css'
 
 import Aplus from '../icons/sticker/A+.jpg'
 import Anorm from '../icons/sticker/A.jpg'
@@ -167,58 +168,58 @@ const Profile = (props) => {
   const renderSticker = (score) => {
     const side = 90;
     if (score >= 90) {
-      return <td><img className={styles.stickers} src={Aplus} alt='A+' width={side} height={side}/></td>
+      return <td className={style.gradeDisplayCell}><img className={style.stickers} src={Aplus} alt='A+' width={side} height={side}/></td>
     } else if (score >= 85) {
-      return <td><img className={styles.stickers} src={Anorm} alt='A' width={side} height={side}/></td>
+      return <td className={style.gradeDisplayCell}><img className={style.stickers} src={Anorm} alt='A' width={side} height={side}/></td>
     } else if (score >= 80) {
-      return <td><img className={styles.stickers} src={Aminus} alt='A-' width={side} height={side}/></td>
+      return <td className={style.gradeDisplayCell}><img className={style.stickers} src={Aminus} alt='A-' width={side} height={side}/></td>
     } else if (score >= 76) {
-      return <td><img className={styles.stickers} src={Bplus} alt='B+' width={side} height={side}/></td>
+      return <td className={style.gradeDisplayCell}><img className={style.stickers} src={Bplus} alt='B+' width={side} height={side}/></td>
     } else if (score >= 72) {
-      return <td><img className={styles.stickers} src={Bnorm} alt='B' width={side} height={side}/></td>
+      return <td className={style.gradeDisplayCell}><img className={style.stickers} src={Bnorm} alt='B' width={side} height={side}/></td>
     } else if (score >= 68) {
-      return <td><img className={styles.stickers} src={Bminus} alt='B-' width={side} height={side}/></td>
+      return <td className={style.gradeDisplayCell}><img className={style.stickers} src={Bminus} alt='B-' width={side} height={side}/></td>
     } else if (score >= 64) {
-      return <td><img className={styles.stickers} src={Cplus} alt='C+' width={side} height={side}/></td>
+      return <td className={style.gradeDisplayCell}><img className={style.stickers} src={Cplus} alt='C+' width={side} height={side}/></td>
     } else if (score >= 60) {
-      return <td><img className={styles.stickers} src={Cnorm} alt='C' width={side} height={side}/></td>
+      return <td className={style.gradeDisplayCell}><img className={style.stickers} src={Cnorm} alt='C' width={side} height={side}/></td>
     } else if (score >= 55) {
-      return <td><img className={styles.stickers} src={Cminus} alt='C-' width={side} height={side}/></td>
+      return <td className={style.gradeDisplayCell}><img className={style.stickers} src={Cminus} alt='C-' width={side} height={side}/></td>
     } else if (score >= 50) {
-      return <td><img className={styles.stickers} src={Dnorm} alt='D' width={side} height={side}/></td>
+      return <td className={style.gradeDisplayCell}><img className={style.stickers} src={Dnorm} alt='D' width={side} height={side}/></td>
     } else {
-      return <td><img className={styles.stickers} src={Fnorm} alt='F' width={side} height={side}/></td>
+      return <td className={style.gradeDisplayCell}><img className={style.stickers} src={Fnorm} alt='F' width={side} height={side}/></td>
     }
   };
 
   return (
-    <div className={styles.mainContainer}>
-      <div className={styles_header.header}>
-        <button title="Go To Home Page" className={styles_header.homeButton} onClick={onHomeButtonClicked}><span className={styles_header.headerSpan}>Home</span></button>
-        <h1 className={styles_header.headerTitle}>{userInfo !== null ? userInfo.username : navigate("/")} Profile</h1>
-        <button title="Go To Profile Page" className={styles_header.profileButton} onClick={onProfileButtonClicked}><span className={styles_header.headerSpan}>Profile</span></button>
+    <div className={style.mainContainer}>
+      <div className={style_header.header}>
+        <button title="Go To Home Page" className={style_header.homeButton} onClick={onHomeButtonClicked}><span className={style_header.headerSpan}>Home</span></button>
+        <h1 className={style_header.headerTitle}>{userInfo !== null ? userInfo.username : navigate("/")} Profile</h1>
+        <button title="Go To Profile Page" className={style_header.profileButton} onClick={onProfileButtonClicked}><span className={style_header.headerSpan}>Profile</span></button>
       </div>
       <br/><br/>
-      <div className={styles.gradeDisplay}>
-        <table>
+      <div className={style.gradeDisplay}>
+        <table className={style.gradeDisplayTable}>
           <tr>
-            {grades.map((ques) => {return <th>Question #{ques.questionId}</th>})}
-            <th>Average Scores</th>
+            {grades.map((ques) => {return <th className={style.gradeDisplayCell}>Question #{ques.questionId}</th>})}
+            <th className={style.gradeDisplayCell}>Average Scores</th>
           </tr>
           <tr>
             {grades.map((ques) => {
               if (ques.testCorrect === -1) {
-                return <td>N/A</td>
+                return <td className={style.gradeDisplayCell}>N/A</td>
               } else {
-                return <td>{Math.round(10 * 100 * (ques.testCorrect/ques.testTotal))/10}%</td>
+                return <td className={style.gradeDisplayCell}>{Math.round(10 * 100 * (ques.testCorrect/ques.testTotal))/10}%</td>
               }
             })}
-            <td>{getAverageScore(grades)}%</td>
+            <td className={style.gradeDisplayCell}>{getAverageScore(grades)}%</td>
           </tr>
           <tr>
             {grades.map((ques) => {
               if (ques.testCorrect === -1) {
-                return <td>N/A</td>
+                return <td className={style.gradeDisplayCell}>N/A</td>
               } else {
                 const score = Math.round(10 * 100 * (ques.testCorrect/ques.testTotal))/10;
                 return renderSticker(score)
@@ -229,95 +230,95 @@ const Profile = (props) => {
         </table>
       </div>
 
-      <div className={styles.buttonContainer}>
-        <button title="Logout" className={styles.logoutButton} onClick={onLogoutButtonClicked}>Logout</button>
+      <div className={style.buttonContainer}>
+        <button title="Logout" className={style.logoutButton} onClick={onLogoutButtonClicked}>Logout</button>
       </div>
 
-      <div className={styles.changePassword} style={{ display: researcher ? "none" : "block" }}>
-        <div className={'title'}>
+      <div className={style.changePassword} style={{ display: researcher ? "none" : "block" }}>
+        <div className = {style_auth.title}>
           <div>Change Password</div>
         </div>
         <br/>
-        <div className={'input'}>
+        <div className = {style_auth.input}>
           <input
             value={oldPassword}
             placeholder="Old Password..."
             onChange={(ev) => setOldPassword(ev.target.value)}
-            className={'inputBox'}
+            className = {style_auth.inputBox}
             type={showOldPassword ? 'text' : 'password'}
             maxLength="20"
-            id = {'oldPassword'}
+            id = {style.oldPassword}
           />
           <label>
               <input
               value={showOldPassword}
-              className={'inputBox'}
+              className = {style_auth.inputBox}
               type = "checkbox"
               onChange={() => setShowOldPassword(!showOldPassword)}
-              id = "showPass"
+              id = {style_auth.showPass}
               />
               <label>Show Old Password</label>
           </label>
         </div>
 
-        <div className={'input'}>
+        <div className = {style_auth.input}>
           <input
             value={newPassword}
             placeholder="New Password..."
             onChange={(ev) => setNewPassword(ev.target.value)}
-            className={'inputBox'}
+            className = {style_auth.inputBox}
             type={showNewPassword ? 'text' : 'password'}
             maxLength="20"
-            id = {'newPassword'}
+            id = {style.newPassword}
           />
           <label>
               <input
               value={showNewPassword}
-              className={'inputBox'}
+              className = {style_auth.inputBox}
               type = "checkbox"
               onChange={() => setShowNewPassword(!showNewPassword)}
-              id = "showPass"
+              id = {style_auth.showPass}
               />
               <label>Show New Password</label>
           </label>
         </div>
 
-        <div className={'input'}>
+        <div className = {style_auth.input}>
           <input
             value={confirmNewPassword}
             placeholder="Confirm New Password..."
             onChange={(ev) => setConfirmNewPassword(ev.target.value)}
-            className={'inputBox'}
+            className = {style_auth.inputBox}
             type={showConfirmNewPassword ? 'text' : 'password'}
             maxLength="20"
-            id = {'confirmNewPassword'}
+            id = {style.confirmNewPassword}
           />
           <label>
               <input
               value={showConfirmNewPassword}
-              className={'inputBox'}
+              className = {style_auth.inputBox}
               type = "checkbox"
               onChange={() => setShowConfirmNewPassword(!showConfirmNewPassword)}
-              id = "showPass"
+              id = {style_auth.showPass}
               />
               <label>Show Confirm New Password</label>
           </label>
         </div>
         <br/>
-        <div className={styles.errorLabel}>
+        <div className={style.errorLabel}>
           <label>{error}</label>
         </div>
-        <div className={'input'}>
-          <input className={'inputButton'} type="button" onClick={onButtonClick} value={'Change Password'} />
+        <div className = {style_auth.input}>
+          <input className = {style_auth.inputButton} type="button" onClick={onButtonClick} value={'Change Password'} />
         </div>
       </div>
-      <div className={styles.buttonContainer} style={{ display: researcher ? "none" : "block" }}>
-        <button title="Delete Account" disabled={enabled} className={styles.deleteButton} onClick={onDeleteButtonClicked}>Delete Account</button>
+      <div className={style.buttonContainer} style={{ display: researcher ? "none" : "block" }}>
+        <button title="Delete Account" disabled={enabled} className={style.deleteButton} onClick={onDeleteButtonClicked}>Delete Account</button>
       </div>
-      <label id = "enabled" style={{ display: researcher ? "none" : "block" }}>
+      <label id = {style.enabled} style={{ display: researcher ? "none" : "block" }}>
         <input
         value={enabled}
-        className={'inputBox'}
+        className = {style_auth.inputBox}
         type = "checkbox"
         onChange={() => setEnabled(!enabled)}
         />
