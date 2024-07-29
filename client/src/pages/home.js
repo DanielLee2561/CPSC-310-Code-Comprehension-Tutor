@@ -25,7 +25,10 @@ const Home = (props) => {
   }
 
   const updateQuestions = async () => {
-    await axios.put("http://localhost:5000/users/gradebook/questions").catch(err => {});
+    await axios.put("http://localhost:5000/users/gradebook/questions", {
+      username: userInfo.username,
+      password: userInfo.password
+    }).catch(err => {});
   }
 
   useEffect(() => {

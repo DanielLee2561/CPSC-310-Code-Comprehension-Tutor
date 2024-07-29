@@ -39,12 +39,6 @@ router.get('/research/researcher', (req, res) => {
     return res.status(401).send();
 });
 
-router.get('/', (req, res) => {
-    // console.log(users);
-    reloadDataVars();
-    res.send(users);
-});
-
 //register a user
 router.post('/register', (req, res) => {
     reloadDataVars();
@@ -105,16 +99,24 @@ function buildUserQuestions(user, questions) {
 }
 
 router.put('/gradebook/questions', (req, res) => {
-    try {
-        reloadDataVars();
-        for (let user of users) {
-            buildUserQuestions(user, questions);
+    const {username, password} = req.body;
+    for (let user of users) {
+        if (user.username === username) {
+            if ((user.password === password) && (user.statusLogin === true)) {    
+                try {
+                    reloadDataVars();
+                    for (let user of users) {
+                        buildUserQuestions(user, questions);
+                    }
+                    fs.writeFileSync(usersJsonPath, JSON.stringify({"users": users}, null, 2));
+                    return res.status(200).send();
+                } catch (err) {
+                    return res.status(500).send();
+                }
+            }
         }
-        fs.writeFileSync(usersJsonPath, JSON.stringify({"users": users}, null, 2));
-        return res.status(200).send();
-    } catch (err) {
-        return res.status(500).send();
     }
+    return res.status(401).send();
 })
 
 //login
