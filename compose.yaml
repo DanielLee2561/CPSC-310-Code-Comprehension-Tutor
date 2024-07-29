@@ -11,6 +11,8 @@ services:
     volumes:
       - ./server/data/users.json:/usr/app/server/data/users.json
       - ./server/data/questions.json:/usr/app/server/data/questions.json
+      - ./entrypointapp.sh:/entrypointapp.sh
+    entrypoint: ["/usr/bin/bash", "/entrypointapp.sh"]
   ollama:
     image: ollama/ollama:latest
     ports:
