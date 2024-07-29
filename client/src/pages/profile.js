@@ -48,14 +48,19 @@ const Profile = (props) => {
     }).catch(err => console.log(err.response.data.message));
   }
 
+  const updateQuestions = async () => {
+    await axios.put("http://localhost:5000/users/gradebook/questions").catch(err => console.log(err.response.data.message));
+  }
+
   useEffect(() => {
     if (userInfo === null) {
       navigate("/");
     } else {
       isResearcher();
+      updateQuestions();
       getGrades();
     }
-  })
+  }, [])
 
   const onHomeButtonClicked = () => {
     navigate("/home", {state: userInfo});
