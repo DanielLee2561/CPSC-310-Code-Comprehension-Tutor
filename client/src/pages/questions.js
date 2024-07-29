@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import styles from '../css/questions.module.css'
+import style_header from '../css/header.module.css'
+import style from '../css/questions.module.css'
 import axios from 'axios';
 
 let state;
@@ -8,12 +9,12 @@ let navigate;
 
 const ButtonHome = () => {
   const onClick = () => {navigate("/home", {state: state});}
-  return <button title="Go To Home Page" className='homeButton' onClick={onClick}><span className='headerSpan'>Home</span></button>;
+  return <button title="Go To Home Page" className={style_header.homeButton} onClick={onClick}><span className={style_header.headerSpan}>Home</span></button>;
 }
 
 const ButtonProfile = () => {
   const onClick = () => {navigate("/profile", {state: state});}
-  return <button title="Go To Profile Page" className='profileButton' onClick={onClick}><span className='headerSpan'>Profile</span></button>;
+  return <button title="Go To Profile Page" className={style_header.profileButton} onClick={onClick}><span className={style_header.headerSpan}>Profile</span></button>;
 }
 
 function getBestAttempt (attempts) {
@@ -69,7 +70,7 @@ const ButtonStart = (props) => {
     }
   };
 
-  return <button title='Start' className='button start' onClick={onClick}></button>;
+  return <button title='Start' className={`${style.button} ${style.start}`} onClick={onClick}></button>;
 }
 
 // View Button
@@ -80,7 +81,7 @@ const ButtonView = (props) => {
     navigate("/attempt", {state: state});
   }
 
-  return <button title='View' className='button view' onClick={onClick}></button>;
+  return <button title='View' className={`${style.button} ${style.view}`} onClick={onClick}></button>;
 }
 
 // Attempt
@@ -129,7 +130,7 @@ const Question = (question) => {
     return (
       <input
         title={ stateExpand ? "Hide Attempts" : "Show Attempts" }
-        className={ stateExpand ? "button expand on" : "button expand off" }
+        className={`${style.button} ${style.expand} ${ stateExpand ? style.on : style.off }`}
         type="button"
         onClick={onClick}
       />
@@ -139,9 +140,9 @@ const Question = (question) => {
   const Attempts = () => {
     if (stateExpand) {
       return (
-        <ul className='attempts'>
+        <ul className={style.attempts}>
           {attempts.map((attempt, attemptID) =>
-            <li className='attempt'>
+            <li className={style.attempt}>
               {Attempt("Attempt", attemptID+1, attempt)}
               <ButtonView question={id} attempt={attemptID+1} />
             </li>
@@ -154,7 +155,7 @@ const Question = (question) => {
   // Return
   return (
     <div>
-      <li className='attempt question'>
+      <li className={`${style.attempt} ${style.question}`}>
         <span>
           <ButtonExpand />
           {Attempt ("Question", id, getBestAttempt(attempts))}
@@ -171,7 +172,7 @@ const Questions = (props) => {
 
   if (questions != null) {
     return (
-      <ul className='questions'>
+      <ul className={style.questions}>
         {questions.map((question) =>
           <li>
             {Question(question)}
@@ -208,9 +209,9 @@ const QuestionsPage = () => {
 
   return (
     <div>
-      <div className="header">
+      <div className={style_header.header}>
         <ButtonHome />
-        <h1 className='headerTitle'>Questions</h1>
+        <h1 className={style_header.headerTitle}>Questions</h1>
         <ButtonProfile />
       </div>
       <Questions questions={questions}/>
