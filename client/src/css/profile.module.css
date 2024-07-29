@@ -62,6 +62,17 @@
     text-align: center;
 }
 
+.gradeDisplayTable {
+    margin-right: auto;
+    margin-left: auto;
+    border-collapse: collapse;
+}
+
+.gradeDisplayTable, .gradeDisplayCell {
+    border: 2px solid;
+    color: black;
+}
+
 .stickers {
     display: block;
     margin: auto;

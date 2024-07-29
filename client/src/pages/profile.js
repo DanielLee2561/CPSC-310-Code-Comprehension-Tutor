@@ -167,27 +167,27 @@ const Profile = (props) => {
   const renderSticker = (score) => {
     const side = 90;
     if (score >= 90) {
-      return <td><img className={styles.stickers} src={Aplus} alt='A+' width={side} height={side}/></td>
+      return <td className={styles.gradeDisplayCell}><img className={styles.stickers} src={Aplus} alt='A+' width={side} height={side}/></td>
     } else if (score >= 85) {
-      return <td><img className={styles.stickers} src={Anorm} alt='A' width={side} height={side}/></td>
+      return <td className={styles.gradeDisplayCell}><img className={styles.stickers} src={Anorm} alt='A' width={side} height={side}/></td>
     } else if (score >= 80) {
-      return <td><img className={styles.stickers} src={Aminus} alt='A-' width={side} height={side}/></td>
+      return <td className={styles.gradeDisplayCell}><img className={styles.stickers} src={Aminus} alt='A-' width={side} height={side}/></td>
     } else if (score >= 76) {
-      return <td><img className={styles.stickers} src={Bplus} alt='B+' width={side} height={side}/></td>
+      return <td className={styles.gradeDisplayCell}><img className={styles.stickers} src={Bplus} alt='B+' width={side} height={side}/></td>
     } else if (score >= 72) {
-      return <td><img className={styles.stickers} src={Bnorm} alt='B' width={side} height={side}/></td>
+      return <td className={styles.gradeDisplayCell}><img className={styles.stickers} src={Bnorm} alt='B' width={side} height={side}/></td>
     } else if (score >= 68) {
-      return <td><img className={styles.stickers} src={Bminus} alt='B-' width={side} height={side}/></td>
+      return <td className={styles.gradeDisplayCell}><img className={styles.stickers} src={Bminus} alt='B-' width={side} height={side}/></td>
     } else if (score >= 64) {
-      return <td><img className={styles.stickers} src={Cplus} alt='C+' width={side} height={side}/></td>
+      return <td className={styles.gradeDisplayCell}><img className={styles.stickers} src={Cplus} alt='C+' width={side} height={side}/></td>
     } else if (score >= 60) {
-      return <td><img className={styles.stickers} src={Cnorm} alt='C' width={side} height={side}/></td>
+      return <td className={styles.gradeDisplayCell}><img className={styles.stickers} src={Cnorm} alt='C' width={side} height={side}/></td>
     } else if (score >= 55) {
-      return <td><img className={styles.stickers} src={Cminus} alt='C-' width={side} height={side}/></td>
+      return <td className={styles.gradeDisplayCell}><img className={styles.stickers} src={Cminus} alt='C-' width={side} height={side}/></td>
     } else if (score >= 50) {
-      return <td><img className={styles.stickers} src={Dnorm} alt='D' width={side} height={side}/></td>
+      return <td className={styles.gradeDisplayCell}><img className={styles.stickers} src={Dnorm} alt='D' width={side} height={side}/></td>
     } else {
-      return <td><img className={styles.stickers} src={Fnorm} alt='F' width={side} height={side}/></td>
+      return <td className={styles.gradeDisplayCell}><img className={styles.stickers} src={Fnorm} alt='F' width={side} height={side}/></td>
     }
   };
 
@@ -200,25 +200,25 @@ const Profile = (props) => {
       </div>
       <br/><br/>
       <div className={styles.gradeDisplay}>
-        <table>
+        <table className={styles.gradeDisplayTable}>
           <tr>
-            {grades.map((ques) => {return <th>Question #{ques.questionId}</th>})}
-            <th>Average Scores</th>
+            {grades.map((ques) => {return <th className={styles.gradeDisplayCell}>Question #{ques.questionId}</th>})}
+            <th className={styles.gradeDisplayCell}>Average Scores</th>
           </tr>
           <tr>
             {grades.map((ques) => {
               if (ques.testCorrect === -1) {
-                return <td>N/A</td>
+                return <td className={styles.gradeDisplayCell}>N/A</td>
               } else {
-                return <td>{Math.round(10 * 100 * (ques.testCorrect/ques.testTotal))/10}%</td>
+                return <td className={styles.gradeDisplayCell}>{Math.round(10 * 100 * (ques.testCorrect/ques.testTotal))/10}%</td>
               }
             })}
-            <td>{getAverageScore(grades)}%</td>
+            <td className={styles.gradeDisplayCell}>{getAverageScore(grades)}%</td>
           </tr>
           <tr>
             {grades.map((ques) => {
               if (ques.testCorrect === -1) {
-                return <td>N/A</td>
+                return <td className={styles.gradeDisplayCell}>N/A</td>
               } else {
                 const score = Math.round(10 * 100 * (ques.testCorrect/ques.testTotal))/10;
                 return renderSticker(score)
