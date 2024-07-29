@@ -947,9 +947,18 @@ describe('Build Questions', () => {
 	describe('Build Questions API', () => {
 		it('Build Questions', async () => {
 			const existingQuestions = [1,2,3,4,5,6,7,8,9,10];
+			const username = "Researcher_A";
+			const password = "pResearcher_A";
+			const res = await axios.put("http://localhost:5000/users/login", {
+				username,
+				password
+			});
 
 			try {
-				const res = await axios.put("http://localhost:5000/users/gradebook/questions");
+				const res = await axios.put("http://localhost:5000/users/gradebook/questions", {
+					username,
+					password
+				});
 				let usersUpdate = readJsonFile(usersJsonPath);
 				const users = usersUpdate.users;
 				for (let i = 0; i < users.length; i++) {
@@ -963,6 +972,10 @@ describe('Build Questions', () => {
 			} catch (err) {
 				expect.fail(err);	
 			}
+
+			await axios.put("http://localhost:5000/users/logout", {
+				username
+			});
 		});
 	});	
 });

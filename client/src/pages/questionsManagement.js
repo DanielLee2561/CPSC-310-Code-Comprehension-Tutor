@@ -13,7 +13,17 @@ const ButtonHome = () => {
 }
 
 const ButtonProfile = () => {
-  const onClick = () => {navigate("/profile", {state: state});}
+  const updateQuestions = async () => {
+    await axios.put("http://localhost:5000/users/gradebook/questions", {
+      username: state.username,
+      password: state.password
+    }).catch(err => console.log(err.response.data.message));
+  }
+
+  const onClick = () => {
+    updateQuestions();
+    navigate("/profile", {state: state});
+  }
   return <button title="Go To Profile Page" className='profileButton' onClick={onClick}><span className='headerSpan'>Profile</span></button>;
 }
 
