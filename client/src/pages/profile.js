@@ -4,6 +4,7 @@
 import React, { useEffect,useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import axios from "axios";
+import style_auth from '../css/authentication.module.css'
 import style_header from '../css/header.module.css'
 import style from '../css/profile.module.css'
 
@@ -246,7 +247,7 @@ const Profile = (props) => {
             className={'inputBox'}
             type={showOldPassword ? 'text' : 'password'}
             maxLength="20"
-            id = {'oldPassword'}
+            id = {style.oldPassword}
           />
           <label>
               <input
@@ -254,7 +255,7 @@ const Profile = (props) => {
               className={'inputBox'}
               type = "checkbox"
               onChange={() => setShowOldPassword(!showOldPassword)}
-              id = "showPass"
+              id = {style_auth.showPass}
               />
               <label>Show Old Password</label>
           </label>
@@ -268,7 +269,7 @@ const Profile = (props) => {
             className={'inputBox'}
             type={showNewPassword ? 'text' : 'password'}
             maxLength="20"
-            id = {'newPassword'}
+            id = {style.newPassword}
           />
           <label>
               <input
@@ -276,7 +277,7 @@ const Profile = (props) => {
               className={'inputBox'}
               type = "checkbox"
               onChange={() => setShowNewPassword(!showNewPassword)}
-              id = "showPass"
+              id = {style_auth.showPass}
               />
               <label>Show New Password</label>
           </label>
@@ -290,7 +291,7 @@ const Profile = (props) => {
             className={'inputBox'}
             type={showConfirmNewPassword ? 'text' : 'password'}
             maxLength="20"
-            id = {'confirmNewPassword'}
+            id = {style.confirmNewPassword}
           />
           <label>
               <input
@@ -298,7 +299,7 @@ const Profile = (props) => {
               className={'inputBox'}
               type = "checkbox"
               onChange={() => setShowConfirmNewPassword(!showConfirmNewPassword)}
-              id = "showPass"
+              id = {style_auth.showPass}
               />
               <label>Show Confirm New Password</label>
           </label>
