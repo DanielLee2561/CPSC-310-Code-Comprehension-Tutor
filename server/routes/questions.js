@@ -27,10 +27,17 @@ const writeJsonFile = (filePath, data) => {
     }
 }
 
-router.get('/', (req, res) => {
+router.get('/newQuestions', (req, res) => {
     reload();
-    // console.log(users);
-    res.send(questions);
+    const {username, password} = req.query;
+    for (let user of users) {
+        if (user.username === username) {
+            if ((user.password === password) && (user.statusLogin === true)) {
+                res.send(questions);
+            }
+        }
+    }
+    res.status(401).send();
 });
 
 //researcher can add a question

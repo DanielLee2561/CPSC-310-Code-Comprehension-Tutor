@@ -149,8 +149,12 @@ const QuestionsPage = () => {
   useEffect(() => {
     const initialize = async () => {
       try {
-        let request = {"username":state.username, "password":state.password};
-        let response = await axios.get(`http://localhost:5000/questions`, request);
+        let response = await axios.get(`http://localhost:5000/questions/newQuestions`, {
+          params: {
+            username: state.username,
+            password: state.password
+          }
+        });
         setQuestions(response.data);
         if (response.data.length > 0) {
           const maxId = Math.max(...response.data.map(q => q.id));

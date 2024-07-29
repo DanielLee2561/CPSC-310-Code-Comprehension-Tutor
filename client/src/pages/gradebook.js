@@ -33,7 +33,12 @@ const Gradebook = (props) => {
 
   const getQuestions = async () => {
     try {
-        const res = await axios.get("http://localhost:5000/questions/");
+        const res = await axios.get("http://localhost:5000/questions/newQuestions", {
+          params: {
+            username: userInfo.username,
+            password: userInfo.password
+          }
+        });
         setQuestions(res.data);
       } catch (err) {
       
