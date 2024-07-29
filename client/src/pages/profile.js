@@ -314,7 +314,7 @@ const Profile = (props) => {
       <div className={style.buttonContainer} style={{ display: researcher ? "none" : "block" }}>
         <button title="Delete Account" disabled={enabled} className={style.deleteButton} onClick={onDeleteButtonClicked}>Delete Account</button>
       </div>
-      <label id = "enabled" style={{ display: researcher ? "none" : "block" }}>
+      <label id = {style.enabled} style={{ display: researcher ? "none" : "block" }}>
         <input
         value={enabled}
         className={'inputBox'}
