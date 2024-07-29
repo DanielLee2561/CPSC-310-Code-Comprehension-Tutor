@@ -235,16 +235,16 @@ const Profile = (props) => {
       </div>
 
       <div className={style.changePassword} style={{ display: researcher ? "none" : "block" }}>
-        <div className={'title'}>
+        <div className = {style_auth.title}>
           <div>Change Password</div>
         </div>
         <br/>
-        <div className={'input'}>
+        <div className = {style_auth.input}>
           <input
             value={oldPassword}
             placeholder="Old Password..."
             onChange={(ev) => setOldPassword(ev.target.value)}
-            className={'inputBox'}
+            className = {style_auth.inputBox}
             type={showOldPassword ? 'text' : 'password'}
             maxLength="20"
             id = {style.oldPassword}
@@ -252,7 +252,7 @@ const Profile = (props) => {
           <label>
               <input
               value={showOldPassword}
-              className={'inputBox'}
+              className = {style_auth.inputBox}
               type = "checkbox"
               onChange={() => setShowOldPassword(!showOldPassword)}
               id = {style_auth.showPass}
@@ -261,12 +261,12 @@ const Profile = (props) => {
           </label>
         </div>
 
-        <div className={'input'}>
+        <div className = {style_auth.input}>
           <input
             value={newPassword}
             placeholder="New Password..."
             onChange={(ev) => setNewPassword(ev.target.value)}
-            className={'inputBox'}
+            className = {style_auth.inputBox}
             type={showNewPassword ? 'text' : 'password'}
             maxLength="20"
             id = {style.newPassword}
@@ -274,7 +274,7 @@ const Profile = (props) => {
           <label>
               <input
               value={showNewPassword}
-              className={'inputBox'}
+              className = {style_auth.inputBox}
               type = "checkbox"
               onChange={() => setShowNewPassword(!showNewPassword)}
               id = {style_auth.showPass}
@@ -283,12 +283,12 @@ const Profile = (props) => {
           </label>
         </div>
 
-        <div className={'input'}>
+        <div className = {style_auth.input}>
           <input
             value={confirmNewPassword}
             placeholder="Confirm New Password..."
             onChange={(ev) => setConfirmNewPassword(ev.target.value)}
-            className={'inputBox'}
+            className = {style_auth.inputBox}
             type={showConfirmNewPassword ? 'text' : 'password'}
             maxLength="20"
             id = {style.confirmNewPassword}
@@ -296,7 +296,7 @@ const Profile = (props) => {
           <label>
               <input
               value={showConfirmNewPassword}
-              className={'inputBox'}
+              className = {style_auth.inputBox}
               type = "checkbox"
               onChange={() => setShowConfirmNewPassword(!showConfirmNewPassword)}
               id = {style_auth.showPass}
@@ -308,8 +308,8 @@ const Profile = (props) => {
         <div className={style.errorLabel}>
           <label>{error}</label>
         </div>
-        <div className={'input'}>
-          <input className={'inputButton'} type="button" onClick={onButtonClick} value={'Change Password'} />
+        <div className = {style_auth.input}>
+          <input className = {style_auth.inputButton} type="button" onClick={onButtonClick} value={'Change Password'} />
         </div>
       </div>
       <div className={style.buttonContainer} style={{ display: researcher ? "none" : "block" }}>
@@ -318,7 +318,7 @@ const Profile = (props) => {
       <label id = {style.enabled} style={{ display: researcher ? "none" : "block" }}>
         <input
         value={enabled}
-        className={'inputBox'}
+        className = {style_auth.inputBox}
         type = "checkbox"
         onChange={() => setEnabled(!enabled)}
         />
