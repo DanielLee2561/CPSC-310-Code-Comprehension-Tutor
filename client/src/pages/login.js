@@ -64,49 +64,49 @@ const Login = (props) => {
   // Username and password max of 20 characters
 
   return (
-    <div className={'main'}>
-      <div className={'title'}>
+    <div className={styles.main}>
+      <div className={styles.title}>
         <div>Login</div>
       </div>
       <br/>
-      <div className={'input'}>
+      <div className={styles.input}>
         <input
           value={username}
           placeholder="Username"
           onChange={(ev) => setUsername(ev.target.value)}
-          className={'inputBox'}
+          className={styles.inputBox}
           maxLength="20"
         />
       </div>
       <br/>
-      <div className={'input'}>
+      <div className={styles.input}>
         <input
           value={password}
           placeholder="Password"
           onChange={(ev) => setPassword(ev.target.value)}
-          className={'inputBox'}
+          className={styles.inputBox}
           type={showPassword ? 'text' : 'password'}
           maxLength="20"
-          id = {'password'}
+          id = {styles.password}
         />
         <label>
             <input
             value={showPassword}
-            className={'inputBox'}
+            className={styles.inputBox}
             type = "checkbox"
             onChange={() => setShowPassword(!showPassword)}
-            id = "showPass"
+            id = {styles.showPass}
             />
             <label>Show Password</label>
         </label>
       </div>
       <br/>
-      <div className="errorLabel">
+      <div className={styles.errorLabel}>
         <label>{error}</label>
       </div>
-      <div className={'input'}>
-        <input className={'registerButton'} type="button" onClick={onRegisterClick} value={'Don’t have an account? Register here'} />
-        <input className={'inputButton'} type="button" onClick={onButtonClick} value={'Login'} />
+      <div className={styles.input}>
+        <input className={styles.registerButton} type="button" onClick={onRegisterClick} value={'Don’t have an account? Register here'} />
+        <input className={styles.inputButton} type="button" onClick={onButtonClick} value={'Login'} />
       </div>
     </div>
   )
