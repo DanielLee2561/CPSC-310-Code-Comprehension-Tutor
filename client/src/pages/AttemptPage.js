@@ -62,6 +62,10 @@ function AttemptPage() {
     const [submitEnabled, setSubmitEnabled] = useState(true);
     const [retryEnabled, setRetryEnabled] = useState(true);
 
+    // For button sound effect (from kenney.nl)
+    const buttonClickSound = new Audio(process.env.PUBLIC_URL + '/buttonClickSound.ogg');
+    buttonClickSound.volume = 0.25;
+
     // IMPORTANT: This is not the full endpoint.
     // You may need to concatenate /attempts/:attempt_number (attemptNum) at the end.
     // Attempt number can change (due to retry/redo) so it cannot be statically included.
@@ -122,6 +126,7 @@ function AttemptPage() {
 
     const handleSubmit = async () => {
         setSubmitEnabled(false);
+        buttonClickSound.play();
         const input = {
             password: props.password, description: description, notes: notes, inProgress: false
         }
@@ -138,6 +143,7 @@ function AttemptPage() {
 
     const handleSave = async () => {
         setSaveEnabled(false);
+        buttonClickSound.play();
         const input = {
             password: props.password, description: description, notes: notes, inProgress: true
         }
@@ -152,6 +158,7 @@ function AttemptPage() {
 
     const handleRetry = async () => {
         setRetryEnabled(false);
+        buttonClickSound.play();
         const input = {
             password: password
         }
