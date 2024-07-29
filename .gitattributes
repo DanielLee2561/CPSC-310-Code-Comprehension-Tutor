@@ -1,1 +1,2 @@
 entrypoint.sh text eol=lf
+entrypointapp.sh text eol=lf
