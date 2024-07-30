@@ -134,7 +134,7 @@ const Gradebook = (props) => {
           {questions.map((ques) => {
             return <th>Question #{ques.id}</th>
           })}
-          <th>Student Averages</th>
+          <th>Student Average</th>
         </tr>
         {data.map((stu) => {
           return <tr>
@@ -150,7 +150,7 @@ const Gradebook = (props) => {
                 </tr>
         })}
         <tr>
-        <td className={stylesB.averages}>Question Averages</td>
+        <td className={stylesB.averages}>Question Average</td>
         {questions.map((ques) => {
           return <td className={stylesB.averages}>
                     {questionAverages(ques)}
