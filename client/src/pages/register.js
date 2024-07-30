@@ -113,7 +113,7 @@ function Register() {
           </label>
         </div>
         <br/>
-        <div className={styles.input.consent}>
+        <div className={`${styles.input} ${styles.consent}`}>
             <div className={styles.consentText}>
               <label>{textConsent}</label>
             </div>
