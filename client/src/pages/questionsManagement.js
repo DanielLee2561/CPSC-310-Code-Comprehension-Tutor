@@ -184,7 +184,7 @@ const QuestionsPage = () => {
     <div>
       <div className={style_header.header}>
         <ButtonHome />
-        <h1 className={style_header.headerTitle}>Questions Management</h1>
+        <h1 className={style_header.headerTitle}>Question Management</h1>
         <ButtonProfile />
       </div>
       <Questions questions={questions}/>
