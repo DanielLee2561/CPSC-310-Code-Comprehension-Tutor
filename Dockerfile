@@ -20,18 +20,24 @@ RUN npm install
 
 COPY server/index.js ./
 
-COPY server/routes/ ./routes/
-COPY server/data/ ./data/
-COPY server/functions/ ./functions/
+WORKDIR /usr/app/server/routes/
+COPY server/routes/questions.js ./
+COPY server/routes/users.js ./
+COPY server/routes/attemptPersistence.js ./
 
-WORKDIR /usr/app/test/
-COPY test/package*.json ./
-COPY test/alltest.test.js ./
-COPY test/frontend.test.js ./
-COPY test/questions.test.js ./
-COPY test/users.test.js ./
+WORKDIR /usr/app/server/data/
+COPY server/data/users.json ./
+COPY server/data/questions.json ./
+
+WORKDIR /usr/app/server/functions/
+COPY server/functions/dataPersistence.js ./
+COPY server/functions/test.js ./
+COPY server/functions/evaluateCode.js ./
+COPY server/functions/fileSystemFunctions.js ./
+COPY server/functions/generateCode.js ./
 
 WORKDIR /usr/app/server/
+
 
 ENV NODE_ENV=production
 
