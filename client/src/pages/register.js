@@ -4,7 +4,7 @@
 // https://clerk.com/blog/building-a-react-login-page-template
 // https://www.robinwieruch.de/react-checkbox/
 
-import "./authentication.css";
+import styles from "../css/authentication.module.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
@@ -75,63 +75,63 @@ function Register() {
     }
   };
   return (
-    <div className={'main'}>
-      <div className={'title'}>
+    <div className={styles.main}>
+      <div className={styles.title}>
         <div>Register</div>
       </div>
       <br/>
       <form onSubmit={handleSubmit}>
-        <div className={'input'}>
+        <div className={styles.input}>
           <input name="username" type="text" placeholder="Username" />
         </div>
         <br/>
-        <div className={'input'}>
-          <input name="password" type={showPassword ? 'text' : 'password'} placeholder="Password" id="password" />
+        <div className={styles.input}>
+          <input name="password" type={showPassword ? 'text' : 'password'} placeholder="Password" id={styles.password} />
           <label>
               <input
               value={showPassword}
-              className={'inputBox'}
+              className={styles.inputBox}
               type = "checkbox"
               onChange={() => setShowPassword(!showPassword)}
-              id = "showPass"
+              id = {styles.showPass}
               />
               <label>Show Password</label>
           </label>
         </div>
         <br/>
-        <div className={'input'}>
-          <input name="confirmpassword" type= {showPasswordConfirmation ? 'text' : 'password'} placeholder="Confirm Password" id="passwordConfirmation" />
+        <div className={styles.input}>
+          <input name="confirmpassword" type= {showPasswordConfirmation ? 'text' : 'password'} placeholder="Confirm Password" id={styles.passwordConfirmation} />
           <label>
               <input
               value={showPasswordConfirmation}
-              className={'inputBox'}
+              className={styles.inputBox}
               type = "checkbox"
               onChange={() => setShowPasswordConfirmation(!showPasswordConfirmation)}
-              id = "showPass"
+              id = {styles.showPass}
               />
               <label>Show Password Confirmation</label>
           </label>
         </div>
         <br/>
-        <div className={'input consent'}>
-            <div className={'consentText'}>
+        <div className={styles.input.consent}>
+            <div className={styles.consentText}>
               <label>{textConsent}</label>
             </div>
             <input
             value={consent}
-            className={'inputBox'}
+            className={styles.inputBox}
             type = "checkbox"
             onChange={() => setConsent(!consent)}
             />
-            <span className={'consentText'}>Agree</span>
+            <span className={styles.consentText}>Agree</span>
         </div>
         <br/>
-        <div className="errorLabel">
+        <div className={styles.errorLabel}>
           <label>{error}</label>
         </div>
-        <div className={'input'}>
-          <input className={'loginButton'} type="button" onClick={onLoginClick} value={textLogin} />
-          <input className={'inputButton'} disabled={isLoading} type="submit" value={'Register'} />
+        <div className={styles.input}>
+          <input className={styles.loginButton} type="button" onClick={onLoginClick} value={textLogin} />
+          <input className={styles.inputButton} disabled={isLoading} type="submit" value={'Register'} />
         </div>
       </form>
     </div>

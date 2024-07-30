@@ -1,8 +1,8 @@
 import React, { useEffect,useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import axios from "axios";
-import './header.css'
-import './home.css'
+import styles_header from '../css/header.module.css'
+import styles from '../css/home.module.css'
 
 const Home = (props) => {
   const navigate = useNavigate()
@@ -67,9 +67,9 @@ const Home = (props) => {
     if (showGradebook) {
       return (
         <div>
-          <div className='buttonContainer'>
-            <button title="Go To Question Management Page" className='questionsButton' onClick={onQuestionsManagementButtonClicked}>Question Management</button>
-            <button title="Go To Gradebook Page" className='questionsButton' onClick={onGradebookButtonClicked}>Gradebook</button>
+          <div className={styles.buttonContainer}>
+            <button title="Go To Question Management Page" className={styles.questionsButton} onClick={onQuestionsManagementButtonClicked}>Question Management</button>
+            <button title="Go To Gradebook Page" className={styles.questionsButton} onClick={onGradebookButtonClicked}>Gradebook</button>
           </div>
         </div>
       );
@@ -77,15 +77,15 @@ const Home = (props) => {
   }
 
   return (
-    <div className="mainContainer">
-      <div className="header">
-        <button title="Go To Home Page" className='homeButton' onClick={onHomeButtonClicked}><span className='headerSpan'>Home</span></button>
-        <h1 className='headerTitle'>Code Comprehension Tutor</h1>
-        <button title="Go To Profile Page" className='profileButton' onClick={onProfileButtonClicked}><span className='headerSpan'>Profile</span></button>
+    <div className={styles.mainContainer}>
+      <div className={styles_header.header}>
+        <button title="Go To Home Page" className={styles_header.homeButton} onClick={onHomeButtonClicked}><span className={styles_header.headerSpan}>Home</span></button>
+        <h1 className={styles_header.headerTitle}>Code Comprehension Tutor</h1>
+        <button title="Go To Profile Page" className={styles_header.profileButton} onClick={onProfileButtonClicked}><span className={styles_header.headerSpan}>Profile</span></button>
       </div>
-      <div className='buttonContainer'>
-        <button title="Go To Questions Page" className='questionsButton' onClick={onQuestionsButtonClicked}>Questions</button>
-        <button title="Go To The Tutorial Page" className='questionsButton' onClick={onTutorialButtonClicked}>Tutorial</button>
+      <div className={styles.buttonContainer}>
+        <button title="Go To Questions Page" className={styles.questionsButton} onClick={onQuestionsButtonClicked}>Questions</button>
+        <button title="Go To The Tutorial Page" className={styles.questionsButton} onClick={onTutorialButtonClicked}>Tutorial</button>
       </div>
       <ResearcherButtons />
     </div>

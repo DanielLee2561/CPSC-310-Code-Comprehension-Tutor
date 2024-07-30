@@ -1,7 +1,14 @@
-import './AttemptPage.css';
+import attemptPage from '../css/AttemptPage.module.css';
+import header from '../css/header.module.css';
 import React, {useState, useEffect} from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';
 import axios from "axios";
+
+// REFERENCE to grouping css files into styles:
+// https://github.com/css-modules/css-modules/blob/master/docs/import-multiple-css-modules.md
+let styles = {};
+Object.assign(styles, attemptPage, header);
+
 
 /*
     Props Required:
@@ -35,7 +42,6 @@ function AttemptPage() {
     const username = username_check;
     const password = password_check;
 
-    const numericAttemptId = parseInt(attemptId);
     // Initializing states and state hooks.
     const [functionText, setFunctionText] = useState("");
 
@@ -55,6 +61,10 @@ function AttemptPage() {
     const [saveEnabled, setSaveEnabled] = useState(true);
     const [submitEnabled, setSubmitEnabled] = useState(true);
     const [retryEnabled, setRetryEnabled] = useState(true);
+
+    // For button sound effect (from kenney.nl)
+    const buttonClickSound = new Audio(process.env.PUBLIC_URL + '/buttonClickSound.ogg');
+    buttonClickSound.volume = 0.25;
 
     // IMPORTANT: This is not the full endpoint.
     // You may need to concatenate /attempts/:attempt_number (attemptNum) at the end.
@@ -79,17 +89,13 @@ function AttemptPage() {
     useEffect(() => {
         if (state === null) {
             navigate("/");
-        } 
+        }
     }, [state])
 
-    // get the corresponding data from the questionid and check user whether done this question before?
-    // if not, create the new attempt; or return the latest attempt?
-
+    // get the corresponding data from the question with given questionid
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // sessionStorage.setItem("attemptNumber", props.attempt_num);
-                // setAttemptNum(attemptId);
                 const response = await axios.put(endpoint + "/attempts/" + attemptId, {password: props.password});
                 const result = response.data;
 
@@ -103,7 +109,7 @@ function AttemptPage() {
                 setDuration(result.duration);
                 setFunctionText(result.question);
             } catch (err) {
-                
+
             }
         }
         fetchData();
@@ -120,17 +126,15 @@ function AttemptPage() {
 
     const handleSubmit = async () => {
         setSubmitEnabled(false);
+        buttonClickSound.play();
         const input = {
-            password: props.password,
-            description: description,
-            notes: notes,
-            inProgress: false
+            password: props.password, description: description, notes: notes, inProgress: false
         }
 
         try {
             await axios.put(endpoint, input);
         } catch (err) {
-           
+
         } finally {
             setSubmitEnabled(true);
             reloadPage();
@@ -139,16 +143,14 @@ function AttemptPage() {
 
     const handleSave = async () => {
         setSaveEnabled(false);
+        buttonClickSound.play();
         const input = {
-            password: props.password,
-            description: description,
-            notes: notes,
-            inProgress: true
+            password: props.password, description: description, notes: notes, inProgress: true
         }
         try {
             await axios.put(endpoint, input);
         } catch (err) {
-          
+
         } finally {
             setSaveEnabled(true);
         }
@@ -156,18 +158,18 @@ function AttemptPage() {
 
     const handleRetry = async () => {
         setRetryEnabled(false);
+        buttonClickSound.play();
         const input = {
             password: password
         }
         try {
             const response = await axios.post(endpoint, input);
             const data = response.data;
-         
+
             state.attempt = data.attemptNum;
             navigate("/attempt", {state: state});
         } catch (err) {
-          
-           
+
         } finally {
             setRetryEnabled(true);
         }
@@ -188,88 +190,137 @@ function AttemptPage() {
         navigate("/profile", {state: state});
     }
 
-
     let scoreColour;
     if (testsCorrect / testsTotal === 1 || testsTotal === 0) {
         scoreColour = "mediumseagreen";
     } else if (testsCorrect / testsTotal > 1) {
-        scoreColour = "blueviolet"; // This should likely never happen, just for debugging purposes (you can remove)
+        scoreColour = "blueviolet";
     } else if (testsCorrect / testsTotal > 0) {
         scoreColour = "orange";
     } else {
         scoreColour = "tomato";
     }
 
-    return (
-        <div className="AttemptPage">
-            <div className="header">
-                <button title="Go To Home Page" className='homeButton' onClick={onHomeButtonClicked}><span
-                    className='headerSpan'>Home</span></button>
-                <button className="returnButton" title="Back" onClick={handleReturn}><span
-                    className='headerSpan'>Return</span></button>
-                <h1 className='headerTitleAttempt'>Question {question_id} (Attempt {attemptId})</h1>
-                <button title="Go To Profile Page" className='profileButton' onClick={onProfileButtonClicked}><span
-                    className='headerSpan'>Profile</span></button>
-            </div>
-            {!isInProgress ? <div>
-                <h2 style={{color: scoreColour}}>{testsCorrect}/{testsTotal}&emsp;&emsp;{duration}s</h2>
-            </div> : <h2 style={{color: "darkorchid"}}>Attempt In Progress</h2>}
+    const Header = () => {
+        return (<div className={styles.header}>
+            <button title="Go To Home Page"
+                    className={styles.homeButton}
+                    onClick={onHomeButtonClicked}>
+                <span className={styles.headerSpan}>Home</span>
+            </button>
 
-            <h2>{textInstruction}</h2>
+            <button
+                className={styles.returnButton}
+                title="Back"
+                onClick={handleReturn}>
+                <span className={styles.headerSpan}>Return</span>
+            </button>
 
-            <div className="grid-container">
-                <pre className="grid-item function-text">
-                    {functionText}
-                </pre>
+            <h1 className={styles.headerTitleAttempt}>Question {question_id} (Attempt {attemptId})</h1>
+            <button title="Go To Profile Page"
+                    className={styles.profileButton}
+                    onClick={onProfileButtonClicked}>
+                <span className={styles.headerSpan}>Profile</span>
+            </button>
+        </div>);
+    }
 
-                {!isInProgress ? <pre className="grid-item function-text" style={{color: 'mediumslateblue'}}>
+    const AttemptStatsHeader = () => {
+        if (isInProgress) {
+            return <h2 style={{color: "darkorchid"}}>Attempt In Progress</h2>
+        } else {
+            return <h2 style={{color: scoreColour}}>{testsCorrect}/{testsTotal}&emsp;&emsp;{duration}s</h2>
+        }
+    }
+
+    const FunctionCode = () => {
+        return <pre className={`${styles.gridItem} ${styles.functionText}`}>{functionText}</pre>
+    }
+
+    const GeneratedCode = () => {
+        if (!isInProgress) {
+            return <pre className={`${styles.gridItem} ${styles.functionText}`}
+                        style={{color: 'mediumslateblue'}}>
                     {generatedCode}
-                </pre> : <pre className="grid-item" style={{textAlign: 'left', backgroundColor: "#f4f4f4"}}>
+                </pre>
+        } else {
+            return <pre className={`${styles.gridItem} ${styles.readOnlyText}`}>
                     Submit to see your LLM generated code!
-                </pre>}
+                </pre>
+        }
+    }
 
-                <textarea
-                    className={`grid-item ${isInProgress ? "" : "readonly-textarea"}`}
-                    style={{fontFamily: 'Helvetica', textAlign: 'left'}}
-                    placeholder={textDescription}
-                    onChange={handleDescription}
-                    value={description}
-                    readOnly={!isInProgress}
-                />
-
-                {isInProgress ? <pre className="grid-item readonly-textarea" id="failing-test-case-box"
-                                     style={{fontFamily: 'Arial, sans-serif', textAlign: 'left'}}>
+    const FailingTestCases = () => {
+        if (isInProgress) {
+            return <pre className={`${styles.gridItem} ${styles.readOnlyText}`}
+                        id={`${styles.failingTestCaseBox}`}>
                     Submit to see if you have any failing test cases
-                </pre> : <pre className="grid-item readonly-textarea" id="failing-test-case-box"
-                              style={{fontFamily: 'Arial, sans-serif', textAlign: 'left', color: 'red'}}>
+                </pre>
+        } else {
+            return <pre className={`${styles.gridItem} ${styles.readOnlyText}`}
+                        id={`${styles.failingTestCaseBox}`}
+                        style={{color: 'red'}}>
                     {failingTestCases}
-                </pre>}
+                </pre>
+        }
+    }
 
-                <textarea
-                    className={`grid-item ${isInProgress ? "" : "readonly-textarea"}`}
-                    style={{textAlign: 'left'}}
-                    placeholder={textNotes}
-                    onChange={handleNotes}
-                    value={notes}
-                    readOnly={!isInProgress}
-                />
+    const DataControlButtons = () => {
+        if (isInProgress) {
+            return <div>
+                {saveEnabled ?
+                    <button className={styles.buttonEnabled} onClick={handleSave}>Save</button> :
+                    <button className={styles.buttonDisabled} disabled>Saving...</button>}
+                {submitEnabled ?
+                    <button className={styles.buttonEnabled} onClick={handleSubmit}>Submit</button> :
+                    <button className={styles.buttonDisabled} disabled>Submitting...</button>}
             </div>
+        } else {
+            return <div>
+                {retryEnabled ?
+                    <button className={styles.buttonEnabled} onClick={handleRetry}>Retry</button> :
+                    <button className={styles.buttonDisabled} disabled>Initializing new attempt...</button>}
+            </div>
+        }
+    }
 
-            <h2></h2> {/* Just for some separation between the question side and the save/submitting stuff*/}
+    return (<div className={styles.AttemptPage}>
+        <Header/>
 
-            {isInProgress ? <div>
-                {saveEnabled ? <button className="active-button" onClick={handleSave}>Save</button> :
-                    <button className="inactive-button" disabled>Saving...</button>}
-                {submitEnabled ? <button className="active-button" onClick={handleSubmit}>Submit</button> :
-                    <button className="inactive-button" disabled>Submitting...</button>}
-            </div> : <div>
-                {retryEnabled ? <button className="active-button" onClick={handleRetry}>Retry</button> :
-                    <button className="inactive-button" disabled>Initializing new attempt...</button>}
-            </div>}
+        <AttemptStatsHeader/>
 
-            {isInProgress && <h5>Please allow some time for submission, generating code can take a while.</h5>}
+        <h2>{textInstruction}</h2>
+
+        <div className={styles.gridLayout}>
+            <FunctionCode/>
+
+            <GeneratedCode/>
+
+            {/* Description textbox*/}
+            <textarea
+                className={`${styles.gridItem} ${!isInProgress && styles.readOnlyText}`}
+                placeholder={textDescription}
+                onChange={handleDescription}
+                value={description}
+                readOnly={!isInProgress}
+            />
+
+            <FailingTestCases/>
+
+            {/* Notes textbox*/}
+            <textarea
+                className={`${styles.gridItem} ${!isInProgress && styles.readOnlyText}`}
+                placeholder={textNotes}
+                onChange={handleNotes}
+                value={notes}
+                readOnly={!isInProgress}
+            />
         </div>
-    );
+
+        <DataControlButtons/>
+
+        {isInProgress && <h5>Please allow some time for submission, generating code can take a while.</h5>}
+    </div>);
 }
 
 export default AttemptPage;

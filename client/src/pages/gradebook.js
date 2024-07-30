@@ -1,8 +1,8 @@
 import React, { useEffect,useState } from 'react'
 import axios from "axios";
 import { useLocation, useNavigate } from 'react-router-dom'
-import './header.css'
-import './gradebook.css'
+import styles from '../css/header.module.css'
+import stylesB from '../css/gradebook.module.css'
 
 const Gradebook = (props) => {
   const [data, setData] = useState([]);
@@ -122,11 +122,11 @@ const Gradebook = (props) => {
   }, [])
 
   return (
-    <div className="mainContainer">
-      <div className="header">
-        <button title="Go To Home Page" className='homeButton' onClick={onHomeButtonClicked}><span className='headerSpan'>Home</span></button>
-        <h1 className='headerTitle'>Gradebook</h1>
-        <button title="Go To Profile Page" className='profileButton' onClick={onProfileButtonClicked}><span className='headerSpan'>Profile</span></button>
+    <div className={stylesB.mainContainer}>
+      <div className={styles.header}>
+        <button title="Go To Home Page" className={styles.homeButton} onClick={onHomeButtonClicked}><span className={styles.headerSpan}>Home</span></button>
+        <h1 className={styles.headerTitle}>Gradebook</h1>
+        <button title="Go To Profile Page" className={styles.profileButton} onClick={onProfileButtonClicked}><span className={styles.headerSpan}>Profile</span></button>
       </div>
       <table>
         <tr>
@@ -150,13 +150,13 @@ const Gradebook = (props) => {
                 </tr>
         })}
         <tr>
-        <td className='averages'>Question Averages</td>
+        <td className={stylesB.averages}>Question Averages</td>
         {questions.map((ques) => {
-          return <td className='averages'>
+          return <td className={stylesB.averages}>
                     {questionAverages(ques)}
                   </td>
         })}
-        <td className='averages'>{getAverageScore(averageScores)}</td>
+        <td className={stylesB.averages}>{getAverageScore(averageScores)}</td>
         </tr>
       </table>
     </div>
