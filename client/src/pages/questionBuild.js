@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from "axios";
-import styles from '../css/questionBuild.module.css';
+import style_header from '../css/header.module.css';
+import style from '../css/questionBuild.module.css';
 
 function QuestionsBuild() {
     const state = useLocation().state;
@@ -13,7 +14,7 @@ function QuestionsBuild() {
     const [failedTests,setFailedTests]=useState([]);
     const [showError, setShowError] = useState(false);
     const [errorMessage, setErrorMessage] = useState(""); 
-
+ 
     useEffect(() => {
         if (!state) {
             navigate("/");
@@ -126,36 +127,36 @@ function QuestionsBuild() {
     };
 
     return (
-        <div className="questionBuild">
-            <div className="headerBuild">
-                <button title="Go To Home Page" className='homeButton' onClick={onHomeButtonClicked}>
-                    <span className='headerSpan'>Home</span>
+        <div className={style.questionBuild}>
+            <div className={style_header.header}>
+                <button title="Go To Home Page" className={style_header.homeButton} onClick={onHomeButtonClicked}>
+                    <span className={style_header.headerSpan}>Home</span>
                 </button>
-                <button title="Go Back" className='returnButton' onClick={handleReturn}>
-                    <span className='headerSpan'>Return</span>
+                <button title="Go Back" className={style_header.returnButton} onClick={handleReturn}>
+                    <span className={style_header.headerSpan}>Return</span>
                 </button>
-                <h1 className='headerTitleBuild'>Question Builder</h1>
-                <button title="Go To Profile Page" className='profileButton' onClick={onProfileButtonClicked}>
-                    <span className='headerSpan'>Profile</span>
+                <h1 className={style.headerTitleBuild}>Question Builder</h1>
+                <button title="Go To Profile Page" className={style_header.profileButton} onClick={onProfileButtonClicked}>
+                    <span className={style_header.headerSpan}>Profile</span>
                 </button>
             </div>
-            <h1 className='questionNumber'>Question # {questionId}</h1>
-            <div className='questionContent'>
+            <h1 className={style.questionNumber}>Question # {questionId}</h1>
+            <div className={style.questionContent}>
                 <textarea
-                    className="gridItem"
+                    className={style.gridItem}
                     style={{ textAlign: 'left' }}
                     value={questionCode}
                     onChange={handleQuestionCodeChange}
                 />
             </div>
-            <div className='inputArea'>
+            <div className={style.inputArea}>
                 {inputAreas.map((inputArea, index) => {
                     const isFailed = failedTests.some(failedTest => failedTest.assertion === inputArea.assertion); 
                     return (
-                        <div key={index} className='questionInputBox' style={{ backgroundColor: isFailed ? '#ff9999' : '#d4f4dd' }}
+                        <div key={index} className={style.questionInputBox} style={{ backgroundColor: isFailed ? '#ff9999' : '#d4f4dd' }}
                         >
-                            <div className="testLabel">Test</div>
-                            <div className='titleAndText'>
+                            <div className={style.testLabel}>Test</div>
+                            <div className={style.titleAndText}>
                                 <input
                                     type="text"
                                     placeholder="Title"
@@ -169,20 +170,20 @@ function QuestionsBuild() {
                                     onChange={(e) => handleInputChange(index, 'assertion', e.target.value)}
                                 />
                             </div>
-                            <button className="deleteTestButton" onClick={() => handleDelete(index)}>Delete</button>
+                            <button className={style.deleteTestButton} onClick={() => handleDelete(index)}>Delete</button>
                         </div>
                     );
                 })}
             </div>
             {showError && (
-                <div className="error-message" style={{ color: 'red', textAlign: 'center', marginTop: '20px' }}>
+                <div className={style.error} style={{ color: 'red', textAlign: 'center', marginTop: '20px' }}>
                    {"Save Question failed :" + errorMessage}
                 </div>
             )}
-            <div className='actions'>
-                <button className="deleteQuestion" onClick={handleDeleteQuestion}>Delete Question</button>
-                <button className="addTest" onClick={handleAddTest}>Add Test</button>
-                <button className="saveQuestion" onClick={handleSaveQuestion}>Save Question</button>
+            <div className={style.actions}>
+                <button className={style.deleteQuestion} onClick={handleDeleteQuestion}>Delete Question</button>
+                <button className={style.addTest} onClick={handleAddTest}>Add Test</button>
+                <button className={style.saveQuestion} onClick={handleSaveQuestion}>Save Question</button>
             </div>
         </div>
     );
