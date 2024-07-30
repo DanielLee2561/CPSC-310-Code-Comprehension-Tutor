@@ -218,7 +218,7 @@ const Profile = (props) => {
         <table className={style.gradeDisplayTable}>
           <tr>
             {grades.map((ques) => {return <th className={style.gradeDisplayCell}>Question #{ques.questionId}</th>})}
-            <th className={style.gradeDisplayCell}>Average Scores</th>
+            <th className={style.gradeDisplayCell}>Student Average</th>
           </tr>
           <tr>
             {grades.map((ques) => {
