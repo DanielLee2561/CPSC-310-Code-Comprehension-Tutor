@@ -60,26 +60,6 @@ describe('Login', () => {
         });
     });
 
-    it('Login Success Researcher', async () => {
-        const username = "Researcher_A";
-        const password = "pResearcher_A";
-        const res = await axios.put("http://localhost:5000/users/login", {
-            username, password
-        });
-        const testUsersJSON = readJsonFile(usersJsonPath);
-        expect(testUsersJSON.users[3].statusLogin).equal(true);
-        for (let i = 0; i < testUsersJSON.users.length; i++) {
-            if (testUsersJSON.users[i].username !== username) {
-                expect(testUsersJSON.users[i].statusLogin).equal(false);
-            }
-        }
-        expect(res.status).equal(204);
-
-        await axios.put("http://localhost:5000/users/logout", {
-            username
-        });
-    });
-
     it('Login Incorrect Password', async () => {
         const username = "Student_A";
         const password = "pStudent_A2";
@@ -96,62 +76,6 @@ describe('Login', () => {
             expect(err.response.status).equal(401);
         }
     });
-
-    it('Login Inccorect Username', async () => {
-        const username = "Student_A2";
-        const password = "pStudent_A";
-        try {
-            const res = await axios.put("http://localhost:5000/users/login", {
-                username, password
-            });
-            expect.fail();
-        } catch (err) {
-            const testUsersJSON = readJsonFile(usersJsonPath);
-            for (let i = 0; i < testUsersJSON.users.length; i++) {
-                expect(testUsersJSON.users[i].statusLogin).equal(false);
-            }
-            expect(err.response.status).equal(404);
-        }
-    });
-
-    it('Login No Username', async () => {
-        const username = "";
-        const password = "pStudent_A";
-        try {
-            const res = await axios.put("http://localhost:5000/users/login", {
-                username, password
-            });
-            expect.fail();
-        } catch (err) {
-            const testUsersJSON = readJsonFile(usersJsonPath);
-            for (let i = 0; i < testUsersJSON.users.length; i++) {
-                expect(testUsersJSON.users[i].statusLogin).equal(false);
-            }
-            expect(err.response.status).equal(400);
-        }
-    });
-
-	// describe('Login API', async () => {
-	it('Login Success', async () => {
-		const username = "Student_A";
-		const password = "pStudent_A";
-		const res = await axios.put("http://localhost:5000/users/login", {
-			username,
-			password
-		});
-		const testUsersJSON = readJsonFile(usersJsonPath);
-		expect(testUsersJSON.users[0].statusLogin).equal(true);
-		for (let i = 0; i < testUsersJSON.users.length; i++) {
-			if (testUsersJSON.users[i].username !== username) {
-				expect(testUsersJSON.users[i].statusLogin).equal(false);
-			}
-		}
-		expect(res.status).equal(204);
-
-		await axios.put("http://localhost:5000/users/logout", {
-			username
-		});
-	});
 
 	it('Login Success: Filter Out Questions', async () => {
 		const username = "Student_D";
@@ -329,10 +253,6 @@ describe('Login', () => {
 			expect(err.response.status).equal(400);
 		}
 	});
-	// })
-	
-	
-
 });
 
 
@@ -406,23 +326,6 @@ describe('Register', () => {
 				expect(err.response.status).equal(400);
 			}
 		});
-
-        it('Register unsuccessful with exists username', async () => {
-            const username = "Student_A";
-            const password = "pStudent_E";
-            // Log the request data for debugging
-         
-
-            try {
-                const res = await axios.put("http://localhost:5000/users/register", {
-                    username, password
-                });
-                expect.fail();
-            } catch (err) {
-                expect(err.response.status).equal(400);
-
-            }
-        });
     });
 });
 
@@ -521,42 +424,7 @@ describe('Change Password', () => {
         writeJsonFile(usersJsonPath, usersJSON);
         writeJsonFile(questionsJsonPath, questoinsJSON);
     });
-    describe('Change Password API', () => {
-        it('Change Password Success', async () => {
-            const username = "Student_A";
-            const oldPassword = "pStudent_A";
-            const newPassword = "111111111";
-            // Log the request data for debugging
-     
-            try {
-                const res = await axios.put("http://localhost:5000/users/:username", {
-                    username, oldPassword, newPassword
-                });
-                expect(res.status).to.equal(201);
-            } catch (err) {
-                expect(err.response.status).equal(400);
-
-            }
-        });
-
-        it('Change Password unsuccessful with password is not correct', async () => {
-            const username = "Student_A";
-            const oldPassword = "11111111111";
-            const newPassword = "111111111";
-            // Log the request data for debugging
-         
-
-            try {
-                const res = await axios.put("http://localhost:5000/users/:username", {
-                    username, oldPassword, newPassword
-                });
-                expect(res.status).fail();
-            } catch (err) {
-                expect(err.response.status).equal(400);
-
-            }
-        });
-    });
+    
 	describe('Change Password API', () => {
 		it('Change Password Success', async () => {
 			const username = "Student_A";
@@ -587,7 +455,7 @@ describe('Change Password', () => {
 					oldPassword,
 					newPassword
 				});
-				expect.fail(res);
+				expect.fail(res.status);
 			} catch (err) {
 				expect(err.response.status).equal(400);
 			}
@@ -607,37 +475,7 @@ describe('Delete Account', () => {
         writeJsonFile(usersJsonPath, usersJSON);
         writeJsonFile(questionsJsonPath, questoinsJSON);
     });
-    describe('Delete Account API', () => {
-        it('Delete Account Success', async () => {
-            const username = "Student_C";
-            const password = "pStudent_C";
-            // Log the request data for debugging
-            
-            try {
-                const res = await axios.delete("http://localhost:5000/users/:username", {
-                    username, password
-                });
-                expect(res.status).to.equal(201);
-            } catch (err) {
-                expect(err.response.status).equal(400);
-            }
-        });
-        it('Delete Account unsuccessful with the incorrect password', async () => {
-            const username = "Student_A";
-            const password = "pStudent_A1111";
-
-            // Log the request data for debugging
-            
-            try {
-                const res = await axios.delete(`http://localhost:5000/users/${username}`, {
-                    data: {password}
-                });
-                expect().fail();
-            } catch (err) {
-                expect(err.response.status).to.equal(400);
-            }
-        });
-    });
+    
 	describe('Delete Account API', () => {
 		it('Delete Account Success', async () => {
 			const username = "Student_C";
@@ -733,7 +571,7 @@ describe('Save and Submit Attempt', () => {
         writeJsonFile(questionsJsonPath, questionsJSON);
     });
 
-    it('Save Attempt Success', async () => {
+	it('Save Attempt Success', async () => {
         const username = "Student_A";
         const password = "pStudent_A";
         const expected_ret = {
@@ -785,102 +623,6 @@ describe('Save and Submit Attempt', () => {
         }
     });
 
-	it('Save Attempt Success', async () => {
-		const username = "Student_A";
-		const password = "pStudent_A";
-		const expected_ret = {
-			description: "This function always returns 1",
-			notes: "Just testing partial success... I know what the function does...",
-			inProgress: true,
-			startTime: "2024-07-01T07:00:00.000Z",
-			endTime: null,
-			duration: null,
-			generatedCode: null,
-			failingTestCases: null,
-			testCorrect: null,
-			testTotal: null,
-			question: "function foo() {\n return \"Hello World!\";\n}"
-		}
-		// Student_A log-in
-		await axios.put("http://localhost:5000/users/login", {
-			username,
-			password
-		});
-		// Save question
-		const response = await axios.put(
-			"http://localhost:5000/users/Student_A/questions/1",
-			{
-				password: "pStudent_A",
-				description: "This function always returns 1",
-				notes: "Just testing partial success... I know what the function does...",
-				inProgress: true
-			});
-		expect(response.status).to.eql(204);
-		// View if saved
-		const view_response = await axios.put(
-			"http://localhost:5000/users/Student_A/questions/1/attempts/4",
-			{ password: password });
-		const view_data = view_response.data;
-		expect(view_response.status).to.eql(200);
-		expect(view_data).to.eql(expected_ret);
-	});
-
-	it('Submit Attempt Success', async () => {
-		const username = "Student_A";
-		const password = "pStudent_A";
-
-		// Student_A log-in
-		await axios.put("http://localhost:5000/users/login", {
-			username,
-			password
-		});
-
-		// Submit question
-		const response = await axios.put(
-			"http://localhost:5000/users/Student_A/questions/1",
-			{
-				password: "pStudent_A",
-				description: "This function always returns 1",
-				notes: "Just testing partial success... I know what the function does...",
-				inProgress: false
-			});
-
-		expect(response.status).to.eql(204);
-
-		// View if saved
-		const view_response = await axios.put(
-			"http://localhost:5000/users/Student_A/questions/1/attempts/4",
-			{ password: password });
-		const view_data = view_response.data;
-		expect(view_response.status).to.eql(200);
-
-		// Stuff changes per submit, so just test if it is not in the starting state
-		expect(view_data.inProgress).to.eql(false);
-		expect(view_data.generatedCode).to.not.eql(null);
-		expect(view_data.duration).to.not.eql(null);
-		expect(view_data.endTime).to.not.eql(null);
-		expect(view_data.failingTestCases).to.not.eql(null);
-
-	}).timeout(100000); //allow time to generate code
-
-	it('Save/Submit Questions Failure - User not logged in', async () => {
-		const password = "pStudent_A";
-
-		try {
-			const response = await axios.put(
-				"http://localhost:5000/users/Student_A/questions/2",
-				{
-					password: "pStudent_A",
-					description: "This function always returns 1",
-					notes: "Just testing partial success... I know what the function does...",
-					inProgress: true
-				});
-			expect.fail(response);
-		} catch (err) {
-			expect(err.response.status).to.eql(401);
-			expect(err.response.data.error).to.eql("User is not currently logged in");
-		}
-	});
 
 	it('Save/Submit Questions Failure - Wrong Password', async () => {
 		try {
@@ -1205,9 +947,18 @@ describe('Build Questions', () => {
 	describe('Build Questions API', () => {
 		it('Build Questions', async () => {
 			const existingQuestions = [1,2,3,4,5,6,7,8,9,10];
+			const username = "Researcher_A";
+			const password = "pResearcher_A";
+			const res = await axios.put("http://localhost:5000/users/login", {
+				username,
+				password
+			});
 
 			try {
-				const res = await axios.put("http://localhost:5000/users/gradebook/questions");
+				const res = await axios.put("http://localhost:5000/users/gradebook/questions", {
+					username,
+					password
+				});
 				let usersUpdate = readJsonFile(usersJsonPath);
 				const users = usersUpdate.users;
 				for (let i = 0; i < users.length; i++) {
@@ -1221,6 +972,10 @@ describe('Build Questions', () => {
 			} catch (err) {
 				expect.fail(err);	
 			}
+
+			await axios.put("http://localhost:5000/users/logout", {
+				username
+			});
 		});
 	});	
 });

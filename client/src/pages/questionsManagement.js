@@ -14,8 +14,18 @@ const ButtonHome = () => {
 }
 
 const ButtonProfile = () => {
-  const onClick = () => {navigate("/profile", {state: state});}
-  return <button title="Go To Profile Page" className={style_header.profileButton} onClick={onClick}><span className={style_header.headerSpan}>Profile</span></button>;
+  const updateQuestions = async () => {
+    await axios.put("http://localhost:5000/users/gradebook/questions", {
+      username: state.username,
+      password: state.password
+    }).catch(err => console.log(err.response.data.message));
+  }
+
+  const onClick = () => {
+    updateQuestions();
+    navigate("/profile", {state: state});
+  }
+  return <button title="Go To Profile Page" className='profileButton' onClick={onClick}><span className='headerSpan'>Profile</span></button>;
 }
 
 // Attempt
@@ -150,8 +160,12 @@ const QuestionsPage = () => {
   useEffect(() => {
     const initialize = async () => {
       try {
-        let request = {"username":state.username, "password":state.password};
-        let response = await axios.get(`http://localhost:5000/questions`, request);
+        let response = await axios.get(`http://localhost:5000/questions/newQuestions`, {
+          params: {
+            username: state.username,
+            password: state.password
+          }
+        });
         setQuestions(response.data);
         if (response.data.length > 0) {
           const maxId = Math.max(...response.data.map(q => q.id));

@@ -49,14 +49,22 @@ const Profile = (props) => {
     }).catch(err => console.log(err.response.data.message));
   }
 
+  const updateQuestions = async () => {
+    await axios.put("http://localhost:5000/users/gradebook/questions", {
+      username: userInfo.username,
+      password: userInfo.password
+    }).catch(err => console.log(err.response.data.message));
+  }
+
   useEffect(() => {
     if (userInfo === null) {
       navigate("/");
     } else {
       isResearcher();
+      updateQuestions();
       getGrades();
     }
-  })
+  }, [])
 
   const onHomeButtonClicked = () => {
     navigate("/home", {state: userInfo});
@@ -164,11 +172,17 @@ const Profile = (props) => {
     }
     return (Math.round(10 * totalScore/numCompletedQuestions))/10;
   };
+  
+  const renderAverageScore = (score) => {
+    return score === "N/A" ? <td>{score}</td> : <td>{score}%</td> 
+  };
 
   const renderSticker = (score) => {
     const side = 90;
-    if (score >= 90) {
-      return <td className={style.gradeDisplayCell}><img className={style.stickers} src={Aplus} alt='A+' width={side} height={side}/></td>
+    if (score === "N/A") {
+      return <td>{score}</td>
+    } else if (score >= 90) {
+      return <td><img className='stickers' src={Aplus} alt='A+' width={side} height={side}/></td>
     } else if (score >= 85) {
       return <td className={style.gradeDisplayCell}><img className={style.stickers} src={Anorm} alt='A' width={side} height={side}/></td>
     } else if (score >= 80) {
@@ -214,7 +228,7 @@ const Profile = (props) => {
                 return <td className={style.gradeDisplayCell}>{Math.round(10 * 100 * (ques.testCorrect/ques.testTotal))/10}%</td>
               }
             })}
-            <td className={style.gradeDisplayCell}>{getAverageScore(grades)}%</td>
+            {renderAverageScore(getAverageScore(grades))}
           </tr>
           <tr>
             {grades.map((ques) => {

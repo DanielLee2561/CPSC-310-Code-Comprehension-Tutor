@@ -39,12 +39,6 @@ router.get('/research/researcher', (req, res) => {
     return res.status(401).send();
 });
 
-router.get('/', (req, res) => {
-    // console.log(users);
-    reloadDataVars();
-    res.send(users);
-});
-
 //register a user
 router.post('/register', (req, res) => {
     reloadDataVars();
@@ -105,16 +99,24 @@ function buildUserQuestions(user, questions) {
 }
 
 router.put('/gradebook/questions', (req, res) => {
-    try {
-        reloadDataVars();
-        for (let user of users) {
-            buildUserQuestions(user, questions);
+    const {username, password} = req.body;
+    for (let user of users) {
+        if (user.username === username) {
+            if ((user.password === password) && (user.statusLogin === true)) {    
+                try {
+                    reloadDataVars();
+                    for (let user of users) {
+                        buildUserQuestions(user, questions);
+                    }
+                    fs.writeFileSync(usersJsonPath, JSON.stringify({"users": users}, null, 2));
+                    return res.status(200).send();
+                } catch (err) {
+                    return res.status(500).send();
+                }
+            }
         }
-        fs.writeFileSync(usersJsonPath, JSON.stringify({"users": users}, null, 2));
-        return res.status(200).send();
-    } catch (err) {
-        return res.status(500).send();
     }
+    return res.status(401).send();
 })
 
 //login
@@ -349,22 +351,26 @@ router.put("/:username/grade", (req, res) => {
 
     user.questions.forEach(question => {
         let best_attempt = {
-            questionId: question.questionId,
-            testCorrect: -1,
+            questionId: question.questionId, 
+            testCorrect: -1, 
             testTotal: -1
         };
         
         let highest_score = -1;
+        let highest_score_max = 1;
         question.attempts.forEach(attempt => {
-        if (attempt.testCorrect === null) return;
-            highest_score = attempt.testCorrect > highest_score ? attempt.testCorrect : highest_score;
+            if (attempt.testCorrect === null) return;
+            if ((attempt.testCorrect / attempt.testTotal) > (highest_score / highest_score_max)) {
+                highest_score = attempt.testCorrect;
+                highest_score_max = attempt.testTotal
+            }
         });
         
         // keep testCorrect and testTotal -1 when this question has never been taken or finished, 
         // score will be represented as "N/A"
         if (highest_score !== -1) { 
             best_attempt.testCorrect = highest_score;
-            best_attempt.testTotal = question.attempts[0].testTotal;
+            best_attempt.testTotal = highest_score_max;
         }
         
         question_list.push(best_attempt);

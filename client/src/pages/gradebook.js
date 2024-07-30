@@ -33,7 +33,12 @@ const Gradebook = (props) => {
 
   const getQuestions = async () => {
     try {
-        const res = await axios.get("http://localhost:5000/questions/");
+        const res = await axios.get("http://localhost:5000/questions/newQuestions", {
+          params: {
+            username: userInfo.username,
+            password: userInfo.password
+          }
+        });
         setQuestions(res.data);
       } catch (err) {
       
@@ -100,7 +105,10 @@ const Gradebook = (props) => {
   }
 
   const updateQuestions = async () => {
-    await axios.put("http://localhost:5000/users/gradebook/questions").catch(err => console.log(err.response.data.message));
+    await axios.put("http://localhost:5000/users/gradebook/questions", {
+      username: userInfo.username,
+      password: userInfo.password
+    }).catch(err => console.log(err.response.data.message));
   }
 
   useEffect(() => {
