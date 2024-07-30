@@ -256,7 +256,7 @@ const Profile = (props) => {
         <div className = {style_auth.input}>
           <input
             value={oldPassword}
-            placeholder="Old Password..."
+            placeholder="Old Password"
             onChange={(ev) => setOldPassword(ev.target.value)}
             className = {style_auth.inputBox}
             type={showOldPassword ? 'text' : 'password'}
@@ -278,7 +278,7 @@ const Profile = (props) => {
         <div className = {style_auth.input}>
           <input
             value={newPassword}
-            placeholder="New Password..."
+            placeholder="New Password"
             onChange={(ev) => setNewPassword(ev.target.value)}
             className = {style_auth.inputBox}
             type={showNewPassword ? 'text' : 'password'}
@@ -300,7 +300,7 @@ const Profile = (props) => {
         <div className = {style_auth.input}>
           <input
             value={confirmNewPassword}
-            placeholder="Confirm New Password..."
+            placeholder="Confirm New Password"
             onChange={(ev) => setConfirmNewPassword(ev.target.value)}
             className = {style_auth.inputBox}
             type={showConfirmNewPassword ? 'text' : 'password'}
