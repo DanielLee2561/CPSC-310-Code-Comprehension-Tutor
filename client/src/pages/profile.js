@@ -174,15 +174,15 @@ const Profile = (props) => {
   };
   
   const renderAverageScore = (score) => {
-    return score === "N/A" ? <td>{score}</td> : <td>{score}%</td> 
+    return <td className={style.gradeDisplayCell}>{score}{score === "N/A" ? '' : '%'}</td>
   };
 
   const renderSticker = (score) => {
     const side = 90;
     if (score === "N/A") {
-      return <td>{score}</td>
+      return <td className={style.gradeDisplayCell}>{score}</td>
     } else if (score >= 90) {
-      return <td><img className='stickers' src={Aplus} alt='A+' width={side} height={side}/></td>
+      return <td className={style.gradeDisplayCell}><img className={style.stickers} src={Aplus} alt='A+' width={side} height={side}/></td>
     } else if (score >= 85) {
       return <td className={style.gradeDisplayCell}><img className={style.stickers} src={Anorm} alt='A' width={side} height={side}/></td>
     } else if (score >= 80) {
