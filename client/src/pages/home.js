@@ -85,7 +85,7 @@ const Home = (props) => {
       </div>
       <div className={styles.buttonContainer}>
         <button title="Go To Questions Page" className={styles.questionsButton} onClick={onQuestionsButtonClicked}>Questions</button>
-        <button title="Go To The Tutorial Page" className={styles.questionsButton} onClick={onTutorialButtonClicked}>Tutorial</button>
+        <button title="Go To Tutorial Page" className={styles.questionsButton} onClick={onTutorialButtonClicked}>Tutorial</button>
       </div>
       <ResearcherButtons />
     </div>
