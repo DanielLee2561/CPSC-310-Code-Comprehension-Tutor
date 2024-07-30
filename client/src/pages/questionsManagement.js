@@ -25,7 +25,7 @@ const ButtonProfile = () => {
     updateQuestions();
     navigate("/profile", {state: state});
   }
-  return <button title="Go To Profile Page" className='profileButton' onClick={onClick}><span className='headerSpan'>Profile</span></button>;
+  return <button title="Go To Profile Page" className={style_header.profileButton} onClick={onClick}><span className={style_header.headerSpan}>Profile</span></button>;
 }
 
 // Attempt
