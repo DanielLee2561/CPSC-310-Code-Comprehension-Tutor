@@ -40,6 +40,7 @@ function getQuestionTests(question_id) {
         - An object with the following properties:
             - testsTotal (int): The total number of tests that the generated code was run up against.
             - testsCorrect (int): The number of tests that the generated code passed.
+            - passingTestCases (string): Passing test case equivalent of failingTestCases.
             - failingTestCases (string): A concatenated string of all the titles of the tests that
                 the generated code failed. Each test title is separated by \n.
  */
@@ -48,33 +49,36 @@ function evaluateCode(question_id, generated_code) {
     const tests = getQuestionTests(Number(question_id));
     let totalTests = 0;
     let passingTests = 0;
+    let passingTestCases = "";
     let failingTestCases = "";
     if (tests === undefined || tests == null) {
         return {
             testTotal: 0,
             testCorrect: 0,
+            passingTestCases: "",
             failingTestCases: ""
         };
     } else {
         try {
             eval("global.foo = " + generated_code); //global.foo is now usable
         } catch (e) {
-           
             eval("global.foo = " + FALLBACK_CODE);
         }
-        for (const test of tests) {
+        for (const test in tests) {
             totalTests++;
+            const testCaseHeader = "Test Case #" + (Number(test) + 1) + ": ";
             try {
-                eval(test.assertion);
+                eval(tests[test].assertion);
                 passingTests++;
+                passingTestCases += testCaseHeader + tests[test].title + "\n";
             } catch (err) {
-              
-                failingTestCases += test.title + "\n";
+                failingTestCases += testCaseHeader + tests[test].title + ", actually equals " + err.actual + "\n";
             }
         }
         return {
             testTotal: totalTests,
             testCorrect: passingTests,
+            passingTestCases: passingTestCases,
             failingTestCases: failingTestCases
         };
     }

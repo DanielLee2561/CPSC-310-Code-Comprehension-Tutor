@@ -118,6 +118,7 @@ router.post("/:username/questions/:id", async (req, res) => {
         "endTime": null,
         "duration": null,
         "generatedCode": null,
+        "passingTestCases": null,
         "failingTestCases": null,
         "testCorrect": null,
         "testTotal": null
