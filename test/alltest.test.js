@@ -90,6 +90,29 @@ function writeJsonFile(path, data) {
     }
 }
 
+// Save Real Data
+const usersRealJsonPath = '../server/data/users.json';
+const usersReal = readJsonFile(usersRealJsonPath);
+const questionsRealJsonPath = '../server/data/questions.json';
+const questionsReal = readJsonFile(questionsRealJsonPath);
+
+// // Get Test Data
+const usersTestJsonPath = '../server/data/usersTest.json';
+const usersTest = readJsonFile(usersTestJsonPath);
+const questionsTestJsonPath = '../server/data/questionsTest.json';
+const questionsTest = readJsonFile(questionsTestJsonPath);
+
+// // Put Test Data Into Real JSON
+beforeEach(function () {
+    writeJsonFile(usersRealJsonPath, usersTest);
+    writeJsonFile(questionsRealJsonPath, questionsTest);
+});
+
+// Put Real Data Back
+after(function () {
+    writeJsonFile(usersRealJsonPath, usersReal);
+    writeJsonFile(questionsRealJsonPath, questionsReal);
+});
 
 
 // View Question (Researcher) - View specific question's details
@@ -1827,9 +1850,18 @@ describe('Build Questions', () => {
 	describe('Build Questions API', () => {
 		it('Build Questions', async () => {
 			const existingQuestions = [1,2,3,4,5,6,7,8,9,10];
+			const username = "Researcher_A";
+			const password = "pResearcher_A";
+			const res = await axios.put("http://localhost:5000/users/login", {
+				username,
+				password
+			});
 
 			try {
-				const res = await axios.put("http://localhost:5000/users/gradebook/questions");
+				const res = await axios.put("http://localhost:5000/users/gradebook/questions", {
+					username,
+					password
+				});
 				let usersUpdate = readJsonFile(usersJsonPath);
 				const users = usersUpdate.users;
 				for (let i = 0; i < users.length; i++) {
@@ -1843,6 +1875,10 @@ describe('Build Questions', () => {
 			} catch (err) {
 				expect.fail(err);	
 			}
+
+			await axios.put("http://localhost:5000/users/logout", {
+				username
+			});
 		});
 	});	
 });
@@ -1909,5 +1945,102 @@ describe('Profile View Grade', () => {
 			}
 		});
 	});
+});
+
+describe('New Questions', () => {
+
+	const usersJsonPath = '../server/data/users.json';
+	const usersJSON = readJsonFile(usersJsonPath);
+	const questionsJsonPath = '../server/data/questions.json';
+	const questionsJSON = readJsonFile(questionsJsonPath);
+
+	afterEach(function() {
+        writeJsonFile(usersJsonPath, usersJSON);
+		writeJsonFile(questionsJsonPath, questionsJSON);
+    });
+
+	describe('Get New Questions', () => {
+		it('Get New Questions Success', async () => {
+			const existingQuestions = [1,2,3,4,5,6,7,8,9,10];
+			const username = "Researcher_A";
+			const password = "pResearcher_A";
+			const res = await axios.put("http://localhost:5000/users/login", {
+				username,
+				password
+			});
+
+			try {
+				const res = await axios.get("http://localhost:5000/questions/newQuestions", {
+                    params: {
+                        username: username,
+                        password: password
+				    }});
+				let questionsUpdate = readJsonFile(questionsJsonPath);
+				const questions = questionsUpdate.questions;
+                expect(questions.length).to.equal(10);
+				for (let i = 0; i < questions.length; i++) {
+					expect(existingQuestions).to.include(questions[i].id);
+				}
+			} catch (err) {
+				expect.fail(err);	
+			}
+
+			await axios.put("http://localhost:5000/users/logout", {
+				username
+			});
+		});
+
+        it('Get New Questions Fail: Not Logged in', async () => {
+			const existingQuestions = [1,2,3,4,5,6,7,8,9,10];
+            const username = "Researcher_A";
+			const password = "pResearcher_A";
+
+			try {
+				const res = await axios.get("http://localhost:5000/questions/newQuestions", {
+                    params: {
+                        username: username,
+                        password: password
+				    }});
+                expect.fail(res);	
+			} catch (err) {
+                console.log(err)
+				expect(err.response.status).to.equal(401);	
+			}
+		});
+
+        it('Get New Questions Fail: Incorrect Username', async () => {
+			const existingQuestions = [1,2,3,4,5,6,7,8,9,10];
+			const username = "Researcher_A2";
+			const password = "pResearcher_A";
+
+			try {
+				const res = await axios.get("http://localhost:5000/questions/newQuestions", {
+					params: {
+                        username: username,
+                        password: password
+				    }});
+                expect.fail(res);	
+			} catch (err) {
+                expect(err.response.status).to.equal(401);	
+			}
+		});
+
+        it('Get New Questions Fail: Incorrect Password', async () => {
+			const existingQuestions = [1,2,3,4,5,6,7,8,9,10];
+			const username = "Researcher_A";
+			const password = "pResearcher_A2";
+
+			try {
+				const res = await axios.get("http://localhost:5000/questions/newQuestions", {
+					params: {
+                        username: username,
+                        password: password
+				    }});
+                expect.fail(res);	
+			} catch (err) {
+                expect(err.response.status).to.equal(401);	
+			}
+		});
+	});	
 });
 
