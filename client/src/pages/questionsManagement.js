@@ -125,7 +125,7 @@ const Add = ({newQuestionId}) => {
   }
 
   return <div className={style.buttonContainer}> 
-      <button title="Go To Question Builder Page" className={style.addButton} onClick={onAddButtonClicked}>Add Question</button>
+      <button className={style.addButton} onClick={onAddButtonClicked}>Add Question</button>
     </div>
 }
 
