@@ -21,7 +21,6 @@ RUN npm install
 COPY server/index.js ./
 
 WORKDIR /usr/app/server/routes/
-COPY server/routes/ollama.js ./
 COPY server/routes/questions.js ./
 COPY server/routes/users.js ./
 COPY server/routes/attemptPersistence.js ./
@@ -29,6 +28,8 @@ COPY server/routes/attemptPersistence.js ./
 WORKDIR /usr/app/server/data/
 COPY server/data/users.json ./
 COPY server/data/questions.json ./
+COPY server/data/questionsTest.json ./
+COPY server/data/usersTest.json ./
 
 WORKDIR /usr/app/server/functions/
 COPY server/functions/dataPersistence.js ./
@@ -38,6 +39,15 @@ COPY server/functions/fileSystemFunctions.js ./
 COPY server/functions/generateCode.js ./
 
 WORKDIR /usr/app/server/
+
+WORKDIR /usr/app/test/
+
+COPY test/package*.json ./
+COPY test/alltest.test.js ./
+COPY test/frontend.test.js ./
+COPY test/questions.test.js ./
+COPY test/users.test.js ./
+
 
 
 ENV NODE_ENV=production
