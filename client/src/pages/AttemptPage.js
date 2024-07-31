@@ -48,6 +48,7 @@ function AttemptPage() {
     const [isInProgress, setInProgress] = useState(true);
     const [description, setDescription] = useState("");
     const [notes, setNotes] = useState("");
+    const [passingTestCases, setPassingTestCases] = useState("");
     const [failingTestCases, setFailingTestCases] = useState("");
     const [generatedCode, setGeneratedCode] = useState("");
 
@@ -103,6 +104,7 @@ function AttemptPage() {
                 setDescription(result.description);
                 setNotes(result.notes);
                 setGeneratedCode(result.generatedCode);
+                setPassingTestCases(result.passingTestCases);
                 setFailingTestCases(result.failingTestCases);
                 setTestsCorrect(result.testCorrect);
                 setTestsTotal(result.testTotal);
@@ -250,16 +252,27 @@ function AttemptPage() {
         }
     }
 
-    const FailingTestCases = () => {
+    const PassingTestCases = () => {
         if (isInProgress) {
-            return <pre className={`${styles.gridItem} ${styles.readOnlyText}`}
-                        id={`${styles.failingTestCaseBox}`}>
-                    Submit to see if you have any failing test cases
+            return <pre className={`${styles.gridItem} ${styles.readOnlyText}`}>
+                    Submit to see your passing test cases
                 </pre>
         } else {
             return <pre className={`${styles.gridItem} ${styles.readOnlyText}`}
-                        id={`${styles.failingTestCaseBox}`}
-                        style={{color: 'red'}}>
+                        style={{color: 'mediumseagreen'}}>
+                    {passingTestCases}
+                </pre>
+        }
+    }
+
+    const FailingTestCases = () => {
+        if (isInProgress) {
+            return <pre className={`${styles.gridItem} ${styles.readOnlyText}`}>
+                    Submit to see your failing test cases
+                </pre>
+        } else {
+            return <pre className={`${styles.gridItem} ${styles.readOnlyText}`}
+                        style={{color: 'orangered'}}>
                     {failingTestCases}
                 </pre>
         }
@@ -305,7 +318,7 @@ function AttemptPage() {
                 readOnly={!isInProgress}
             />
 
-            <FailingTestCases/>
+            <PassingTestCases/>
 
             {/* Notes textbox*/}
             <textarea
@@ -315,6 +328,8 @@ function AttemptPage() {
                 value={notes}
                 readOnly={!isInProgress}
             />
+
+            <FailingTestCases/>
         </div>
 
         <DataControlButtons/>

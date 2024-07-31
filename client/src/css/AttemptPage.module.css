@@ -32,11 +32,6 @@
     border: 1px solid #ccc;
 }
 
-/* Used so that the failing test cases box can occupy two spots in the grid */
-#failingTestCaseBox {
-    grid-row: span 2;
-}
-
 .readOnlyText {
     overflow-y: auto; /* vertical scrollbar */
     padding: 10px;

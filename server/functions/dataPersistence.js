@@ -80,6 +80,7 @@ async function submit(username, question_id, desc, notes) {
                             attempt.generatedCode = generated_code;
                             attempt.testCorrect = evaluatedAttempt.testCorrect;
                             attempt.testTotal = evaluatedAttempt.testTotal;
+                            attempt.passingTestCases = evaluatedAttempt.passingTestCases;
                             attempt.failingTestCases = evaluatedAttempt.failingTestCases;
 
                             writeJsonFile(usersJsonPath, users_json);
