@@ -1,36 +1,75 @@
 # Project-Groups-06-Lab-A
 
-**Project Name:** Code Comprehension Tutor  
-**Group Members:** Daniel Lee, Matija Koprivica, Arshvir Bhandal, Mark Zhu, Chuyi Zheng  
+**Project:** Code Comprehension Tutor  
+**Group:** Daniel Lee, Matija Koprivica, Arshvir Bhandal, Mark Zhu, Chuyi Zheng  
 
 **Description**
 
-&nbsp;&nbsp;&nbsp;&nbsp; The Code Comprehension Tutor allows students to complete several short-answer questions where they describe the purpose of a given JavaScript function. To assess the correctness of the student’s description, it will be encapsulated into a prompt and sent over to Ollama to generate a function corresponding to the given description. Afterwards, it will pass through a series of pre-written test cases to determine if the generated function is functionally-equivalent to the original function. The generated function is then shown to the student and if all test cases passed, then the student can go on to the next question. Otherwise, they will be shown the failing test cases and can refine their description. They will also have the option to write notes about what they are modifying and why, so that when they or perhaps a professor reviews their work, they may understand the reasoning behind the student’s answer.  
+The project enables students to answer questions where they describe the purpose of a JavaScript function. To assess code comprehension, their description is used as a prompt in an LLM to generate a function. This function is evaluated against test cases to determine its functional equivalence to the original function. The function and test results are then shown to the student.
 
-&nbsp;&nbsp;&nbsp;&nbsp; The web application will feature several unique features, one of which are researcher accounts. These accounts are instantiated manually, and they allow researchers to add, edit, and delete questions. Furthermore, they can view students’ highest scores for each question, and see question and student averages. This may allow researchers to evaluate the effectiveness of the questions and find out which types of functions students find easy or difficult to understand. They may modify the questions or add new ones to give students more to practice with. Another unique feature is a tutorial page, which will contain a video and a short, written guide on how to answer questions on the app. Lastly, students’ accounts will be secured with a password that they may change at any time.
+The project also includes a gradebook and tools related to question management. The gradebook enables a researcher to view the scores of each student for each question. The question management tools allow a researcher to add new questions and edit the code or tests of existing ones.
 
-**Citation (Icons)**
+**Feature Core**
 
+- Register
+- Login
+- Logout
+- Question Bank
+- Question
+
+**Feature Unique**
+
+- Tutorial (Minor)
+- Change Password (Minor)
+- Delete Account (Minor)
+- Gradebook (Major)
+- Question Management (Major)
+
+**Student vs Researcher**
+
+There are two types of accounts, students and researchers. The Gradebook and Question Management Tools are restricted to researchers. You cannot register a researcher account, but you can use the following account to login as a researcher.
+
+Username: Researcher_A
+<br>Password: pResearcher_A
+
+**Model**
+
+https://ollama.com/library/stable-code
+
+We are using the stable-code model from Ollama. Please note that using an LLM to generate code from a description is not perfect. If there are syntax errors, we display the generated code in the frontend and all of the tests will fail.
+
+**Citation**
+
+- https://www.shutterstock.com/zh/image-vector/grading-system-f-set-grades-school-2212741195
 - https://github.com/astrit/css.gg.git
+- https://kenney.nl/assets/interface-sounds
 
-## Frontend (Non-Docker)
+# Setup
 
-1) In client folder, execute "npm i react-scripts --save".
-2) In client folder, execute "npm start".
+**Docker Compose**
 
-## Backend (Non-Docker)
+1. Install "Docker Desktop"
+2. Open "Docker Desktop"
+3. In top-level of project folder, execute without quotes "docker compose up --build -d".
+4. Open "http://localhost:5000/"
 
-1) In server folder, execute "npm i nodemon --save".
-2) In server folder, execute "npm start".
+After building the project, you will need to wait 3 minutes before accessing http://localhost:5000/. This is necessary to retrieve the model from Ollama. If you do not want to wait this amount of time, then you can comment out “sleep 3m” in entrypointapp.sh. This may result in unexpected behaviour.
 
-## Test (Non-Docker)
+**Test Suite Unit**
 
-1) In test folder, execute "npm i axios --save".
-2) In test folder, execute "npx mocha users.test.js".
+There are over 80 unit tests in the project. However, considering most of the unit tests invoke the API, it is necessary to run the backend in order to run the tests. The backend will generate server/report.html based on server/alltest.test.js. Any changes made to server/alltest.test.js while the backend is running will automatically update report.html.
 
-## Docker Compose
+1. Install Axios
+- In the test folder, execute without quotes "npm install axios".
+2. Install Concurrently
+- In the server folder, execute without quotes "npm install concurrently".
+3. Backend Run
+- In the server folder, execute without quotes “npm start”.
+4. Open Test Suite
+- In the server folder, open in your web browser “report.html”.
 
-1) Install "Docker Desktop"
-2) Open "Docker Desktop"
-3) In top-level of project folder, execute without quotes "docker compose up --build -d".
-4) Open "http://localhost:5000/"
+**Test Suite Manual**
+
+https://docs.google.com/spreadsheets/d/1I9KqvwTJo8QG4nt4EdNd7mwhYY237tFcL0d9Uu3QKuE/edit?usp=sharing
+
+A significant portion of testing was conducted manually in the frontend. A link to our manual test suite and their related test plans are included above.
