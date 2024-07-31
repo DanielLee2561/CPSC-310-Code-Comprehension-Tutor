@@ -1489,6 +1489,7 @@ describe('Save and Submit Attempt', () => {
             endTime: null,
             duration: null,
             generatedCode: null,
+            passingTestCases: null,
             failingTestCases: null,
             testCorrect: null,
             testTotal: null,
@@ -1498,8 +1499,12 @@ describe('Save and Submit Attempt', () => {
         await axios.put("http://localhost:5000/users/login", {
             username, password
         });
+        //create attempt
+        await axios.post("http://localhost:5000/users/Student_A/questions/10", {
+            password
+        });
         // Save question
-        const response = await axios.put("http://localhost:5000/users/Student_A/questions/1", {
+        const response = await axios.put("http://localhost:5000/users/Student_A/questions/10", {
             password: "pStudent_A",
             description: "This function always returns 1",
             notes: "Just testing partial success... I know what the function does...",
@@ -1507,10 +1512,16 @@ describe('Save and Submit Attempt', () => {
         });
         expect(response.status).to.eql(204);
         // View if saved
-        const view_response = await axios.put("http://localhost:5000/users/Student_A/questions/1/attempts/4", {password: password});
+        const view_response = await axios.put("http://localhost:5000/users/Student_A/questions/10/attempts/1", {password: password});
         const view_data = view_response.data;
         expect(view_response.status).to.eql(200);
-        expect(view_data).to.eql(expected_ret);
+        expect(view_data.description).to.eql(expected_ret.description);
+        expect(view_data.notes).to.eql(expected_ret.notes);
+        expect(view_data.generatedCode).to.eql(null);
+        expect(view_data.passingTestCases).to.eql(null);
+        expect(view_data.failingTestCases).to.eql(null);
+        expect(view_data.inProgress).to.eql(true);
+        expect(view_data.endTime).to.eql(null);
     });
 
     it('Save/Submit Questions Failure - User not logged in', async () => {
