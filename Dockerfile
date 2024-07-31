@@ -23,6 +23,7 @@ COPY server/index.js ./
 COPY server/routes/ ./routes/
 COPY server/data/ ./data/
 COPY server/functions/ ./functions/
+COPY server/report.html ./
 
 WORKDIR /usr/app/test/
 COPY test/package*.json ./
