@@ -36,7 +36,7 @@ const Tutorial = (props) => {
         <iframe 
           width="560" 
           height="315" 
-          src="https://www.youtube.com/embed/R4JVNCeY1oo?si=RI0Zqph2RSlAu-me" 
+          src="https://www.youtube.com/embed/ZPjN-KYxsx8" 
           title="YouTube video player" 
           frameborder="0" 
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
@@ -44,7 +44,18 @@ const Tutorial = (props) => {
           allowfullscreen>
         </iframe>
       </div>
-
+      <div className = {style.videoContainer}>
+        <iframe 
+          width="560" 
+          height="315" 
+          src="https://www.youtube.com/embed/5MzMrbB01OM" 
+          title="YouTube video player" 
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          referrerpolicy="strict-origin-when-cross-origin" 
+          allowfullscreen>
+        </iframe>
+      </div>
       <div className = {style.textContainer}>
         <p>{textCore}</p>
         <p>{textUnique}</p>
