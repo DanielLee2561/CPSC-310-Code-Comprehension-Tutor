@@ -57,7 +57,7 @@ After building the project, you will need to wait 3 minutes before accessing htt
 
 **Test Suite Unit**
 
-There are over 80 unit tests in the project. However, considering most of the unit tests invoke the API, it is necessary to run the backend in order to run the tests. The backend will generate server/report.html based on server/alltest.test.js. Any changes made to server/alltest.test.js while the backend is running will automatically update report.html.
+There are over 80 unit tests in the project. However, considering most of the unit tests invoke the API, it is necessary to run the backend in order to run the tests. The backend will generate server/report.html based on test/alltest.test.js. Any changes made to test/alltest.test.js while the backend is running will automatically update report.html.
 
 1. Install Axios
 - In the test folder, execute without quotes "npm install axios".
