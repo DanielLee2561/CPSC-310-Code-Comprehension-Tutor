@@ -1,7 +1,12 @@
 # Project-Groups-06-Lab-A
 
 **Project:** Code Comprehension Tutor  
-**Group:** Daniel Lee, Matija Koprivica, Arshvir Bhandal, Mark Zhu, Chuyi Zheng  
+**Group:** Daniel Lee, Matija Koprivica, Arshvir Bhandal, Mark Zhu, Chuyi Zheng
+
+**Video**
+
+- https://www.youtube.com/watch?v=ZPjN-KYxsx8
+- https://www.youtube.com/watch?v=5MzMrbB01OM
 
 **Description**
 
