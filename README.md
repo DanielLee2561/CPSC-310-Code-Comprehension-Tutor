@@ -5,8 +5,8 @@
 
 **Video**
 
-- https://www.youtube.com/watch?v=ZPjN-KYxsx8
-- https://www.youtube.com/watch?v=5MzMrbB01OM
+- [Code Comprehension Tutor - Core Features](https://www.youtube.com/watch?v=ZPjN-KYxsx8)
+- [Code Comprehension Tutor - Unique Features](https://www.youtube.com/watch?v=5MzMrbB01OM)
 
 **Description**
 
