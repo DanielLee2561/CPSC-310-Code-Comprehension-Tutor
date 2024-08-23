@@ -1,4 +1,4 @@
-# Project-Groups-06-Lab-A
+# CPSC 310 Code Comprehension Tutor
 
 **Project**
 
